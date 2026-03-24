@@ -229,7 +229,7 @@ export default function Home() {
                     Kup mi pivo 🍺
                   </h2>
                   <p className="text-gray-300 mb-6">
-                    To už je minimálně na basu… tak mi můžeš jedno vrátit 🍺
+                    To už je minimálně na basu… tak ať se taky napiju 🍺
                   </p>
                   <div className="flex justify-center mb-4">
                     <div className="bg-white p-4 rounded-lg">
