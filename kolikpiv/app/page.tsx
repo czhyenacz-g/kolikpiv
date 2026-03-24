@@ -199,7 +199,12 @@ export default function Home() {
                   <>
                     <p className="text-3xl font-bold mb-2">
                       Tohle je {Math.floor(result.beers / 20)}{" "}
-                      {Math.floor(result.beers / 20) === 1 ? "basa" : "basy"}
+                      {(() => {
+                        const crates = Math.floor(result.beers / 20);
+                        if (crates === 1) return "basa";
+                        if (crates >= 2 && crates <= 4) return "basy";
+                        return "bas";
+                      })()}
                       {result.beers % 20 > 0 && ` a ${result.beers % 20} piv`} 🍺📦
                     </p>
                     <p className="text-gray-500 text-sm mb-3">
