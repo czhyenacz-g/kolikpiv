@@ -137,6 +137,31 @@ export default function Home() {
     }, 50);
   };
 
+  const handleShare = async () => {
+    if (!result) return;
+
+    const shareText = `Tohle je ${result.beers} piv 🍺\n\n👉 kolikpiv.cz`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          text: shareText,
+        });
+      } catch (err) {
+        // User cancelled or error occurred
+        console.log("Share cancelled");
+      }
+    } else {
+      // Fallback to clipboard
+      try {
+        await navigator.clipboard.writeText(shareText);
+        alert("Zkopírováno 👍");
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -241,9 +266,15 @@ export default function Home() {
                 <p className="text-gray-400 mb-4">
                   = {result.hours} hodin práce
                 </p>
-                <p className="text-amber-400 text-lg italic">
+                <p className="text-amber-400 text-lg italic mb-6">
                   {result.message}
                 </p>
+                <button
+                  onClick={handleShare}
+                  className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Sdílet 🍺
+                </button>
               </div>
 
               {result.beers >= 20 && (
