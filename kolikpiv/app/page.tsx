@@ -83,6 +83,7 @@ export default function Home() {
   const [monthlyWage, setMonthlyWage] = useState<string>("50000");
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [heroTagline] = useState<string>(() =>
     HERO_TAGLINES[Math.floor(Math.random() * HERO_TAGLINES.length)]
   );
@@ -110,9 +111,19 @@ export default function Home() {
     const beerPriceNum = parseFloat(beerPrice);
     const monthlyWageNum = parseFloat(monthlyWage);
 
-    if (isNaN(priceNum) || isNaN(beerPriceNum) || isNaN(monthlyWageNum)) {
+    // Check if price is empty or invalid
+    if (!price || price.trim() === "" || isNaN(priceNum)) {
+      setErrorMessage("Nevyplnil jsi, kolik jsi chtěl utratit mimo hospodu!");
+      setResult(null);
       return;
     }
+
+    if (isNaN(beerPriceNum) || isNaN(monthlyWageNum)) {
+      return;
+    }
+
+    // Clear error message if validation passes
+    setErrorMessage("");
 
     const beers = Math.round(priceNum / beerPriceNum);
     const hourlyWage = monthlyWageNum / 168;
@@ -147,7 +158,10 @@ export default function Home() {
             <input
               type="number"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                setPrice(e.target.value);
+                if (errorMessage) setErrorMessage("");
+              }}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
               placeholder="např. 1000"
             />
@@ -183,6 +197,14 @@ export default function Home() {
           >
             Kolik piv to je?
           </button>
+
+          {errorMessage && (
+            <div className="mt-6 p-4 bg-red-900/30 border border-red-700 rounded-lg text-center">
+              <p className="text-red-400 font-semibold">
+                {errorMessage}
+              </p>
+            </div>
+          )}
 
           {result && (
             <>
