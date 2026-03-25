@@ -309,6 +309,14 @@ export default function Home() {
             </>
           )}
         </div>
+
+        {/* SEO Summary */}
+        <div className="mt-12 pt-8 border-t border-gray-800">
+          <p className="text-gray-500 text-sm text-center">
+            Kolikpiv.cz je jednoduchá online kalkulačka, která převádí ceny na počet piv.
+            Zadej částku a zjisti, kolik piv za ni dostaneš.
+          </p>
+        </div>
       </div>
     </div>
   );
