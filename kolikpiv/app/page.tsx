@@ -6,10 +6,11 @@ import { QRCodeSVG } from "qrcode.react";
 // Hero taglines - rotating subtitle under the main title
 const HERO_TAGLINES = [
   "Přepočítej si každou blbost na piva.",
-  "Všechno má svou cenu v pivech.",
   "Kolik to stojí? Teď to víš v pivech.",
-  "Realita v jednotkách, kterým rozumíš.",
-  "Konečně ceny, co dávají smysl.",
+  "Realita v pivech bolí víc.",
+  "Možná si to po přepočtu rozmyslíš.",
+  "Každá cena se dá vysvětlit v pivech.",
+  "Zjisti, kolik piv za to vlastně je.",
 ];
 
 // Fun messages for different beer count ranges
@@ -312,9 +313,11 @@ export default function Home() {
 
         {/* SEO Summary */}
         <div className="mt-12 pt-8 border-t border-gray-800">
-          <p className="text-gray-500 text-sm text-center">
+          <p className="text-gray-500 text-sm text-center max-w-2xl mx-auto">
             Kolikpiv.cz je jednoduchá online kalkulačka, která převádí ceny na počet piv.
-            Zadej částku a zjisti, kolik piv za ni dostaneš.
+            Zadej částku a zjisti, kolik piv za ni dostaneš. Nejde o alkohol kalkulačku ani
+            výpočet promile, ale o zábavný způsob, jak si představit hodnotu peněz. Například
+            zjistíš, kolik piv stojí telefon, dovolená nebo běžné nákupy.
           </p>
         </div>
       </div>
