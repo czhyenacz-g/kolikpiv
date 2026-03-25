@@ -31,26 +31,30 @@ export async function GET(request: NextRequest) {
               padding: '80px',
             }}
           >
-            <div
-              style={{
-                fontSize: 96,
-                fontWeight: 'bold',
-                color: '#ffffff',
-                marginBottom: 40,
-                textAlign: 'center',
-                lineHeight: 1.2,
-              }}
-            >
-              Kolik piv to je? 🍺
-            </div>
-            <div
-              style={{
-                fontSize: 48,
-                color: '#9ca3af',
-                textAlign: 'center',
-              }}
-            >
-              kolikpiv.cz
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div
+                style={{
+                  fontSize: 96,
+                  fontWeight: 'bold',
+                  color: '#ffffff',
+                  marginBottom: 40,
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                  display: 'flex',
+                }}
+              >
+                Kolik piv to je? 🍺
+              </div>
+              <div
+                style={{
+                  fontSize: 48,
+                  color: '#9ca3af',
+                  textAlign: 'center',
+                  display: 'flex',
+                }}
+              >
+                kolikpiv.cz
+              </div>
             </div>
           </div>
         ),
@@ -82,52 +86,57 @@ export async function GET(request: NextRequest) {
             padding: '80px',
           }}
         >
-          {/* Top: Price */}
-          <div
-            style={{
-              fontSize: 56,
-              color: '#9ca3af',
-              marginBottom: 40,
-              textAlign: 'center',
-            }}
-          >
-            Za {price} Kč?
-          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* Top: Price */}
+            <div
+              style={{
+                fontSize: 56,
+                color: '#9ca3af',
+                marginBottom: 40,
+                textAlign: 'center',
+                display: 'flex',
+              }}
+            >
+              Za {price} Kč?
+            </div>
 
-          {/* Middle: Result (large) */}
-          <div
-            style={{
-              fontSize: 72,
-              fontWeight: 'bold',
-              color: '#fbbf24',
-              marginBottom: 60,
-              textAlign: 'center',
-              lineHeight: 1.2,
-            }}
-          >
-            {beers < 1 ? (
-              'Ani na jedno pivo 😄'
-            ) : beers >= 20 ? (
-              `To je za ${Math.floor(beers / 20)} ${(() => {
-                const crates = Math.floor(beers / 20);
-                if (crates === 1) return "basa";
-                if (crates >= 2 && crates <= 4) return "basy";
-                return "bas";
-              })()} 🍺📦`
-            ) : (
-              `To je za ${beers} ${beerWord} 🍺`
-            )}
-          </div>
+            {/* Middle: Result (large) */}
+            <div
+              style={{
+                fontSize: 72,
+                fontWeight: 'bold',
+                color: '#fbbf24',
+                marginBottom: 60,
+                textAlign: 'center',
+                lineHeight: 1.2,
+                display: 'flex',
+              }}
+            >
+              {beers < 1 ? (
+                'Ani na jedno pivo 😄'
+              ) : beers >= 20 ? (
+                `To je za ${Math.floor(beers / 20)} ${(() => {
+                  const crates = Math.floor(beers / 20);
+                  if (crates === 1) return "basa";
+                  if (crates >= 2 && crates <= 4) return "basy";
+                  return "bas";
+                })()} 🍺📦`
+              ) : (
+                `To je za ${beers} ${beerWord} 🍺`
+              )}
+            </div>
 
-          {/* Bottom: Website */}
-          <div
-            style={{
-              fontSize: 40,
-              color: '#9ca3af',
-              textAlign: 'center',
-            }}
-          >
-            kolikpiv.cz
+            {/* Bottom: Website */}
+            <div
+              style={{
+                fontSize: 40,
+                color: '#9ca3af',
+                textAlign: 'center',
+                display: 'flex',
+              }}
+            >
+              kolikpiv.cz
+            </div>
           </div>
         </div>
       ),
