@@ -98,7 +98,7 @@ export default function CalculatorClient() {
 
   const [price, setPrice] = useState<string>("");
   const [beerPrice, setBeerPrice] = useState<string>("50");
-  const [monthlyWage, setMonthlyWage] = useState<string>("50000");
+  const [monthlyWage, setMonthlyWage] = useState<string>("40000");
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -143,7 +143,7 @@ export default function CalculatorClient() {
       // Auto-calculate if we have all params
       const priceNum = parseFloat(urlPrice);
       const beerPriceNum = parseFloat(urlBeerPrice || savedBeerPrice || "50");
-      const monthlyWageNum = parseFloat(urlSalary || savedMonthlyWage || "50000");
+      const monthlyWageNum = parseFloat(urlSalary || savedMonthlyWage || "40000");
 
       if (!isNaN(priceNum) && !isNaN(beerPriceNum) && !isNaN(monthlyWageNum)) {
         const beers = Math.floor(priceNum / beerPriceNum);
