@@ -98,7 +98,7 @@ export default function CalculatorClient() {
 
   const [price, setPrice] = useState<string>("");
   const [beerPrice, setBeerPrice] = useState<string>("50");
-  const [monthlyWage, setMonthlyWage] = useState<string>("40000");
+  const [monthlyWage, setMonthlyWage] = useState<string>("35000");
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -143,7 +143,7 @@ export default function CalculatorClient() {
       // Auto-calculate if we have all params
       const priceNum = parseFloat(urlPrice);
       const beerPriceNum = parseFloat(urlBeerPrice || savedBeerPrice || "50");
-      const monthlyWageNum = parseFloat(urlSalary || savedMonthlyWage || "40000");
+      const monthlyWageNum = parseFloat(urlSalary || savedMonthlyWage || "35000");
 
       if (!isNaN(priceNum) && !isNaN(beerPriceNum) && !isNaN(monthlyWageNum)) {
         const beers = Math.floor(priceNum / beerPriceNum);
@@ -370,6 +370,7 @@ export default function CalculatorClient() {
               onChange={(e) => setMonthlyWage(e.target.value)}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
             />
+            <p className="mt-1 text-xs text-zinc-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
           </div>
 
           <button
