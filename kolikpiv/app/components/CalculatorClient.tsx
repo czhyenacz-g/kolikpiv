@@ -336,8 +336,12 @@ export default function CalculatorClient() {
                   Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
                 </p>
               )}
-              <p className="text-gray-400 mb-4">
+              <p className="text-gray-400 mb-1">
                 = {result.hours} hodin práce
+              </p>
+              <p className="text-gray-400 text-sm mb-4">
+                = {Math.round((result.hours / 8) * 100)} % pracovního dne
+                {Math.round((result.hours / 8) * 100) > 100 && " (víc než jeden den 😄)"}
               </p>
               <p className="text-amber-400 text-lg italic mb-6">
                 {result.message}
