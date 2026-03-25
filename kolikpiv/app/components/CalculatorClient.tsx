@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -96,9 +96,16 @@ export default function CalculatorClient() {
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [heroTagline] = useState<string>(() =>
-    HERO_TAGLINES[Math.floor(Math.random() * HERO_TAGLINES.length)]
-  );
+  const [qrDownloadMessage, setQrDownloadMessage] = useState<string>("");
+  const [heroTagline, setHeroTagline] = useState<string>(HERO_TAGLINES[0]);
+
+  const qrRef = useRef<HTMLDivElement>(null);
+
+  // Set random tagline after mount to avoid hydration mismatch
+  useEffect(() => {
+    const randomTagline = HERO_TAGLINES[Math.floor(Math.random() * HERO_TAGLINES.length)];
+    setHeroTagline(randomTagline);
+  }, []);
 
   // Load from URL query params and localStorage on mount
   useEffect(() => {
@@ -231,6 +238,39 @@ export default function CalculatorClient() {
       } catch (err) {
         console.error("Failed to copy:", err);
       }
+    }
+  };
+
+  const handleDownloadQR = () => {
+    if (!qrRef.current) return;
+
+    try {
+      // Find the SVG element inside the ref
+      const svg = qrRef.current.querySelector('svg');
+      if (!svg) return;
+
+      // Serialize SVG to string
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      // Create temporary download link
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'kolikpiv-qr.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      // Show feedback
+      setQrDownloadMessage("QR uložen 👍");
+      setTimeout(() => {
+        setQrDownloadMessage("");
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to download QR:", err);
+      alert("Nepodařilo se uložit QR kód");
     }
   };
 
@@ -367,7 +407,12 @@ export default function CalculatorClient() {
                   To už je minimálně na basu… tak ať se taky napiju 🍺
                 </p>
                 <div className="flex justify-center mb-4">
-                  <div className="bg-white p-4 rounded-lg">
+                  <div
+                    ref={qrRef}
+                    onClick={handleDownloadQR}
+                    className="bg-white p-4 rounded-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                    title="Klikni pro uložení QR kódu"
+                  >
                     <QRCodeSVG
                       value="SPD*1.0*ACC:CZ5055000000008216903002*AM:50.00*CC:CZK*MSG:Pivo"
                       size={200}
@@ -375,8 +420,16 @@ export default function CalculatorClient() {
                     />
                   </div>
                 </div>
+                {qrDownloadMessage && (
+                  <p className="text-green-400 text-sm mb-2 font-semibold">
+                    {qrDownloadMessage}
+                  </p>
+                )}
                 <p className="text-gray-400 text-sm mb-2">
                   Naskenuj v bankovní aplikaci
+                </p>
+                <p className="text-zinc-400 text-xs mb-2 md:hidden">
+                  Klikni pro uložení 🍺
                 </p>
                 <p className="text-amber-500 font-semibold">
                   👉 50 Kč = 1 pivo pro mě
