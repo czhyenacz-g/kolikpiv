@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 
 // Hero taglines - rotating subtitle under the main title
@@ -78,7 +79,17 @@ const getRandomMessage = (beers: number): string => {
   return messages[Math.floor(Math.random() * messages.length)];
 };
 
+const getBeerWord = (count: number): string => {
+  if (count === 1) return "pivo";
+  if (count >= 2 && count <= 4) return "piva";
+  return "piv";
+};
+
 export default function Home() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [price, setPrice] = useState<string>("");
   const [beerPrice, setBeerPrice] = useState<string>("50");
   const [monthlyWage, setMonthlyWage] = useState<string>("50000");
@@ -89,14 +100,49 @@ export default function Home() {
     HERO_TAGLINES[Math.floor(Math.random() * HERO_TAGLINES.length)]
   );
 
-  // Load from localStorage on mount
+  // Load from URL query params and localStorage on mount
   useEffect(() => {
+    // First, try to load from localStorage
     const savedBeerPrice = localStorage.getItem("beerPrice");
     const savedMonthlyWage = localStorage.getItem("monthlyWage");
 
-    if (savedBeerPrice) setBeerPrice(savedBeerPrice);
-    if (savedMonthlyWage) setMonthlyWage(savedMonthlyWage);
-  }, []);
+    // Read query params
+    const urlPrice = searchParams.get("price");
+    const urlBeerPrice = searchParams.get("beerPrice");
+    const urlSalary = searchParams.get("salary");
+
+    // Set values, prioritizing URL params over localStorage
+    if (urlBeerPrice && !isNaN(parseFloat(urlBeerPrice))) {
+      setBeerPrice(urlBeerPrice);
+    } else if (savedBeerPrice) {
+      setBeerPrice(savedBeerPrice);
+    }
+
+    if (urlSalary && !isNaN(parseFloat(urlSalary))) {
+      setMonthlyWage(urlSalary);
+    } else if (savedMonthlyWage) {
+      setMonthlyWage(savedMonthlyWage);
+    }
+
+    if (urlPrice && !isNaN(parseFloat(urlPrice))) {
+      setPrice(urlPrice);
+
+      // Auto-calculate if we have all params
+      const priceNum = parseFloat(urlPrice);
+      const beerPriceNum = parseFloat(urlBeerPrice || savedBeerPrice || "50");
+      const monthlyWageNum = parseFloat(urlSalary || savedMonthlyWage || "50000");
+
+      if (!isNaN(priceNum) && !isNaN(beerPriceNum) && !isNaN(monthlyWageNum)) {
+        const beers = Math.floor(priceNum / beerPriceNum);
+        const hourlyWage = monthlyWageNum / 168;
+        const hours = parseFloat((priceNum / hourlyWage).toFixed(1));
+        const message = getRandomMessage(beers);
+
+        setResult({ beers, hours, message });
+        setShowResult(true);
+      }
+    }
+  }, [searchParams]);
 
   // Save to localStorage when values change
   useEffect(() => {
@@ -126,10 +172,17 @@ export default function Home() {
     // Clear error message if validation passes
     setErrorMessage("");
 
-    const beers = Math.round(priceNum / beerPriceNum);
+    const beers = Math.floor(priceNum / beerPriceNum);
     const hourlyWage = monthlyWageNum / 168;
     const hours = parseFloat((priceNum / hourlyWage).toFixed(1));
     const message = getRandomMessage(beers);
+
+    // Update URL with current calculation
+    const params = new URLSearchParams();
+    params.set("price", price);
+    params.set("beerPrice", beerPrice);
+    params.set("salary", monthlyWage);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
     setShowResult(false);
     setTimeout(() => {
@@ -138,10 +191,28 @@ export default function Home() {
     }, 50);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    calculate();
+  };
+
   const handleShare = async () => {
     if (!result) return;
 
-    const shareText = `Tohle je ${result.beers} piv 🍺\n\n👉 kolikpiv.cz`;
+    // Get current URL with query params
+    const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://kolikpiv.cz';
+
+    // Random emotional variants for the beer line
+    const beerWord = getBeerWord(result.beers);
+    const variants = [
+      `To je za ${result.beers} ${beerWord} 🍺`,
+      `To je za ${result.beers} ${beerWord} 😳🍺`,
+      `To je za ${result.beers} ${beerWord}!!! 🍺`,
+      `To už bolí… za ${result.beers} ${beerWord} 🍺`,
+    ];
+    const randomVariant = variants[Math.floor(Math.random() * variants.length)];
+
+    const shareText = `Za ${price} Kč?\n\n${randomVariant}\n\nKolik piv stojí tvoje věci?\n👉 ${currentUrl}`;
 
     if (navigator.share) {
       try {
@@ -176,7 +247,7 @@ export default function Home() {
           {heroTagline}
         </p>
 
-        <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-2">
               Kolik to stojí? (CZK)
@@ -218,98 +289,98 @@ export default function Home() {
           </div>
 
           <button
-            onClick={calculate}
+            type="submit"
             className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
           >
             Kolik piv to je?
           </button>
+        </form>
 
-          {errorMessage && (
-            <div className="mt-6 p-4 bg-red-900/30 border border-red-700 rounded-lg text-center">
-              <p className="text-red-400 font-semibold">
-                {errorMessage}
+        {errorMessage && (
+          <div className="mt-6 p-4 bg-red-900/30 border border-red-700 rounded-lg text-center">
+            <p className="text-red-400 font-semibold">
+              {errorMessage}
+            </p>
+          </div>
+        )}
+
+        {result && (
+          <>
+            <div
+              className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
+                showResult ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {result.beers < 1 ? (
+                <p className="text-3xl font-bold mb-2">
+                  Ani na jedno pivo 😄
+                </p>
+              ) : result.beers >= 20 ? (
+                <>
+                  <p className="text-3xl font-bold mb-2">
+                    Tohle je za {Math.floor(result.beers / 20)}{" "}
+                    {(() => {
+                      const crates = Math.floor(result.beers / 20);
+                      if (crates === 1) return "basa";
+                      if (crates >= 2 && crates <= 4) return "basy";
+                      return "bas";
+                    })()}
+                    {result.beers % 20 > 0 && ` a ${result.beers % 20} ${getBeerWord(result.beers % 20)}`} 🍺📦
+                  </p>
+                  <p className="text-gray-500 text-sm mb-3">
+                    ({result.beers} {getBeerWord(result.beers)} celkem)
+                  </p>
+                </>
+              ) : (
+                <p className="text-3xl font-bold mb-2">
+                  Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
+                </p>
+              )}
+              <p className="text-gray-400 mb-4">
+                = {result.hours} hodin práce
               </p>
+              <p className="text-amber-400 text-lg italic mb-6">
+                {result.message}
+              </p>
+              <button
+                onClick={handleShare}
+                className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Sdílet 🍺
+              </button>
             </div>
-          )}
 
-          {result && (
-            <>
+            {result.beers >= 20 && (
               <div
                 className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
                   showResult ? "opacity-100" : "opacity-0"
                 }`}
               >
-                {result.beers < 1 ? (
-                  <p className="text-3xl font-bold mb-2">
-                    Ani na jedno pivo 😄
-                  </p>
-                ) : result.beers >= 20 ? (
-                  <>
-                    <p className="text-3xl font-bold mb-2">
-                      Tohle je {Math.floor(result.beers / 20)}{" "}
-                      {(() => {
-                        const crates = Math.floor(result.beers / 20);
-                        if (crates === 1) return "basa";
-                        if (crates >= 2 && crates <= 4) return "basy";
-                        return "bas";
-                      })()}
-                      {result.beers % 20 > 0 && ` a ${result.beers % 20} piv`} 🍺📦
-                    </p>
-                    <p className="text-gray-500 text-sm mb-3">
-                      ({result.beers} piv celkem)
-                    </p>
-                  </>
-                ) : (
-                  <p className="text-3xl font-bold mb-2">
-                    Tohle je {result.beers} piv 🍺
-                  </p>
-                )}
-                <p className="text-gray-400 mb-4">
-                  = {result.hours} hodin práce
+                <h2 className="text-xl font-bold mb-4">
+                  Kup mi pivo 🍺
+                </h2>
+                <p className="text-gray-300 mb-6">
+                  To už je minimálně na basu… tak ať se taky napiju 🍺
                 </p>
-                <p className="text-amber-400 text-lg italic mb-6">
-                  {result.message}
-                </p>
-                <button
-                  onClick={handleShare}
-                  className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Sdílet 🍺
-                </button>
-              </div>
-
-              {result.beers >= 20 && (
-                <div
-                  className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
-                    showResult ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <h2 className="text-xl font-bold mb-4">
-                    Kup mi pivo 🍺
-                  </h2>
-                  <p className="text-gray-300 mb-6">
-                    To už je minimálně na basu… tak ať se taky napiju 🍺
-                  </p>
-                  <div className="flex justify-center mb-4">
-                    <div className="bg-white p-4 rounded-lg">
-                      <QRCodeSVG
-                        value="SPD*1.0*ACC:CZ5055000000008216903002*AM:50.00*CC:CZK*MSG:Pivo"
-                        size={200}
-                        level="M"
-                      />
-                    </div>
+                <div className="flex justify-center mb-4">
+                  <div className="bg-white p-4 rounded-lg">
+                    <QRCodeSVG
+                      value="SPD*1.0*ACC:CZ5055000000008216903002*AM:50.00*CC:CZK*MSG:Pivo"
+                      size={200}
+                      level="M"
+                    />
                   </div>
-                  <p className="text-gray-400 text-sm mb-2">
-                    Naskenuj v bankovní aplikaci
-                  </p>
-                  <p className="text-amber-500 font-semibold">
-                    👉 50 Kč = 1 pivo pro mě
-                  </p>
                 </div>
-              )}
-            </>
-          )}
-        </div>
+                <p className="text-gray-400 text-sm mb-2">
+                  Naskenuj v bankovní aplikaci
+                </p>
+                <p className="text-amber-500 font-semibold">
+                  👉 50 Kč = 1 pivo pro mě
+                </p>
+              </div>
+            )}
+          </>
+        )}
 
         {/* SEO Summary */}
         <div className="mt-12 pt-8 border-t border-gray-800">
