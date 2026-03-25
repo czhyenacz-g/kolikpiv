@@ -85,6 +85,12 @@ const getBeerWord = (count: number): string => {
   return "piv";
 };
 
+const getDonationAmount = (beerPrice: number): number => {
+  if (!beerPrice || beerPrice < 50) return 50;
+  if (beerPrice > 2000) return 2000;
+  return Math.floor(beerPrice);
+};
+
 export default function CalculatorClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -432,48 +438,68 @@ export default function CalculatorClient() {
               </button>
             </div>
 
-            {result.beers >= 20 && (
-              <div
-                className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
-                  showResult ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <h2 className="text-xl font-bold mb-4">
-                  Kup mi pivo 🍺
-                </h2>
-                <p className="text-gray-300 mb-6">
-                  To už je minimálně na basu… tak ať se taky napiju 🍺
-                </p>
-                <div className="flex justify-center mb-4">
-                  <div
-                    ref={qrRef}
-                    onClick={handleDownloadQR}
-                    className="bg-white p-4 rounded-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
-                    title="Klikni pro uložení QR kódu"
-                  >
-                    <QRCodeSVG
-                      value="SPD*1.0*ACC:CZ5055000000008216903002*AM:50.00*CC:CZK*MSG:Pivo"
-                      size={200}
-                      level="M"
-                    />
-                  </div>
-                </div>
-                {qrDownloadMessage && (
-                  <p className="text-green-400 text-sm mb-2 font-semibold">
-                    {qrDownloadMessage}
+{result.beers >= 20 && (() => {
+              const beerPriceNum = parseFloat(beerPrice);
+              const donationAmount = getDonationAmount(beerPriceNum);
+              const isCapped = beerPriceNum > 2000;
+              const qrValue = `SPD*1.0*ACC:CZ5055000000008216903002*AM:${donationAmount}.00*CC:CZK*MSG:Pivo`;
+
+              return (
+                <div
+                  className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
+                    showResult ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <h2 className="text-xl font-bold mb-4">
+                    Kup mi pivo 🍺
+                  </h2>
+                  <p className="text-gray-300 mb-6">
+                    To už je minimálně na basu… tak ať se taky napiju 🍺
                   </p>
-                )}
-                <p className="text-gray-400 text-sm mb-2">
-                  Naskenuj v bankovní aplikaci
-                </p>
-                <p className="text-zinc-400 text-xs mb-2 md:hidden">
-                  Klikni pro uložení 🍺
-                </p>
-                <p className="text-amber-500 font-semibold">
-                  👉 50 Kč = 1 pivo pro mě
-                </p>
-              </div>
-            )}
+                  <div className="flex justify-center mb-4">
+                    <div
+                      ref={qrRef}
+                      onClick={handleDownloadQR}
+                      className="bg-white p-4 rounded-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                      title="Klikni pro uložení QR kódu"
+                    >
+                      <QRCodeSVG
+                        value={qrValue}
+                        size={200}
+                        level="M"
+                      />
+                    </div>
+                  </div>
+                  {qrDownloadMessage && (
+                    <p className="text-green-400 text-sm mb-2 font-semibold">
+                      {qrDownloadMessage}
+                    </p>
+                  )}
+                  <p className="text-gray-400 text-sm mb-2">
+                    Naskenuj v bankovní aplikaci
+                  </p>
+                  <p className="text-zinc-400 text-xs mb-2 md:hidden">
+                    Klikni pro uložení 🍺
+                  </p>
+                  {donationAmount === 50 ? (
+                    <p className="text-amber-500 font-semibold">
+                      👉 50 Kč = 1 pivo pro mě
+                    </p>
+                  ) : (
+                    <>
+                      <p className="text-amber-500 font-semibold">
+                        👉 QR je připravený na {donationAmount} Kč
+                      </p>
+                      {isCapped && (
+                        <p className="text-gray-500 text-xs mt-2">
+                          Původní cena piva: {beerPriceNum} Kč 😄
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            })()}
           </>
         )}
 
