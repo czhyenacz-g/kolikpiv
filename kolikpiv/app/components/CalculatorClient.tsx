@@ -245,29 +245,67 @@ export default function CalculatorClient() {
     if (!qrRef.current) return;
 
     try {
-      // Find the SVG element inside the ref
+      // Check for canvas element first
+      const canvas = qrRef.current.querySelector('canvas');
+      if (canvas) {
+        // Canvas: directly convert to PNG
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'kolikpiv-qr.png';
+        link.click();
+
+        setQrDownloadMessage("QR uložen 👍");
+        setTimeout(() => setQrDownloadMessage(""), 2000);
+        return;
+      }
+
+      // SVG: convert to PNG via canvas
       const svg = qrRef.current.querySelector('svg');
       if (!svg) return;
 
-      // Serialize SVG to string
+      // Get SVG dimensions
+      const svgRect = svg.getBoundingClientRect();
+      const svgWidth = svgRect.width;
+      const svgHeight = svgRect.height;
+
+      // Serialize SVG to data URL
       const svgData = new XMLSerializer().serializeToString(svg);
-      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
+      const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
 
-      // Create temporary download link
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'kolikpiv-qr.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Create image from SVG
+      const img = new Image();
+      img.onload = () => {
+        // Create canvas and draw image
+        const canvas = document.createElement('canvas');
+        canvas.width = svgWidth;
+        canvas.height = svgHeight;
+        const ctx = canvas.getContext('2d');
 
-      // Show feedback
-      setQrDownloadMessage("QR uložen 👍");
-      setTimeout(() => {
-        setQrDownloadMessage("");
-      }, 2000);
+        if (!ctx) {
+          alert("Nepodařilo se uložit QR kód");
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0);
+
+        // Convert canvas to PNG and download
+        const pngDataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = pngDataUrl;
+        link.download = 'kolikpiv-qr.png';
+        link.click();
+
+        // Show feedback
+        setQrDownloadMessage("QR uložen 👍");
+        setTimeout(() => setQrDownloadMessage(""), 2000);
+      };
+
+      img.onerror = () => {
+        alert("Nepodařilo se uložit QR kód");
+      };
+
+      img.src = svgDataUrl;
     } catch (err) {
       console.error("Failed to download QR:", err);
       alert("Nepodařilo se uložit QR kód");
