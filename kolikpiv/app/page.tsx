@@ -9,22 +9,22 @@ type Props = {
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   // In Next.js 15, searchParams must be awaited
   const params = await searchParams;
-  const price = params.price as string | undefined;
+  const price = (params.price as string) || "0";
   const beerPrice = (params.beerPrice as string) || "50";
 
-  // Base URL for OG images (absolute URLs required)
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : process.env.NEXT_PUBLIC_BASE_URL || "https://kolikpiv.cz";
-
-  // Build dynamic OG image URL
-  let ogImageUrl = `${baseUrl}/api/og`;
-  if (price) {
-    ogImageUrl += `?price=${price}&beerPrice=${beerPrice}`;
-  }
+  // Build dynamic OG image URL with query params
+  const ogImageUrl = `https://kolikpiv.cz/api/og?price=${price}&beerPrice=${beerPrice}`;
 
   return {
+    title: "Kolik piv to je? | Přepočet ceny na piva",
+    description: "Zjisti, kolik piv stojí cokoliv 🍺",
     openGraph: {
+      title: "Kolik piv to je? | Přepočet ceny na piva",
+      description: "Zjisti, kolik piv stojí cokoliv 🍺",
+      url: "https://kolikpiv.cz",
+      siteName: "Kolik piv to je?",
+      locale: "cs_CZ",
+      type: "website",
       images: [
         {
           url: ogImageUrl,
@@ -36,6 +36,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     },
     twitter: {
       card: "summary_large_image",
+      title: "Kolik piv to je? | Přepočet ceny na piva",
+      description: "Zjisti, kolik piv stojí cokoliv 🍺",
       images: [ogImageUrl],
     },
   };
