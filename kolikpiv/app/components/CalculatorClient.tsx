@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
+import { track } from "@vercel/analytics";
+import { GOATCOUNTER_CODE } from "../config/analytics";
 
 // Hero taglines - rotating subtitle under the main title
 const HERO_TAGLINES = [
@@ -106,6 +108,7 @@ export default function CalculatorClient() {
   const [heroTagline, setHeroTagline] = useState<string>(HERO_TAGLINES[0]);
 
   const qrRef = useRef<HTMLDivElement>(null);
+  const [visitorCount, setVisitorCount] = useState<string | null>(null);
 
   // Set random tagline after mount to avoid hydration mismatch
   useEffect(() => {
@@ -157,6 +160,22 @@ export default function CalculatorClient() {
     }
   }, [searchParams]);
 
+  // Fetch public visitor count from GoatCounter
+  useEffect(() => {
+    if (!GOATCOUNTER_CODE) return;
+    fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter/%2F.json`)
+      .then((r) => r.json())
+      .then((data) => setVisitorCount(data.count))
+      .catch(() => {});
+  }, []);
+
+  // Track QR section shown
+  useEffect(() => {
+    if (result && result.beers >= 20) {
+      track("qr_section_shown", { beers: result.beers });
+    }
+  }, [result]);
+
   // Save to localStorage when values change
   useEffect(() => {
     localStorage.setItem("beerPrice", beerPrice);
@@ -197,6 +216,8 @@ export default function CalculatorClient() {
     params.set("salary", monthlyWage);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
+    track("calculator_submit", { price: priceNum, beerPrice: beerPriceNum, beers });
+
     setShowResult(false);
     setTimeout(() => {
       setResult({ beers, hours, message });
@@ -211,6 +232,8 @@ export default function CalculatorClient() {
 
   const handleShare = async () => {
     if (!result) return;
+
+    track("share_click", { beers: result.beers });
 
     // Get current URL with query params
     const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://kolikpiv.cz';
@@ -249,6 +272,7 @@ export default function CalculatorClient() {
 
   const handleDownloadQR = () => {
     if (!qrRef.current) return;
+    track("qr_download_click");
 
     try {
       // Check for canvas element first
@@ -511,6 +535,18 @@ export default function CalculatorClient() {
             Zadej částku a zjisti, kolik piv za ni dostaneš. Nejde o alkohol kalkulačku ani
             výpočet promile, ale o zábavný způsob, jak si představit hodnotu peněz. Například
             zjistíš, kolik piv stojí telefon, dovolená nebo běžné nákupy.
+          </p>
+        </div>
+
+        {/* Footer stats */}
+        <div className="mt-6 pb-6 text-center">
+          {visitorCount && (
+            <p className="text-gray-600 text-xs">
+              Návštěv celkem: {visitorCount}
+            </p>
+          )}
+          <p className="text-gray-700 text-xs mt-1">
+            Díky, že to šíříš 🍺
           </p>
         </div>
       </div>
