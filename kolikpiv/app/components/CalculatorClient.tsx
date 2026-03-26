@@ -247,6 +247,19 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     calculate();
   };
 
+  const handleSurprise = () => {
+    const r = Math.random();
+    let value: number;
+    if (r < 0.3) {
+      value = Math.round(100 + Math.random() * 400);
+    } else if (r < 0.7) {
+      value = Math.round(500 + Math.random() * 4500);
+    } else {
+      value = Math.round(5000 + Math.random() * 45000);
+    }
+    handleExample(value);
+  };
+
   const handleExample = (value: number) => {
     const priceStr = String(value);
     const beerPriceNum = parseFloat(beerPrice);
@@ -404,7 +417,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
         {/* Quick examples */}
         <div className="mb-6">
-          <p className="text-gray-500 text-xs text-center mb-3">Zkus třeba:</p>
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-gray-500 text-xs">Zkus třeba:</p>
+            <button
+              type="button"
+              onClick={handleSurprise}
+              className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+            >
+              🎲 Překvap mě
+            </button>
+          </div>
           <div className="flex flex-wrap justify-center gap-2">
             {[
               { label: "kebab po párty", value: 150 },
