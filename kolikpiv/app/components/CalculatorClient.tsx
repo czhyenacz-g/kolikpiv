@@ -60,6 +60,8 @@ const EXTREME_MESSAGES = [
 // Special message for very high beer counts (>100)
 const ULTRA_MESSAGE = "Tohle už je životní rozhodnutí.";
 
+const LAST_UPDATED = "26. 3. 2026";
+
 const getRandomMessage = (beers: number): string => {
   // Special message for ultra high values
   if (beers > 100) {
@@ -114,6 +116,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [qrDownloadMessage, setQrDownloadMessage] = useState<string>("");
+  const [copyLinkMessage, setCopyLinkMessage] = useState<string>("");
   const [heroTagline, setHeroTagline] = useState<string>(HERO_TAGLINES[0]);
 
   const qrRef = useRef<HTMLDivElement>(null);
@@ -245,6 +248,19 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     calculate();
+  };
+
+  const handleCopyLink = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopyLinkMessage("Odkaz zkopírován 👍");
+      setTimeout(() => setCopyLinkMessage(""), 2500);
+    } catch {
+      // fallback for older browsers
+      setCopyLinkMessage("Zkopíruj URL z adresního řádku");
+      setTimeout(() => setCopyLinkMessage(""), 2500);
+    }
   };
 
   const handleSurprise = () => {
@@ -554,6 +570,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               >
                 Sdílej kamarádům 🍺
               </button>
+              <button
+                onClick={handleCopyLink}
+                className="w-full py-2.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm text-gray-300 transition"
+              >
+                {copyLinkMessage || "Kopírovat odkaz"}
+              </button>
             </div>
 
 {result.beers >= 20 && (() => {
@@ -635,7 +657,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           return (
             <div className="mt-8">
               <h2 className="text-xl font-bold text-center mb-1">🔥 Co za to koupíš v obchodě</h2>
-              <p className="text-gray-500 text-sm text-center mb-6">Orientačně podle ceny za kus 🍺</p>
+              <p className="text-gray-500 text-sm text-center mb-1">Orientačně podle ceny za kus 🍺</p>
+              <p className="text-zinc-500 text-xs text-center mb-6">Ceny aktualizovány: {LAST_UPDATED}</p>
               <div className="space-y-3">
                 {sorted.map((deal) => {
                   const pieceCount = Math.floor(totalPrice / deal.pricePerPiece);
@@ -713,8 +736,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           </p>
         </div>
 
+        {/* Disclaimer */}
+        <div className="mt-6 text-center">
+          <p className="text-zinc-500 text-xs">Experiment 🍺</p>
+          <p className="text-zinc-500 text-xs">Něco může být nepřesné… ale piva sedí 😄</p>
+        </div>
+
         {/* Footer stats */}
-        <div className="mt-6 pb-6 text-center">
+        <div className="mt-4 pb-6 text-center">
           {visitorCount && (
             <p className="text-gray-600 text-xs">
               Návštěv celkem: {visitorCount}
