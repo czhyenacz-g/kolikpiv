@@ -185,6 +185,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     }
   }, [result]);
 
+  // Track deals section shown
+  useEffect(() => {
+    const totalPrice = parseFloat(price);
+    if (result && totalPrice > 0) {
+      track("deals_shown", { totalPrice });
+    }
+  }, [result, price]);
+
   // Save to localStorage when values change
   useEffect(() => {
     localStorage.setItem("beerPrice", beerPrice);
@@ -585,6 +593,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         href={deal.url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => track("affiliate_click", {
+                          beer: deal.name,
+                          pricePerPiece: deal.pricePerPiece,
+                          pieceCount,
+                          totalPrice,
+                        })}
                         className={`block p-4 rounded-lg border transition-colors ${
                           deal.isBestDeal
                             ? "bg-gray-800 border-amber-500/60 hover:border-amber-400 hover:bg-gray-700"
