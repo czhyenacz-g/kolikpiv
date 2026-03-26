@@ -1,0 +1,38 @@
+[
+  {
+    "id": "branik",
+    "name": "Braník 10",
+    "pricePerPiece": 9.9,
+    "shop": "Tesco",
+    "isBestDeal": true,
+    "url": "https://www.heureka.cz/?h%5Bfraze%5D=branik+10&utm_source=kolikpiv"
+  },
+  {
+    "id": "kozel",
+    "name": "Velkopopovický Kozel 10",
+    "pricePerPiece": 12.9,
+    "shop": "Tesco",
+    "url": "https://www.heureka.cz/?h%5Bfraze%5D=kozel+10&utm_source=kolikpiv"
+  },
+  {
+    "id": "gambrinus",
+    "name": "Gambrinus 10",
+    "pricePerPiece": 12.9,
+    "shop": "COOP",
+    "url": "https://www.heureka.cz/?h%5Bfraze%5D=gambrinus+10&utm_source=kolikpiv"
+  },
+  {
+    "id": "budvar",
+    "name": "Budvar Original",
+    "pricePerPiece": 19.9,
+    "shop": "Albert",
+    "url": "https://www.heureka.cz/?h%5Bfraze%5D=budvar&utm_source=kolikpiv"
+  },
+  {
+    "id": "pilsner",
+    "name": "Pilsner Urquell",
+    "pricePerPiece": 25.9,
+    "shop": "Albert",
+    "url": "https://www.heureka.cz/?h%5Bfraze%5D=pilsner+urquell&utm_source=kolikpiv"
+  }
+]
