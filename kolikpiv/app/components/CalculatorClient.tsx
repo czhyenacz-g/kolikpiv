@@ -98,6 +98,7 @@ const getDonationAmount = (beerPrice: number): number => {
 interface BeerDeal {
   id: string;
   name: string;
+  icon?: string;
   pricePerPiece: number;
   shop: string;
   url?: string;
@@ -669,8 +670,11 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                       {deal.isBestDeal && (
                         <p className="text-amber-400 text-xs font-semibold mb-1">🔥 Nejvýhodnější</p>
                       )}
-                      <p className="font-semibold text-white text-sm">{deal.name}</p>
-                      <p className="text-gray-400 text-xs mt-0.5">{deal.shop} · {deal.pricePerPiece} Kč / ks</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl leading-none">{deal.icon ?? "🍺"}</span>
+                        <p className="font-semibold text-white text-sm">{deal.name}</p>
+                      </div>
+                      <p className="text-gray-400 text-xs mt-0.5">od {deal.pricePerPiece} Kč / kus</p>
                       {pieceCount > 0 ? (
                         <p className="text-amber-400 text-sm mt-1">{pieceCount} piv 🍺</p>
                       ) : (
@@ -680,7 +684,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         <p className="text-gray-500 text-xs mt-1">Nejlepší cena právě teď</p>
                       )}
                       {isClickable && (
-                        <p className="text-blue-400 text-xs mt-1.5">👉 Koupit v akci</p>
+                        <p className="text-blue-400 text-xs mt-1.5">Mrkni na ceny 🍺</p>
                       )}
                     </>
                   );
@@ -722,6 +726,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   );
                 })}
               </div>
+              <p className="text-zinc-600 text-xs text-center mt-4">Ceny se mohou lišit podle aktuálních akcí 🍺</p>
             </div>
           );
         })()}
