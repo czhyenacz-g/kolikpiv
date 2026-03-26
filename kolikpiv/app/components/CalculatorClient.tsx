@@ -552,7 +552,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 onClick={handleShare}
                 className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
               >
-                Sdílet 🍺
+                Sdílej kamarádům 🍺
               </button>
             </div>
 
