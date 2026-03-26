@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
 import CalculatorClient from "./components/CalculatorClient";
+import beerDeals from "../data/beer-deals.json";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -56,7 +57,7 @@ export default function Home() {
         </div>
       }
     >
-      <CalculatorClient />
+      <CalculatorClient beerDeals={beerDeals} />
     </Suspense>
   );
 }

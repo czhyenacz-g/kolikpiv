@@ -93,7 +93,16 @@ const getDonationAmount = (beerPrice: number): number => {
   return Math.floor(beerPrice);
 };
 
-export default function CalculatorClient() {
+interface BeerDeal {
+  id: string;
+  name: string;
+  pricePerPiece: number;
+  shop: string;
+  url?: string;
+  isBestDeal?: boolean;
+}
+
+export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -527,6 +536,82 @@ export default function CalculatorClient() {
             })()}
           </>
         )}
+
+        {/* Store beer deals */}
+        {(() => {
+          const totalPrice = parseFloat(price);
+          if (!result || isNaN(totalPrice) || totalPrice <= 0) return null;
+
+          const sorted = [...beerDeals].sort((a, b) => {
+            if (a.isBestDeal && !b.isBestDeal) return -1;
+            if (!a.isBestDeal && b.isBestDeal) return 1;
+            return a.pricePerPiece - b.pricePerPiece;
+          });
+
+          return (
+            <div className="mt-8">
+              <h2 className="text-xl font-bold text-center mb-1">🔥 Co za to koupíš v obchodě</h2>
+              <p className="text-gray-500 text-sm text-center mb-6">Orientačně podle ceny za kus 🍺</p>
+              <div className="space-y-3">
+                {sorted.map((deal) => {
+                  const pieceCount = Math.floor(totalPrice / deal.pricePerPiece);
+                  const isClickable = Boolean(deal.url);
+
+                  const inner = (
+                    <>
+                      {deal.isBestDeal && (
+                        <p className="text-amber-400 text-xs font-semibold mb-1">🔥 Nejvýhodnější</p>
+                      )}
+                      <p className="font-semibold text-white text-sm">{deal.name}</p>
+                      <p className="text-gray-400 text-xs mt-0.5">{deal.shop} · {deal.pricePerPiece} Kč / ks</p>
+                      {pieceCount > 0 ? (
+                        <p className="text-amber-400 text-sm mt-1">{pieceCount} piv 🍺</p>
+                      ) : (
+                        <p className="text-gray-600 text-sm mt-1">Na tohle zatím nestačí</p>
+                      )}
+                      {deal.isBestDeal && (
+                        <p className="text-gray-500 text-xs mt-1">Nejlepší cena právě teď</p>
+                      )}
+                      {isClickable && (
+                        <p className="text-blue-400 text-xs mt-1.5">👉 Koupit v akci</p>
+                      )}
+                    </>
+                  );
+
+                  if (isClickable) {
+                    return (
+                      <a
+                        key={deal.id}
+                        href={deal.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`block p-4 rounded-lg border transition-colors ${
+                          deal.isBestDeal
+                            ? "bg-gray-800 border-amber-500/60 hover:border-amber-400 hover:bg-gray-700"
+                            : "bg-gray-800 border-gray-600 hover:border-amber-500 hover:bg-gray-700"
+                        }`}
+                      >
+                        {inner}
+                      </a>
+                    );
+                  }
+                  return (
+                    <div
+                      key={deal.id}
+                      className={`p-4 rounded-lg border ${
+                        deal.isBestDeal
+                          ? "bg-gray-800 border-amber-500/60"
+                          : "bg-gray-800 border-gray-700"
+                      }`}
+                    >
+                      {inner}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* SEO Summary */}
         <div className="mt-12 pt-8 border-t border-gray-800">
