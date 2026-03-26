@@ -247,6 +247,36 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     calculate();
   };
 
+  const handleExample = (value: number) => {
+    const priceStr = String(value);
+    const beerPriceNum = parseFloat(beerPrice);
+    const monthlyWageNum = parseFloat(monthlyWage);
+
+    setPrice(priceStr);
+    setErrorMessage("");
+
+    if (!isNaN(beerPriceNum) && !isNaN(monthlyWageNum)) {
+      const beers = Math.floor(value / beerPriceNum);
+      const hourlyWage = monthlyWageNum / 168;
+      const hours = parseFloat((value / hourlyWage).toFixed(1));
+      const message = getRandomMessage(beers);
+
+      const params = new URLSearchParams();
+      params.set("price", priceStr);
+      params.set("beerPrice", beerPrice);
+      params.set("salary", monthlyWage);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+      track("calculator_submit", { price: value, beerPrice: beerPriceNum, beers });
+
+      setShowResult(false);
+      setTimeout(() => {
+        setResult({ beers, hours, message });
+        setShowResult(true);
+      }, 50);
+    }
+  };
+
   const handleShare = async () => {
     if (!result) return;
 
@@ -371,6 +401,30 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         <p className="text-gray-400 text-center mb-8 text-sm">
           {heroTagline}
         </p>
+
+        {/* Quick examples */}
+        <div className="mb-6">
+          <p className="text-gray-500 text-xs text-center mb-3">Zkus třeba:</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {[
+              { label: "kebab po párty", value: 150 },
+              { label: "Netflix na rok", value: 1900 },
+              { label: "víkend v Praze", value: 8000 },
+              { label: "iPhone", value: 35000 },
+              { label: "zásnubní prsten", value: 50000 },
+              { label: "nové auto", value: 400000 },
+            ].map((ex) => (
+              <button
+                key={ex.label}
+                type="button"
+                onClick={() => handleExample(ex.value)}
+                className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+              >
+                {ex.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
