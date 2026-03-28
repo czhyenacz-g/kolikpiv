@@ -18,13 +18,11 @@ const HERO_TAGLINES = [
 
 // Fun messages for different beer count ranges
 const LOW_MESSAGES = [
-  "To je skoro zadarmo.",
-  "Tohle ani neřeš.",
-  "Nula mrdů dáno.",
-  "To dáš bez mrknutí oka.",
-  "Jedno rychlý a jde se dál.",
-  "Tohle je ještě v klidu.",
-  "Skoro jak nic.",
+  "To mě ani nezačne.",
+  "To mě akorát naštve.",
+  "To je jen na chuť.",
+  "Tohle si dám a pak koukám.",
+  "Tohle fakt nechceš.",
 ];
 
 const MEDIUM_MESSAGES = [
@@ -58,14 +56,17 @@ const EXTREME_MESSAGES = [
 ];
 
 // Special message for very high beer counts (>100)
-const ULTRA_MESSAGE = "Tohle už je životní rozhodnutí.";
+const ULTRA_MESSAGES = [
+  "Jdeš se upít k smrti? Tak nalej i mě :-)",
+  "Máš dědictví v pivech?",
+];
 
 const LAST_UPDATED = "26. 3. 2026";
 
 const getRandomMessage = (beers: number): string => {
   // Special message for ultra high values
   if (beers > 100) {
-    return ULTRA_MESSAGE;
+    return ULTRA_MESSAGES[Math.floor(Math.random() * ULTRA_MESSAGES.length)];
   }
 
   let messages: string[];
