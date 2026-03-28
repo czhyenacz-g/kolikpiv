@@ -9,9 +9,9 @@ import { GOATCOUNTER_CODE } from "../config/analytics";
 // Hero taglines - rotating subtitle under the main title
 const HERO_TAGLINES = [
   "Přepočítej si každou blbost na piva.",
-  "Kolik to stojí? Teď to víš v pivech.",
-  "Realita v pivech bolí víc.",
-  "Možná si to po přepočtu rozmyslíš.",
+  "Kolik to stojí? Teď to uvidíš v pivech.",
+  "Realita v pivech bolí víc. Přepočítej si ji na piva 🍺",
+  "Chceš jí něco koupit? Možná si to po přepočtu rozmyslíš.",
   "Každá cena se dá vysvětlit v pivech.",
   "Zjisti, kolik piv za to vlastně je.",
 ];
