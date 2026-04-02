@@ -828,6 +828,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               </p>
               <p className="text-3xl font-bold text-amber-400 my-3">{runKm} km</p>
               <p className="text-gray-500 text-xs">(při průměrném tempu, ~70 kcal/km)</p>
+              <p className="text-gray-600 text-xs mt-3">Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.</p>
             </div>
           );
         })()}
