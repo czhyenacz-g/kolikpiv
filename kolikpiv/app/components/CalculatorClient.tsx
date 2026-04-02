@@ -645,10 +645,31 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           </>
         )}
 
-        {/* Store beer deals */}
+        {/* Store beer deals — temporarily replaced with ad */}
         {(() => {
           const totalPrice = parseFloat(price);
           if (!result || isNaN(totalPrice) || totalPrice <= 0) return null;
+
+          // TODO: re-enable beer deals when links are verified
+          const SHOW_BEER_DEALS = false;
+
+          if (!SHOW_BEER_DEALS) {
+            return (
+              <div className="mt-8">
+                <div className="p-5 rounded-lg border border-gray-700 bg-gray-800/50 text-center">
+                  <p className="text-gray-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
+                  <p className="text-gray-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
+                  <a
+                    href="mailto:reklama@kolikpiv.cz"
+                    className="inline-block text-amber-400 font-semibold text-sm hover:text-amber-300 transition-colors"
+                  >
+                    Objednejte si zde
+                  </a>
+                  <p className="text-gray-500 text-xs mt-2">Od 500 Kč měsíčně</p>
+                </div>
+              </div>
+            );
+          }
 
           const sorted = [...beerDeals].sort((a, b) => {
             if (a.isBestDeal && !b.isBestDeal) return -1;
