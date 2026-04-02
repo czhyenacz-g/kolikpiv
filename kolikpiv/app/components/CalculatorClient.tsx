@@ -114,6 +114,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [price, setPrice] = useState<string>("");
   const [beerPrice, setBeerPrice] = useState<string>("50");
   const [monthlyWage, setMonthlyWage] = useState<string>("35000");
+  const [beersPerEvening, setBeersPerEvening] = useState<string>("5");
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -497,6 +498,18 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           <div>
             <label className="block text-sm font-medium mb-2">
+              Kolik piv za večer v hospodě?
+            </label>
+            <input
+              type="number"
+              value={beersPerEvening}
+              onChange={(e) => setBeersPerEvening(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">
               Měsíční mzda (CZK)
             </label>
             <input
@@ -538,17 +551,17 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               ) : result.beers >= 20 ? (
                 <>
                   <p className="text-3xl font-bold mb-2">
-                    Tohle je za {Math.floor(result.beers / 20)}{" "}
+                    Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
+                  </p>
+                  <p className="text-gray-500 text-sm mb-3">
+                    ({Math.floor(result.beers / 20)}{" "}
                     {(() => {
                       const crates = Math.floor(result.beers / 20);
                       if (crates === 1) return "basa";
                       if (crates >= 2 && crates <= 4) return "basy";
                       return "bas";
                     })()}
-                    {result.beers % 20 > 0 && ` a ${result.beers % 20} ${getBeerWord(result.beers % 20)}`} 🍺📦
-                  </p>
-                  <p className="text-gray-500 text-sm mb-3">
-                    ({result.beers} {getBeerWord(result.beers)} celkem)
+                    {result.beers % 20 > 0 && ` a ${result.beers % 20} ${getBeerWord(result.beers % 20)}`} 📦)
                   </p>
                 </>
               ) : (
@@ -559,10 +572,23 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               <p className="text-gray-400 mb-1">
                 = {result.hours} hodin práce
               </p>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-gray-400 text-sm mb-1">
                 = {Math.round((result.hours / 8) * 100)} % pracovního dne
                 {Math.round((result.hours / 8) * 100) > 100 && " (víc než jeden den 😄)"}
               </p>
+              {(() => {
+                const evenings = parseFloat(beersPerEvening);
+                if (!isNaN(evenings) && evenings > 0 && result.beers > 0) {
+                  const eveningCount = parseFloat((result.beers / evenings).toFixed(1));
+                  const eveningWord = eveningCount === 1 ? "večer" : eveningCount < 5 ? "večery" : "večerů";
+                  return (
+                    <p className="text-gray-400 text-sm mb-4">
+                      = {eveningCount} {eveningWord} v hospodě 🍺
+                    </p>
+                  );
+                }
+                return <div className="mb-4" />;
+              })()}
               <p className="text-amber-400 text-lg italic mb-6">
                 {result.message}
               </p>
@@ -644,6 +670,36 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             })()}
           </>
         )}
+
+        {/* Alcohol equivalence */}
+        {result && result.beers > 0 && (() => {
+          // Based on: 12° beer, 0.5l, 5% ABV = 25ml pure alcohol
+          const ALCOHOL_PER_BEER_ML = 25;
+          const VODKA_BOTTLE_ML = 200; // 0.5l × 40%
+          const WINE_BOTTLE_ML = 90;   // 0.75l × 12%
+
+          const pureAlcoholMl = result.beers * ALCOHOL_PER_BEER_ML;
+          const vodkaBottles = parseFloat((pureAlcoholMl / VODKA_BOTTLE_ML).toFixed(1));
+          const wineBottles = parseFloat((pureAlcoholMl / WINE_BOTTLE_ML).toFixed(1));
+          const pureAlcoholDisplay = pureAlcoholMl >= 1000
+            ? `${(pureAlcoholMl / 1000).toFixed(2)} l`
+            : `${pureAlcoholMl} ml`;
+
+          const vodkaWord = vodkaBottles === 1 ? "lahev" : vodkaBottles < 5 ? "lahve" : "lahví";
+          const wineWord = wineBottles === 1 ? "lahev" : wineBottles < 5 ? "lahve" : "lahví";
+
+          return (
+            <div className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+              <h2 className="text-lg font-bold text-center mb-4">🧪 V přepočtu na alkohol</h2>
+              <p className="text-xs text-gray-500 text-center mb-4">(počítáno jako 12° pivo, 0.5l, 5% ABV)</p>
+              <div className="space-y-2 text-sm text-center">
+                <p className="text-gray-300">= <span className="text-amber-400 font-semibold">{pureAlcoholDisplay}</span> čistého alkoholu</p>
+                <p className="text-gray-300">= <span className="text-amber-400 font-semibold">{vodkaBottles} {vodkaWord}</span> vodky (0.5l, 40 %)</p>
+                <p className="text-gray-300">= <span className="text-amber-400 font-semibold">{wineBottles} {wineWord}</span> vína (0.75l, 12 %)</p>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Store beer deals — temporarily replaced with ad */}
         {(() => {
