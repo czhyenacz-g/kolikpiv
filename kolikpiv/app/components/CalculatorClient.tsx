@@ -808,6 +808,30 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           );
         })()}
 
+        {/* Calorie & running stats */}
+        {result && result.beers > 0 && (() => {
+          const KCAL_PER_BEER = 200;       // 0.5l, 12° pivo
+          const KCAL_PER_KM = 70;          // průměrný člověk ~70 kg
+
+          const totalKcal = result.beers * KCAL_PER_BEER;
+          const runKm = parseFloat((totalKcal / KCAL_PER_KM).toFixed(1));
+
+          const kcalDisplay = totalKcal >= 1000
+            ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
+            : `${totalKcal} kcal`;
+
+          return (
+            <div className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+              <h2 className="text-lg font-bold mb-4">🏃 Kolik toho musíš odběhat</h2>
+              <p className="text-gray-300 text-sm mb-1">
+                {result.beers} piv = <span className="text-amber-400 font-semibold">{kcalDisplay}</span>
+              </p>
+              <p className="text-3xl font-bold text-amber-400 my-3">{runKm} km</p>
+              <p className="text-gray-500 text-xs">(při průměrném tempu, ~70 kcal/km)</p>
+            </div>
+          );
+        })()}
+
         {/* SEO Summary */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-gray-500 text-sm text-center max-w-2xl mx-auto">
