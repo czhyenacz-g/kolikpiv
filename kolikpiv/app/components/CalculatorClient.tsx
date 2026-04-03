@@ -115,6 +115,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [beerPrice, setBeerPrice] = useState<string>("50");
   const [monthlyWage, setMonthlyWage] = useState<string>("35000");
   const [beersPerEvening, setBeersPerEvening] = useState<string>("5");
+  const [isDirty, setIsDirty] = useState<boolean>(false);
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -241,6 +242,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
     track("calculator_submit", { price: priceNum, beerPrice: beerPriceNum, beers });
 
+    setIsDirty(false);
     setShowResult(false);
     setTimeout(() => {
       setResult({ beers, hours, message });
@@ -301,6 +303,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
       track("calculator_submit", { price: value, beerPrice: beerPriceNum, beers });
 
+      setIsDirty(false);
       setShowResult(false);
       setTimeout(() => {
         setResult({ beers, hours, message });
@@ -493,6 +496,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               value={price}
               onChange={(e) => {
                 setPrice(e.target.value);
+                setIsDirty(true);
                 if (errorMessage) setErrorMessage("");
               }}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
@@ -537,12 +541,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <p className="mt-1 text-xs text-zinc-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Kolik piv to je?
-          </button>
+          {(!result || isDirty) && (
+            <button
+              type="submit"
+              className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Kolik piv to je?
+            </button>
+          )}
         </form>
 
         {errorMessage && (
