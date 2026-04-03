@@ -115,7 +115,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [beerPrice, setBeerPrice] = useState<string>("50");
   const [monthlyWage, setMonthlyWage] = useState<string>("35000");
   const [beersPerEvening, setBeersPerEvening] = useState<string>("5");
-  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [recalcFlash, setRecalcFlash] = useState<boolean>(false);
   const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -208,6 +208,24 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   useEffect(() => {
     localStorage.setItem("monthlyWage", monthlyWage);
   }, [monthlyWage]);
+
+  // Auto-recalculate when inputs change (only if result already exists)
+  useEffect(() => {
+    if (!result) return;
+    const priceNum = parseFloat(price);
+    const beerPriceNum = parseFloat(beerPrice);
+    const monthlyWageNum = parseFloat(monthlyWage);
+    if (isNaN(priceNum) || isNaN(beerPriceNum) || isNaN(monthlyWageNum) || priceNum <= 0) return;
+
+    const beers = Math.floor(priceNum / beerPriceNum);
+    const hourlyWage = monthlyWageNum / 168;
+    const hours = parseFloat((priceNum / hourlyWage).toFixed(1));
+
+    setResult((prev) => prev ? { ...prev, beers, hours } : null);
+    setRecalcFlash(true);
+    const t = setTimeout(() => setRecalcFlash(false), 1500);
+    return () => clearTimeout(t);
+  }, [price, beerPrice, monthlyWage]);
 
   const calculate = () => {
     const priceNum = parseFloat(price);
@@ -496,7 +514,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               value={price}
               onChange={(e) => {
                 setPrice(e.target.value);
-                setIsDirty(true);
                 if (errorMessage) setErrorMessage("");
               }}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
@@ -511,7 +528,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <input
               type="number"
               value={beerPrice}
-              onChange={(e) => { setBeerPrice(e.target.value); setIsDirty(true); }}
+              onChange={(e) => setBeerPrice(e.target.value)}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
             />
           </div>
@@ -535,20 +552,18 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <input
               type="number"
               value={monthlyWage}
-              onChange={(e) => { setMonthlyWage(e.target.value); setIsDirty(true); }}
+              onChange={(e) => setMonthlyWage(e.target.value)}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
             />
             <p className="mt-1 text-xs text-zinc-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
           </div>
 
-          {(!result || isDirty) && (
-            <button
-              type="submit"
-              className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Kolik piv to je?
-            </button>
-          )}
+          <button
+            type="submit"
+            className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Kolik piv to je?
+          </button>
         </form>
 
         {errorMessage && (
@@ -591,9 +606,10 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
                 </p>
               )}
-              <p className="text-gray-400 mb-1">
-                = {result.hours} hodin práce
-              </p>
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <p className="text-gray-400">= {result.hours} hodin práce</p>
+                {recalcFlash && <span className="text-green-400 text-xs">přepočítáno</span>}
+              </div>
               <p className="text-gray-400 text-sm mb-1">
                 {result.hours / 8 < 1
                   ? `= ${Math.round((result.hours / 8) * 100)} % pracovního dne`
