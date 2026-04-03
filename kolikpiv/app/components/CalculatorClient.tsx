@@ -260,7 +260,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
     track("calculator_submit", { price: priceNum, beerPrice: beerPriceNum, beers });
 
-    setIsDirty(false);
     setShowResult(false);
     setTimeout(() => {
       setResult({ beers, hours, message });
@@ -321,7 +320,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
       track("calculator_submit", { price: value, beerPrice: beerPriceNum, beers });
 
-      setIsDirty(false);
       setShowResult(false);
       setTimeout(() => {
         setResult({ beers, hours, message });
