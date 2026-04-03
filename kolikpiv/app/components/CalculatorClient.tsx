@@ -424,6 +424,22 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        <div className="flex justify-center mb-4">
+          <svg width="64" height="72" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* foam */}
+            <ellipse cx="14" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
+            <ellipse cx="26" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
+            <ellipse cx="40" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
+            <ellipse cx="52" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
+            <rect x="8" y="18" width="48" height="6" fill="white" opacity="0.95"/>
+            {/* mug body */}
+            <rect x="8" y="22" width="48" height="44" rx="4" fill="#D97706"/>
+            {/* liquid highlight */}
+            <rect x="14" y="28" width="8" height="32" rx="3" fill="#F59E0B" opacity="0.35"/>
+            {/* handle */}
+            <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
+          </svg>
+        </div>
         <h1 className="text-3xl font-bold text-center mb-1">
           Kolik piv to je?
         </h1>
@@ -717,7 +733,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   <p className="text-gray-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
                   <p className="text-gray-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
                   <a
-                    href="mailto:reklama@kolikpiv.cz"
+                    href="mailto:reklama@kolikpiv.cz?subject=Reklama%20na%20kolikpiv.cz"
                     className="inline-block text-amber-400 font-semibold text-sm hover:text-amber-300 transition-colors"
                   >
                     Objednejte si zde
