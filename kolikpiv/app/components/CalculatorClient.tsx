@@ -511,7 +511,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <input
               type="number"
               value={beerPrice}
-              onChange={(e) => setBeerPrice(e.target.value)}
+              onChange={(e) => { setBeerPrice(e.target.value); setIsDirty(true); }}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
             />
           </div>
@@ -535,7 +535,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <input
               type="number"
               value={monthlyWage}
-              onChange={(e) => setMonthlyWage(e.target.value)}
+              onChange={(e) => { setMonthlyWage(e.target.value); setIsDirty(true); }}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
             />
             <p className="mt-1 text-xs text-zinc-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
