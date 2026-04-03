@@ -558,9 +558,10 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           <button
             type="submit"
+            onClick={result ? (e) => { e.preventDefault(); setResult((prev) => prev ? { ...prev, message: getRandomMessage(prev.beers) } : null); } : undefined}
             className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            Kolik piv to je?
+            {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
           </button>
         </form>
 
