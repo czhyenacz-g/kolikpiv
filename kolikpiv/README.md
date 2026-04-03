@@ -29,7 +29,7 @@ Aplikace běží na [http://localhost:3000](http://localhost:3000)
 - Next.js 15 (App Router)
 - React 19
 - TypeScript
-- Tailwind CSSidea:
+- Tailwind CSS
 
 ## Server
 

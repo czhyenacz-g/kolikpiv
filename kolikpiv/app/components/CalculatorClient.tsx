@@ -368,6 +368,23 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     }
   };
 
+  const playClink = () => {
+    try {
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.4, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } catch {}
+  };
+
   const handleDownloadQR = () => {
     if (!qrRef.current) return;
     track("qr_download_click");
@@ -558,7 +575,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           <button
             type="submit"
-            onClick={result ? (e) => { e.preventDefault(); setResult((prev) => prev ? { ...prev, message: getRandomMessage(prev.beers) } : null); } : undefined}
+            onClick={result ? (e) => { e.preventDefault(); playClink(); setResult((prev) => prev ? { ...prev, message: getRandomMessage(prev.beers) } : null); } : (e) => { playClink(); }}
             className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
           >
             {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
