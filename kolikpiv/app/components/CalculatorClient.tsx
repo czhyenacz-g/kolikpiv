@@ -225,7 +225,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     setRecalcFlash(true);
     const t = setTimeout(() => setRecalcFlash(false), 1500);
     return () => clearTimeout(t);
-  }, [price, beerPrice, monthlyWage]);
+  }, [price, beerPrice, monthlyWage, beersPerEvening]);
 
   const calculate = () => {
     const priceNum = parseFloat(price);
@@ -604,10 +604,9 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
                 </p>
               )}
-              <div className="flex items-center justify-center gap-2 mb-1">
-                <p className="text-gray-400">= {result.hours} hodin práce</p>
-                {recalcFlash && <span className="text-green-400 text-xs">přepočítáno</span>}
-              </div>
+              <p className="text-gray-400 mb-1">
+                = {result.hours} hodin práce
+              </p>
               <p className="text-gray-400 text-sm mb-1">
                 {result.hours / 8 < 1
                   ? `= ${Math.round((result.hours / 8) * 100)} % pracovního dne`
@@ -619,13 +618,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   const eveningCount = parseFloat((result.beers / evenings).toFixed(1));
                   const eveningWord = eveningCount === 1 ? "večer" : eveningCount < 5 ? "večery" : "večerů";
                   return (
-                    <p className="text-gray-400 text-sm mb-4">
+                    <p className="text-gray-400 text-sm mb-2">
                       = {eveningCount} {eveningWord} v hospodě 🍺
                     </p>
                   );
                 }
-                return <div className="mb-4" />;
+                return <div className="mb-2" />;
               })()}
+              {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
               <p className="text-amber-400 text-lg italic mb-6">
                 {result.message}
               </p>
