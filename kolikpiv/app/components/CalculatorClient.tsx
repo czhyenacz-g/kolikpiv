@@ -573,7 +573,9 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 = {result.hours} hodin práce
               </p>
               <p className="text-gray-400 text-sm mb-1">
-                = {Math.round((result.hours / 8) * 100)} % pracovního dne
+                {result.hours / 8 < 1
+                  ? `= ${Math.round((result.hours / 8) * 100)} % pracovního dne`
+                  : `= ${(result.hours / 8).toFixed(2)} pracovních dní`}
               </p>
               {(() => {
                 const evenings = parseFloat(beersPerEvening);
