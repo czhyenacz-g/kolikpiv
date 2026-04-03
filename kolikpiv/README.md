@@ -30,3 +30,7 @@ Aplikace běží na [http://localhost:3000](http://localhost:3000)
 - React 19
 - TypeScript
 - Tailwind CSS
+
+## Server
+
+https://vercel.com/czhyenacz-gs-projects/kolikpiv
