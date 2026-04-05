@@ -319,7 +319,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
       params.set("price", priceStr);
       params.set("beerPrice", beerPrice);
       params.set("salary", monthlyWage);
-      if (itemName.trim()) params.set("label", itemName.trim());
+      const effectiveLabel = label || itemName.trim();
+      if (effectiveLabel) params.set("label", effectiveLabel);
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
       track("calculator_submit", { price: value, beerPrice: beerPriceNum, beers });
