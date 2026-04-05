@@ -712,7 +712,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               </button>
               <button
                 onClick={handleCopyLink}
-                className="w-full py-2.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm text-gray-300 transition"
+                className="w-full py-2.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm text-gray-300 transition mt-1.5"
               >
                 {copyLinkMessage || "Kopírovat odkaz"}
               </button>
