@@ -701,9 +701,20 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 return <div className="mb-2" />;
               })()}
               {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
-              <p className="text-amber-400 text-lg italic mb-6 whitespace-pre-line text-left w-full">
-                {result.message}
-              </p>
+              {(() => {
+                const isSwejk = result.message.endsWith("\n— Švejk");
+                const quoteText = isSwejk ? result.message.replace(/\n— Švejk$/, "") : result.message;
+                return (
+                  <div className="mx-auto max-w-xs w-full mb-6 border-l-4 border-amber-700 pl-4 text-left">
+                    <p className="text-amber-400 text-base italic leading-relaxed whitespace-pre-line">
+                      „{quoteText}"
+                    </p>
+                    {isSwejk && (
+                      <p className="text-gray-400 text-sm mt-3">🪖 dobrý voják Švejk</p>
+                    )}
+                  </div>
+                );
+              })()}
               <button
                 onClick={handleShare}
                 className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
