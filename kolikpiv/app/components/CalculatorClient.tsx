@@ -18,47 +18,34 @@ const HERO_TAGLINES = [
 
 // Fun messages for different beer count ranges
 const LOW_MESSAGES = [
-  "To mě ani nezačne.",
-  "To mě akorát naštve.",
-  "To je jen na chuť.",
-  "Tohle si dám a pak koukám.",
-  "Tohle fakt nechceš.",
+  "Pár piv?\nTo ještě nic neznamená.\nTo se člověk ani nestihne ztratit.",
+  "Pár piv?\nTo se teprve začíná mluvit.\nA ještě se všemu věří.",
+  "Pár piv?\nTo bych ani nepočítal.\nTo je spíš na rozehřátí debaty.",
 ];
 
 const MEDIUM_MESSAGES = [
-  "To už je slušná jízda.",
-  "Tady už začíná sranda.",
-  "Jedna lepší noc.",
-  "Tohle už ucítíš.",
-  "Za tohle už něco máš.",
-  "To už není jen tak.",
-  "Tohle má následky.",
+  "Pár desítek piv?\nTo už není náhoda.\nTo už si něco vybíráš.",
+  "Pár desítek piv?\nTo už se řeči začnou motat.\nA pravda se říká snáz.",
+  "Pár desítek piv?\nTo už se něco domluví.\nA ráno se uvidí co.",
 ];
 
 const HIGH_MESSAGES = [
-  "To už je na basu.",
-  "Tohle už je víkend s partou.",
-  "To už není sranda.",
-  "Tady už se píšou příběhy.",
-  "Tohle si budeš pamatovat… možná.",
-  "Tohle už má grády.",
-  "To už je větší akce.",
+  "Tolik piv?\nTo už není večer.\nTo už je rozhodnutí, které tě chvíli bude stát.",
+  "Tolik piv?\nTo už se večer rozplyne.\nA zůstane jen to, co si kdo zapamatuje po svém.",
+  "Tolik piv?\nTo už by chtělo plán.\nA pak ho stejně nedodržet.",
 ];
 
 const EXTREME_MESSAGES = [
-  "Tohle bude pořádnej fesťák!",
-  "Legend… wait for it… dární.",
-  "Tohle je na kroniku.",
-  "Tohle už je jiná liga.",
-  "Tohle bolí ještě v pondělí.",
-  "Tady končí sranda a začíná legenda.",
-  "Tohle už chce vlastní aftermovie.",
+  "Tolik piv?\nTo už není o pití.\nTo už je způsob, jak na chvíli zmizet.",
+  "Tolik piv?\nTo už se člověk ztratí někde mezi řečí a ránem.\nA ani neví kde.",
+  "Tolik piv?\nTo už by se mělo nejdřív probrat.\nAle nejspíš se to stejně jen zapije.",
 ];
 
 // Special message for very high beer counts (>100)
 const ULTRA_MESSAGES = [
-  "Jdeš se upít k smrti? Tak nalej i mě :-)",
-  "Máš dědictví v pivech?",
+  "Tolik piv?\nTo už není večer.\nTo už je život, který se na chvíli rozpadne.",
+  "Tolik piv?\nTo už není o pivu.\nTo už je o tom, co si u toho všechno řeknete,\na co si radši nepamatujete.",
+  "Tolik piv?\nTo už není otázka žízně.\nTo už je otázka charakteru.",
 ];
 
 const LAST_UPDATED = "26. 3. 2026";
@@ -684,7 +671,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 return <div className="mb-2" />;
               })()}
               {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
-              <p className="text-amber-400 text-lg italic mb-6">
+              <p className="text-amber-400 text-lg italic mb-6 whitespace-pre-line">
                 {result.message}
               </p>
               <button
