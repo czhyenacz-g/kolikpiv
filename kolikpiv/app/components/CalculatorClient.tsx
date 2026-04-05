@@ -701,7 +701,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 return <div className="mb-2" />;
               })()}
               {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
-              <p className="text-amber-400 text-lg italic mb-6 whitespace-pre-line text-left">
+              <p className="text-amber-400 text-lg italic mb-6 whitespace-pre-line text-left w-full">
                 {result.message}
               </p>
               <button
