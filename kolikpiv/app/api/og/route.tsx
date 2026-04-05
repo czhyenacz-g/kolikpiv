@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const price = searchParams.get('price')
     const beerPrice = searchParams.get('beerPrice') || '50'
+    const label = searchParams.get('label') || ''
 
     // Default fallback image
     if (!price) {
@@ -87,50 +88,53 @@ export async function GET(request: NextRequest) {
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {/* Top: Price */}
+            {/* Top: item name or price */}
             <div
               style={{
-                fontSize: 56,
+                fontSize: 52,
                 color: '#9ca3af',
+                marginBottom: 24,
+                textAlign: 'center',
+                display: 'flex',
+              }}
+            >
+              {label ? label : `Za ${price} Kč`}
+            </div>
+
+            {/* Middle: big number */}
+            {beers >= 1 && (
+              <div
+                style={{
+                  fontSize: 180,
+                  fontWeight: 'bold',
+                  color: '#fbbf24',
+                  lineHeight: 1,
+                  display: 'flex',
+                }}
+              >
+                {beers}
+              </div>
+            )}
+
+            {/* Beer word */}
+            <div
+              style={{
+                fontSize: 72,
+                fontWeight: 'bold',
+                color: '#ffffff',
                 marginBottom: 40,
                 textAlign: 'center',
                 display: 'flex',
               }}
             >
-              Za {price} Kč?
-            </div>
-
-            {/* Middle: Result (large) */}
-            <div
-              style={{
-                fontSize: 72,
-                fontWeight: 'bold',
-                color: '#fbbf24',
-                marginBottom: 60,
-                textAlign: 'center',
-                lineHeight: 1.2,
-                display: 'flex',
-              }}
-            >
-              {beers < 1 ? (
-                'Ani na jedno pivo 😄'
-              ) : beers >= 20 ? (
-                `To je za ${Math.floor(beers / 20)} ${(() => {
-                  const crates = Math.floor(beers / 20);
-                  if (crates === 1) return "basa";
-                  if (crates >= 2 && crates <= 4) return "basy";
-                  return "bas";
-                })()} 🍺📦`
-              ) : (
-                `To je za ${beers} ${beerWord} 🍺`
-              )}
+              {beers < 1 ? 'Ani na jedno pivo 😄' : `${beerWord} 🍺`}
             </div>
 
             {/* Bottom: Website */}
             <div
               style={{
-                fontSize: 40,
-                color: '#9ca3af',
+                fontSize: 36,
+                color: '#6b7280',
                 textAlign: 'center',
                 display: 'flex',
               }}

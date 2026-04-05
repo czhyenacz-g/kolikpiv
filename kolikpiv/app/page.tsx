@@ -12,9 +12,10 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const params = await searchParams;
   const price = (params.price as string) || "0";
   const beerPrice = (params.beerPrice as string) || "50";
+  const label = (params.label as string) || "";
 
   // Build dynamic OG image URL with query params
-  const ogImageUrl = `https://kolikpiv.cz/api/og?price=${price}&beerPrice=${beerPrice}`;
+  const ogImageUrl = `https://kolikpiv.cz/api/og?price=${price}&beerPrice=${beerPrice}${label ? `&label=${encodeURIComponent(label)}` : ""}`;
 
   return {
     title: "Kolik piv to je? | Přepočet ceny na piva",

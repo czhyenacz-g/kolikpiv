@@ -112,6 +112,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const pathname = usePathname();
 
   const [price, setPrice] = useState<string>("");
+  const [itemName, setItemName] = useState<string>("");
   const [beerPrice, setBeerPrice] = useState<string>("50");
   const [monthlyWage, setMonthlyWage] = useState<string>("35000");
   const [beersPerEvening, setBeersPerEvening] = useState<string>("5");
@@ -256,6 +257,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     params.set("price", price);
     params.set("beerPrice", beerPrice);
     params.set("salary", monthlyWage);
+    if (itemName.trim()) params.set("label", itemName.trim());
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
     track("calculator_submit", { price: priceNum, beerPrice: beerPriceNum, beers });
@@ -298,12 +300,13 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     handleExample(value);
   };
 
-  const handleExample = (value: number) => {
+  const handleExample = (value: number, label?: string) => {
     const priceStr = String(value);
     const beerPriceNum = parseFloat(beerPrice);
     const monthlyWageNum = parseFloat(monthlyWage);
 
     setPrice(priceStr);
+    if (label) setItemName(label);
     setErrorMessage("");
 
     if (!isNaN(beerPriceNum) && !isNaN(monthlyWageNum)) {
@@ -316,6 +319,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
       params.set("price", priceStr);
       params.set("beerPrice", beerPrice);
       params.set("salary", monthlyWage);
+      if (itemName.trim()) params.set("label", itemName.trim());
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
       track("calculator_submit", { price: value, beerPrice: beerPriceNum, beers });
@@ -338,15 +342,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
     // Random emotional variants for the beer line
     const beerWord = getBeerWord(result.beers);
+    const subject = itemName.trim() || `Tohle za ${price} Kč`;
     const variants = [
-      `To je za ${result.beers} ${beerWord} 🍺`,
-      `To je za ${result.beers} ${beerWord} 😳🍺`,
-      `To je za ${result.beers} ${beerWord}!!! 🍺`,
-      `To už bolí… za ${result.beers} ${beerWord} 🍺`,
+      `${subject} stojí ${result.beers} ${beerWord} 🍺`,
+      `${subject} stojí ${result.beers} ${beerWord} 😳🍺`,
+      `${subject}?! To je ${result.beers} ${beerWord}!!! 🍺`,
+      `${subject}… to už bolí. ${result.beers} ${beerWord} 🍺`,
     ];
     const randomVariant = variants[Math.floor(Math.random() * variants.length)];
 
-    const shareText = `Za ${price} Kč?\n\n${randomVariant}\n\nKolik piv stojí tvoje věci?\n👉 ${currentUrl}`;
+    const shareText = `${randomVariant}\n\nKolik piv stojí tvoje věci?\n👉 ${currentUrl}`;
 
     if (navigator.share) {
       try {
@@ -524,7 +529,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               <button
                 key={ex.label}
                 type="button"
-                onClick={() => handleExample(ex.value)}
+                onClick={() => handleExample(ex.value, ex.label)}
                 className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
               >
                 {ex.label}
@@ -534,6 +539,19 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Co kupuješ? <span className="text-gray-500 font-normal">(volitelné)</span>
+            </label>
+            <input
+              type="text"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+              placeholder="např. iPhone, auto, kebab…"
+            />
+          </div>
+
           <div>
             <label className="block text-sm font-medium mb-2">
               Kolik to stojí? (CZK)
