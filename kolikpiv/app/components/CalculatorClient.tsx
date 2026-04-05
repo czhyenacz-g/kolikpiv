@@ -24,6 +24,9 @@ const LOW_MESSAGES = [
   "To bych vůbec neřešil, pane.\nTo se vypije, ani člověk neví jak.\nA ještě má chuť na jedno.",
   "To je tak akorát, aby se člověk rozkoukal.\nPak teprve začne přemýšlet, co dál.\nA většinou už nepřestane.",
   "To je takový zahřívací kolo.\nČlověk si řekne, že skončí.\nA pak to stejně nedopadne.",
+  "To bych ještě nějak uhradil, pane.\nKdyžtak se to zapomene.\nA když ne, tak se to vysvětlí.",
+  "To není tak hrozný.\nTo se dá obejít.\nNebo aspoň odložit.",
+  "Na to bych ještě měl.\nA kdyby ne, tak bych si poradil.\nTo se člověk vždycky nějak zařídí.",
 ];
 
 const MEDIUM_MESSAGES = [
@@ -33,6 +36,9 @@ const MEDIUM_MESSAGES = [
   "To už je, pane, slušnej základ.\nNa tom se dá stavět.\nA taky se na tom většinou staví blbě.",
   "To už bych bral vážně.\nTady už se dělají rozhodnutí.\nA ráno se zase ruší.",
   "To už není jen tak na chuť.\nTo už je na delší sezení.\nA někdy i na delší následky.",
+  "To už je, pane, trochu problém.\nAle nic, co by se nedalo vysvětlit.\nČlověk musí mluvit přesvědčivě.",
+  "To už bych si rozmyslel.\nAle když už je to spočítaný,\ntak se s tím musí něco udělat.",
+  "Na to už úplně nemám.\nAle znám lidi, co by měli.\nA když ne, tak se to odloží.",
 ];
 
 const HIGH_MESSAGES = [
@@ -42,6 +48,9 @@ const HIGH_MESSAGES = [
   "To už je, pane, regulérní akce.\nTady už se nikam nespěchá.\nA taky se většinou nikam nedojde.",
   "To už je na basu.\nA když je basa, tak je i důvod.\nA když není, tak se najde.",
   "To už bych si rozmyslel.\nAle ono je to stejně jedno.\nJakmile se začne, tak se pokračuje.",
+  "To už je, pane, na pováženou.\nTo bych asi zaplatil jen napůl.\nA zbytek bych nechal osudu.",
+  "Na tohle bych neměl ani kdybych chtěl.\nAle chtít je důležitý.\nTo se počítá.",
+  "To už bych radši neviděl.\nKdyž člověk neví, kolik to stojí,\nžije se mu líp.",
 ];
 
 const EXTREME_MESSAGES = [
@@ -51,6 +60,9 @@ const EXTREME_MESSAGES = [
   "To už je, pane, podnik.\nNa to by měl být plán.\nAle většinou se to řeší za pochodu.",
   "To už není pití.\nTo už je program na celej den.\nA někdy i na celej další.",
   "To už se člověk dostane do stavu,\nkdy ví všechno nejlíp.\nA pak si nepamatuje nic.",
+  "To už je, pane, situace.\nNa to by musel být rozpočet.\nA ten já nemám.",
+  "Tohle už bych nezaplatil.\nAle mohl bych o tom dlouho mluvit.\nA to někdy stačí.",
+  "To už je částka, co se neřeší.\nTo se přechází mlčením.\nA rychlým odchodem.",
 ];
 
 // Special message for very high beer counts (>100)
@@ -61,6 +73,9 @@ const ULTRA_MESSAGES = [
   "To už je, pane, záležitost.\nTo už by chtělo povolení.\nA nebo aspoň svědky.",
   "To už není o žízni.\nTo už je o vytrvalosti.\nA ta bývá krátká.",
   "To už bych nedoporučoval.\nAle kdo jsem já, abych do toho mluvil.\nKaždej má svůj způsob, jak na to.",
+  "To už je, pane, mimo moje možnosti.\nTo bych musel být někdo jinej.\nA to já nejsem.",
+  "Tohle už není na zaplacení.\nTo je na přehodnocení života.\nA směru.",
+  "To už bych ani nepočítal.\nKdyž člověk neví,\nkolik nemá, je mu líp.",
 ];
 
 const LAST_UPDATED = "26. 3. 2026";
