@@ -21,48 +21,48 @@ const LOW_MESSAGES = [
   "Pár piv?\nTo ještě nic neznamená.\nTo se člověk ani nestihne ztratit.",
   "Pár piv?\nTo se teprve začíná mluvit.\nA ještě se všemu věří.",
   "Pár piv?\nTo bych ani nepočítal.\nTo je spíš na rozehřátí debaty.",
-  "To bych vůbec neřešil, pane.\nTo se vypije, ani člověk neví jak.\nA ještě má chuť na jedno.",
-  "To je tak akorát, aby se člověk rozkoukal.\nPak teprve začne přemýšlet, co dál.\nA většinou už nepřestane.",
-  "To je takový zahřívací kolo.\nČlověk si řekne, že skončí.\nA pak to stejně nedopadne.",
-  "To bych ještě nějak uhradil, pane.\nKdyžtak se to zapomene.\nA když ne, tak se to vysvětlí.",
-  "To není tak hrozný.\nTo se dá obejít.\nNebo aspoň odložit.",
-  "Na to bych ještě měl.\nA kdyby ne, tak bych si poradil.\nTo se člověk vždycky nějak zařídí.",
+  "To bych vůbec neřešil, pane.\nTo se vypije, ani člověk neví jak.\nA ještě má chuť na jedno.\n— Švejk",
+  "To je tak akorát, aby se člověk rozkoukal.\nPak teprve začne přemýšlet, co dál.\nA většinou už nepřestane.\n— Švejk",
+  "To je takový zahřívací kolo.\nČlověk si řekne, že skončí.\nA pak to stejně nedopadne.\n— Švejk",
+  "To bych ještě nějak uhradil, pane.\nKdyžtak se to zapomene.\nA když ne, tak se to vysvětlí.\n— Švejk",
+  "To není tak hrozný.\nTo se dá obejít.\nNebo aspoň odložit.\n— Švejk",
+  "Na to bych ještě měl.\nA kdyby ne, tak bych si poradil.\nTo se člověk vždycky nějak zařídí.\n— Švejk",
 ];
 
 const MEDIUM_MESSAGES = [
   "Pár desítek piv?\nTo už není náhoda.\nTo už si něco vybíráš.",
   "Pár desítek piv?\nTo už se řeči začnou motat.\nA pravda se říká snáz.",
   "Pár desítek piv?\nTo už se něco domluví.\nA ráno se uvidí co.",
-  "To už je, pane, slušnej základ.\nNa tom se dá stavět.\nA taky se na tom většinou staví blbě.",
-  "To už bych bral vážně.\nTady už se dělají rozhodnutí.\nA ráno se zase ruší.",
-  "To už není jen tak na chuť.\nTo už je na delší sezení.\nA někdy i na delší následky.",
-  "To už je, pane, trochu problém.\nAle nic, co by se nedalo vysvětlit.\nČlověk musí mluvit přesvědčivě.",
-  "To už bych si rozmyslel.\nAle když už je to spočítaný,\ntak se s tím musí něco udělat.",
-  "Na to už úplně nemám.\nAle znám lidi, co by měli.\nA když ne, tak se to odloží.",
+  "To už je, pane, slušnej základ.\nNa tom se dá stavět.\nA taky se na tom většinou staví blbě.\n— Švejk",
+  "To už bych bral vážně.\nTady už se dělají rozhodnutí.\nA ráno se zase ruší.\n— Švejk",
+  "To už není jen tak na chuť.\nTo už je na delší sezení.\nA někdy i na delší následky.\n— Švejk",
+  "To už je, pane, trochu problém.\nAle nic, co by se nedalo vysvětlit.\nČlověk musí mluvit přesvědčivě.\n— Švejk",
+  "To už bych si rozmyslel.\nAle když už je to spočítaný,\ntak se s tím musí něco udělat.\n— Švejk",
+  "Na to už úplně nemám.\nAle znám lidi, co by měli.\nA když ne, tak se to odloží.\n— Švejk",
 ];
 
 const HIGH_MESSAGES = [
   "Tolik piv?\nTo už není večer.\nTo už je rozhodnutí, které tě chvíli bude stát.",
   "Tolik piv?\nTo už se večer rozplyne.\nA zůstane jen to, co si kdo zapamatuje po svém.",
   "Tolik piv?\nTo už by chtělo plán.\nA pak ho stejně nedodržet.",
-  "To už je, pane, regulérní akce.\nTady už se nikam nespěchá.\nA taky se většinou nikam nedojde.",
-  "To už je na basu.\nA když je basa, tak je i důvod.\nA když není, tak se najde.",
-  "To už bych si rozmyslel.\nAle ono je to stejně jedno.\nJakmile se začne, tak se pokračuje.",
-  "To už je, pane, na pováženou.\nTo bych asi zaplatil jen napůl.\nA zbytek bych nechal osudu.",
-  "Na tohle bych neměl ani kdybych chtěl.\nAle chtít je důležitý.\nTo se počítá.",
-  "To už bych radši neviděl.\nKdyž člověk neví, kolik to stojí,\nžije se mu líp.",
+  "To už je, pane, regulérní akce.\nTady už se nikam nespěchá.\nA taky se většinou nikam nedojde.\n— Švejk",
+  "To už je na basu.\nA když je basa, tak je i důvod.\nA když není, tak se najde.\n— Švejk",
+  "To už bych si rozmyslel.\nAle ono je to stejně jedno.\nJakmile se začne, tak se pokračuje.\n— Švejk",
+  "To už je, pane, na pováženou.\nTo bych asi zaplatil jen napůl.\nA zbytek bych nechal osudu.\n— Švejk",
+  "Na tohle bych neměl ani kdybych chtěl.\nAle chtít je důležitý.\nTo se počítá.\n— Švejk",
+  "To už bych radši neviděl.\nKdyž člověk neví, kolik to stojí,\nžije se mu líp.\n— Švejk",
 ];
 
 const EXTREME_MESSAGES = [
   "Tolik piv?\nTo už není o pití.\nTo už je způsob, jak na chvíli zmizet.",
   "Tolik piv?\nTo už se člověk ztratí někde mezi řečí a ránem.\nA ani neví kde.",
   "Tolik piv?\nTo už by se mělo nejdřív probrat.\nAle nejspíš se to stejně jen zapije.",
-  "To už je, pane, podnik.\nNa to by měl být plán.\nAle většinou se to řeší za pochodu.",
-  "To už není pití.\nTo už je program na celej den.\nA někdy i na celej další.",
-  "To už se člověk dostane do stavu,\nkdy ví všechno nejlíp.\nA pak si nepamatuje nic.",
-  "To už je, pane, situace.\nNa to by musel být rozpočet.\nA ten já nemám.",
-  "Tohle už bych nezaplatil.\nAle mohl bych o tom dlouho mluvit.\nA to někdy stačí.",
-  "To už je částka, co se neřeší.\nTo se přechází mlčením.\nA rychlým odchodem.",
+  "To už je, pane, podnik.\nNa to by měl být plán.\nAle většinou se to řeší za pochodu.\n— Švejk",
+  "To už není pití.\nTo už je program na celej den.\nA někdy i na celej další.\n— Švejk",
+  "To už se člověk dostane do stavu,\nkdy ví všechno nejlíp.\nA pak si nepamatuje nic.\n— Švejk",
+  "To už je, pane, situace.\nNa to by musel být rozpočet.\nA ten já nemám.\n— Švejk",
+  "Tohle už bych nezaplatil.\nAle mohl bych o tom dlouho mluvit.\nA to někdy stačí.\n— Švejk",
+  "To už je částka, co se neřeší.\nTo se přechází mlčením.\nA rychlým odchodem.\n— Švejk",
 ];
 
 // Special message for very high beer counts (>100)
@@ -70,12 +70,12 @@ const ULTRA_MESSAGES = [
   "Tolik piv?\nTo už není večer.\nTo už je život, který se na chvíli rozpadne.",
   "Tolik piv?\nTo už není o pivu.\nTo už je o tom, co si u toho všechno řeknete,\na co si radši nepamatujete.",
   "Tolik piv?\nTo už není otázka žízně.\nTo už je otázka charakteru.",
-  "To už je, pane, záležitost.\nTo už by chtělo povolení.\nA nebo aspoň svědky.",
-  "To už není o žízni.\nTo už je o vytrvalosti.\nA ta bývá krátká.",
-  "To už bych nedoporučoval.\nAle kdo jsem já, abych do toho mluvil.\nKaždej má svůj způsob, jak na to.",
-  "To už je, pane, mimo moje možnosti.\nTo bych musel být někdo jinej.\nA to já nejsem.",
-  "Tohle už není na zaplacení.\nTo je na přehodnocení života.\nA směru.",
-  "To už bych ani nepočítal.\nKdyž člověk neví,\nkolik nemá, je mu líp.",
+  "To už je, pane, záležitost.\nTo už by chtělo povolení.\nA nebo aspoň svědky.\n— Švejk",
+  "To už není o žízni.\nTo už je o vytrvalosti.\nA ta bývá krátká.\n— Švejk",
+  "To už bych nedoporučoval.\nAle kdo jsem já, abych do toho mluvil.\nKaždej má svůj způsob, jak na to.\n— Švejk",
+  "To už je, pane, mimo moje možnosti.\nTo bych musel být někdo jinej.\nA to já nejsem.\n— Švejk",
+  "Tohle už není na zaplacení.\nTo je na přehodnocení života.\nA směru.\n— Švejk",
+  "To už bych ani nepočítal.\nKdyž člověk neví,\nkolik nemá, je mu líp.\n— Švejk",
 ];
 
 const LAST_UPDATED = "26. 3. 2026";
@@ -701,7 +701,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 return <div className="mb-2" />;
               })()}
               {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
-              <p className="text-amber-400 text-lg italic mb-6 whitespace-pre-line">
+              <p className="text-amber-400 text-lg italic mb-6 whitespace-pre-line text-left">
                 {result.message}
               </p>
               <button
