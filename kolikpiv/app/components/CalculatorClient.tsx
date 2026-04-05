@@ -338,8 +338,9 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
     track("share_click", { beers: result.beers });
 
-    // Get current URL with query params
-    const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://kolikpiv.cz';
+    // Always use production URL so OG image works when shared
+    const queryString = typeof window !== 'undefined' ? window.location.search : '';
+    const currentUrl = `https://kolikpiv.cz/${queryString}`;
 
     // Random emotional variants for the beer line
     const beerWord = getBeerWord(result.beers);
