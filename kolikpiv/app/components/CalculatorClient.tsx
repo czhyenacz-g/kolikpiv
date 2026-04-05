@@ -476,8 +476,22 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
           </svg>
           <h1 className="text-3xl font-bold">
-            Kolik piv to je?
+            Kolik piv za to je?
           </h1>
+          <svg width="44" height="50" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* foam */}
+            <ellipse cx="14" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
+            <ellipse cx="26" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
+            <ellipse cx="40" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
+            <ellipse cx="52" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
+            <rect x="8" y="18" width="48" height="6" fill="white" opacity="0.95"/>
+            {/* mug body */}
+            <rect x="8" y="22" width="48" height="44" rx="4" fill="#D97706"/>
+            {/* liquid highlight */}
+            <rect x="14" y="28" width="8" height="32" rx="3" fill="#F59E0B" opacity="0.35"/>
+            {/* handle */}
+            <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
+          </svg>
         </div>
         <p className="text-gray-500 text-center text-xs mb-3">
           (zjistíš na kolikpiv.cz)
@@ -603,9 +617,11 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 </p>
               ) : result.beers >= 20 ? (
                 <>
-                  <p className="text-3xl font-bold mb-2">
-                    Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
+                  <p className="text-sm text-gray-400 mb-1">Tohle je za</p>
+                  <p className="text-7xl font-black text-amber-400 mb-1 leading-none">
+                    {result.beers}
                   </p>
+                  <p className="text-2xl font-bold mb-2">{getBeerWord(result.beers)} 🍺</p>
                   <p className="text-gray-500 text-sm mb-3">
                     ({Math.floor(result.beers / 20)}{" "}
                     {(() => {
@@ -618,9 +634,13 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   </p>
                 </>
               ) : (
-                <p className="text-3xl font-bold mb-2">
-                  Tohle je za {result.beers} {getBeerWord(result.beers)} 🍺
-                </p>
+                <>
+                  <p className="text-sm text-gray-400 mb-1">Tohle je za</p>
+                  <p className="text-7xl font-black text-amber-400 mb-1 leading-none">
+                    {result.beers}
+                  </p>
+                  <p className="text-2xl font-bold mb-2">{getBeerWord(result.beers)} 🍺</p>
+                </>
               )}
               <p className="text-gray-400 mb-1">
                 = {result.hours} hodin práce
