@@ -1100,10 +1100,19 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           <p className="text-zinc-500 text-xs">Něco může být nepřesné… ale piva sedí 😄</p>
         </div>
 
-        {/* Footer stats */}
-        <div className="mt-4 pb-6 text-center">
+        {/* Footer — SEO + Švejk */}
+        <div className="mt-8 pb-8 text-center border-t border-gray-800 pt-6">
+          <p className="text-gray-500 text-sm mb-2">
+            Citáty na této stránce jsou inspirovány románem{" "}
+            <strong className="text-gray-400">Osudy dobrého vojáka Švejka za světové války</strong>{" "}
+            od Jaroslava Haška — jako pocta českému humoru, hospodské filozofii a nenapravitelnému optimismu
+            tváří v tvář absurditě.
+          </p>
+          <p className="text-gray-600 text-xs mt-2">
+            Švejk by tohle určitě přepočítal na piva. My jsme to udělali za něj.
+          </p>
           {visitorCount && (
-            <p className="text-gray-600 text-xs">
+            <p className="text-gray-700 text-xs mt-3">
               Návštěv celkem: {visitorCount}
             </p>
           )}
