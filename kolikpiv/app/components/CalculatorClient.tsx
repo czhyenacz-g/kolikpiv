@@ -120,7 +120,28 @@ const MEDIUM_MESSAGES = [
   "To už není o tom, co je pravda. To je o tom, co se komu zdá pravda.\n— Osudy dobrého vojáka Švejka, díl 3 (vojenské interpretace)",
   "Všichni jsme věděli, že to nedopadne dobře. Ale stejně jsme pokračovali.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
 ];
-const HIGH_MESSAGES = OLD_HIGH_MESSAGES;
+const HIGH_MESSAGES = [
+  "To už je takovej stav, kdy člověk jde, ani neví kam. A přesto má pocit, že jde správně.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod na frontu)",
+  "My jsme šli kupředu, protože nám to bylo nařízeno. A nikdo se neptal, jestli to má smysl.\n— Osudy dobrého vojáka Švejka, díl 3 (vojenské přesuny)",
+  "To už není otázka rozumu, pane. To už je jen otázka, jak dlouho to ještě vydrží.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "Každej věděl, že je to špatně. Ale nikdo nevěděl, jak to udělat líp.\n— Osudy dobrého vojáka Švejka, díl 3 (zmatek v jednotce)",
+  "To už se nedá vrátit zpátky. Jakmile se jednou vyjde, tak se jde pořád dál.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod)",
+  "My jsme se domluvili, že to uděláme správně. A právě tím jsme to pokazili.\n— Osudy dobrého vojáka Švejka, díl 3 (vojenské rozhodování)",
+  "To už není o tom, co chce člověk. To už je o tom, co se stane.\n— Osudy dobrého vojáka Švejka, díl 4 (bojová situace)",
+  "Člověk si myslí, že to zvládne. A pak už jen doufá, že to nějak dopadne.\n— Osudy dobrého vojáka Švejka, díl 3 (únava a pochod)",
+  "To už se nikdo nesnaží chápat. Každej jen dělá, co se mu řekne, a čeká, co bude.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "My jsme šli pořád dál, i když jsme nevěděli proč. A právě proto jsme tam došli.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod)",
+  "To už není legrace, jak se to zdálo na začátku. Ale pořád se tomu někdo směje.\n— Osudy dobrého vojáka Švejka, díl 4 (absurdní situace)",
+  "Každej měl jiný rozkaz, a všichni ho plnili. A tím pádem se nestalo nic, co mělo.\n— Osudy dobrého vojáka Švejka, díl 3 (zmatek)",
+  "To už není o tom, co je správně. To už je o tom, co se udělá.\n— Osudy dobrého vojáka Švejka, díl 4 (boj)",
+  "Člověk si říká, že se to nějak vysvětlí. A pak zjistí, že už není komu.\n— Osudy dobrého vojáka Švejka, díl 4 (následky)",
+  "To už není otázka času, pane. To už je otázka, kdy to skončí.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "My jsme to dělali tak dlouho, až to začalo dávat smysl. A to byl ten největší problém.\n— Osudy dobrého vojáka Švejka, díl 3 (ironie)",
+  "To už není stav, kdy se rozhoduje. To už je stav, kdy se pokračuje.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod)",
+  "Každej si myslel, že to chápe. A tím pádem to nechápal nikdo.\n— Osudy dobrého vojáka Švejka, díl 4 (vojenské situace)",
+  "To už se nedá zastavit. To už se jen sleduje, jak to dopadne.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "My jsme věděli, že to nedává smysl. Ale to nám nijak nepomohlo.\n— Osudy dobrého vojáka Švejka, díl 3–4 (přechod na frontu)",
+];
 const EXTREME_MESSAGES = OLD_EXTREME_MESSAGES;
 const ULTRA_MESSAGES = OLD_ULTRA_MESSAGES;
 
