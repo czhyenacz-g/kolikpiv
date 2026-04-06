@@ -142,7 +142,28 @@ const HIGH_MESSAGES = [
   "To už se nedá zastavit. To už se jen sleduje, jak to dopadne.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
   "My jsme věděli, že to nedává smysl. Ale to nám nijak nepomohlo.\n— Osudy dobrého vojáka Švejka, díl 3–4 (přechod na frontu)",
 ];
-const EXTREME_MESSAGES = OLD_EXTREME_MESSAGES;
+const EXTREME_MESSAGES = [
+  "Tohle už člověk sám nezvládne, pane. Na to by muselo bejt víc lidí, a i tak by to bylo málo.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "Já bych to klidně udělal, ale na to nestačím. A kdo by na to stačil, ten tu zrovna není.\n— Osudy dobrého vojáka Švejka, díl 3–4 (vojenské situace)",
+  "To už není práce pro jednoho. To už je věc, která se dělá hromadně, a i tak se nepovede.\n— Osudy dobrého vojáka Švejka, díl 4 (organizace v poli)",
+  "Člověk si myslí, že to zvládne. A pak zjistí, že na to nestačí ani kdyby chtěl.\n— Osudy dobrého vojáka Švejka, díl 4 (následky)",
+  "Na tohle by musel mít člověk víc sil, než má. A ty se nikde nevydávají.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "To už není o tom, jestli se chce. To už je o tom, že to nejde.\n— Osudy dobrého vojáka Švejka, díl 4 (boj)",
+  "My jsme si mysleli, že to nějak zvládneme. Ale ono se to zvládnout nedalo.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod)",
+  "To už by člověk potřeboval pomoct. A právě když ji potřebuje, tak žádná není.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "Já bych do toho šel, pane. Ale musel by tam jít někdo se mnou, a ten se nenašel.\n— Osudy dobrého vojáka Švejka, díl 3–4 (vojenské rozhodnutí)",
+  "To už není taková věc, co se udělá jen tak. To už je věc, co se neudělá vůbec.\n— Osudy dobrého vojáka Švejka, díl 4 (absurdní situace)",
+  "Na tohle nestačí jeden člověk. A když je jich víc, tak se to ještě víc pokazí.\n— Osudy dobrého vojáka Švejka, díl 4 (chaos)",
+  "To už je nad moje možnosti, pane. Já bych to zkusil, ale dopadlo by to špatně.\n— Osudy dobrého vojáka Švejka, díl 4 (rezignace)",
+  "Člověk by potřeboval pomoct. A místo toho dostane rozkaz.\n— Osudy dobrého vojáka Švejka, díl 4 (vojenská realita)",
+  "To už není úkol, to je trest. A ještě k tomu takovej, co se nedá splnit.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "Já bych to rád udělal správně. Ale na to bych musel bejt někdo jinej.\n— Osudy dobrého vojáka Švejka, díl 4 (ironická sebereflexe)",
+  "Tohle už není pro jednotlivce. To už je věc, co se prostě stane, a člověk u toho jen stojí.\n— Osudy dobrého vojáka Švejka, díl 4 (boj)",
+  "My jsme se snažili, pane. Ale ono to nešlo, ani když jsme se snažili víc.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod)",
+  "Na tohle by musel mít člověk jiný podmínky. A ty tady zrovna nejsou.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "To už není otázka snahy. To už je otázka, kdy se to celé rozpadne.\n— Osudy dobrého vojáka Švejka, díl 4 (následky)",
+  "Člověk by to chtěl zvládnout. Ale některý věci jsou větší než on.\n— Osudy dobrého vojáka Švejka, díl 4 (shrnutí)",
+];
 const ULTRA_MESSAGES = OLD_ULTRA_MESSAGES;
 
 const LAST_UPDATED = "26. 3. 2026";
