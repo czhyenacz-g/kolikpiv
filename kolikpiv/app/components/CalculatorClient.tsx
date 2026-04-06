@@ -17,7 +17,8 @@ const HERO_TAGLINES = [
 ];
 
 // Fun messages for different beer count ranges
-const LOW_MESSAGES = [
+// === STARÁ SÉRIE (nepoužívá se) ===
+const OLD_LOW_MESSAGES = [
   "Pár piv?\nTo ještě nic neznamená.\nTo se člověk ani nestihne ztratit.",
   "Pár piv?\nTo se teprve začíná mluvit.\nA ještě se všemu věří.",
   "Pár piv?\nTo bych ani nepočítal.\nTo je spíš na rozehřátí debaty.",
@@ -28,8 +29,7 @@ const LOW_MESSAGES = [
   "To není tak hrozný.\nTo se dá obejít.\nNebo aspoň odložit.\n— Švejk",
   "Na to bych ještě měl.\nA kdyby ne, tak bych si poradil.\nTo se člověk vždycky nějak zařídí.\n— Švejk",
 ];
-
-const MEDIUM_MESSAGES = [
+const OLD_MEDIUM_MESSAGES = [
   "Pár desítek piv?\nTo už není náhoda.\nTo už si něco vybíráš.",
   "Pár desítek piv?\nTo už se řeči začnou motat.\nA pravda se říká snáz.",
   "Pár desítek piv?\nTo už se něco domluví.\nA ráno se uvidí co.",
@@ -40,8 +40,7 @@ const MEDIUM_MESSAGES = [
   "To už bych si rozmyslel.\nAle když už je to spočítaný,\ntak se s tím musí něco udělat.\n— Švejk",
   "Na to už úplně nemám.\nAle znám lidi, co by měli.\nA když ne, tak se to odloží.\n— Švejk",
 ];
-
-const HIGH_MESSAGES = [
+const OLD_HIGH_MESSAGES = [
   "Tolik piv?\nTo už není večer.\nTo už je rozhodnutí, které tě chvíli bude stát.",
   "Tolik piv?\nTo už se večer rozplyne.\nA zůstane jen to, co si kdo zapamatuje po svém.",
   "Tolik piv?\nTo už by chtělo plán.\nA pak ho stejně nedodržet.",
@@ -52,8 +51,7 @@ const HIGH_MESSAGES = [
   "Na tohle bych neměl ani kdybych chtěl.\nAle chtít je důležitý.\nTo se počítá.\n— Švejk",
   "To už bych radši neviděl.\nKdyž člověk neví, kolik to stojí,\nžije se mu líp.\n— Švejk",
 ];
-
-const EXTREME_MESSAGES = [
+const OLD_EXTREME_MESSAGES = [
   "Tolik piv?\nTo už není o pití.\nTo už je způsob, jak na chvíli zmizet.",
   "Tolik piv?\nTo už se člověk ztratí někde mezi řečí a ránem.\nA ani neví kde.",
   "Tolik piv?\nTo už by se mělo nejdřív probrat.\nAle nejspíš se to stejně jen zapije.",
@@ -64,9 +62,7 @@ const EXTREME_MESSAGES = [
   "Tohle už bych nezaplatil.\nAle mohl bych o tom dlouho mluvit.\nA to někdy stačí.\n— Švejk",
   "To už je částka, co se neřeší.\nTo se přechází mlčením.\nA rychlým odchodem.\n— Švejk",
 ];
-
-// Special message for very high beer counts (>100)
-const ULTRA_MESSAGES = [
+const OLD_ULTRA_MESSAGES = [
   "Tolik piv?\nTo už není večer.\nTo už je život, který se na chvíli rozpadne.",
   "Tolik piv?\nTo už není o pivu.\nTo už je o tom, co si u toho všechno řeknete,\na co si radši nepamatujete.",
   "Tolik piv?\nTo už není otázka žízně.\nTo už je otázka charakteru.",
@@ -77,6 +73,35 @@ const ULTRA_MESSAGES = [
   "Tohle už není na zaplacení.\nTo je na přehodnocení života.\nA směru.\n— Švejk",
   "To už bych ani nepočítal.\nKdyž člověk neví,\nkolik nemá, je mu líp.\n— Švejk",
 ];
+
+// === NOVÁ SÉRIE ===
+const LOW_MESSAGES = [
+  "V hospodě U Kalicha se vždycky všechno dozvědělo dřív než na úřadech. Stačilo si dát jedno pivo a hned bylo jasný, jak se věci mají.\n— Osudy dobrého vojáka Švejka, díl 1 (Švejk v hospodě U Kalicha)",
+  "Po pár pivech se lidi vždycky líp domluví. Každej má pravdu a nikdo se nehádá, protože se to tak nějak rozplyne.\n— Osudy dobrého vojáka Švejka, díl 1 (Švejk vypravuje v hospodě)",
+  "Jedno pivo ještě nic neznamená. To si člověk jen srovná myšlenky, aby věděl, co vlastně chtěl říct.\n— Osudy dobrého vojáka Švejka, díl 1 (Rozhovory u Kalicha)",
+  "V hospodě je to jednoduchý, pane. Co se řekne u piva, to se bere vážně, dokud se nevypije další.\n— Osudy dobrého vojáka Švejka, díl 1 (Hospodské rozpravy)",
+  "Když si člověk dá pár piv, tak všechno vypadá jasnější. Akorát že pak si nikdo nepamatuje proč.\n— Osudy dobrého vojáka Švejka, díl 1 (Vyprávění u piva)",
+  "U Kalicha se vždycky našel někdo, kdo věděl víc než ostatní. A po třetím pivu věděli všichni všechno.\n— Osudy dobrého vojáka Švejka, díl 1 (Hosté v hospodě U Kalicha)",
+  "To není opilost, pane, to je jen lepší nálada. Člověk pak řekne věci, co by jinak neřekl.\n— Osudy dobrého vojáka Švejka, díl 1 (Švejk vysvětluje)",
+  "Po pivu se všechno vysvětluje snáz. Akorát že někdy se vysvětlí i to, co vůbec nebylo potřeba.\n— Osudy dobrého vojáka Švejka, díl 1 (Nedorozumění v hospodě)",
+  "Já jsem si dal jen pár piv, pane. To člověk ani nepozná, že už něco říká jinak, než chtěl.\n— Osudy dobrého vojáka Švejka, díl 1 (Švejk při výslechu)",
+  "V hospodě se vždycky začne mluvit o něčem jiným, než kvůli čemu tam člověk přišel. A nakonec se to stejně nedořeší.\n— Osudy dobrého vojáka Švejka, díl 1 (Rozhovory u stolu)",
+  "Po druhým pivu už si lidi tykají. Po třetím si rozumějí. A po čtvrtým si myslí, že si rozumějí.\n— Osudy dobrého vojáka Švejka, díl 1 (Pozorování z hospody)",
+  "U piva se všechno zdá jednodušší. Člověk má plán, který by za střízliva nikdy nevymyslel.\n— Osudy dobrého vojáka Švejka, díl 1 (Hospodské nápady)",
+  "To se jen tak řeklo, pane. U piva se říká spousta věcí, co se pak berou zpátky.\n— Osudy dobrého vojáka Švejka, díl 1 (Švejk se obhajuje)",
+  "Já jsem nic nepopletl, pane. Jen jsem to řekl jinak, než jsem to myslel.\n— Osudy dobrého vojáka Švejka, díl 1 (Nedorozumění při výslechu)",
+  "Když se sedí u piva, tak čas běží jinak. Člověk si myslí, že je chvíli, a jsou z toho hodiny.\n— Osudy dobrého vojáka Švejka, díl 1 (U Kalicha večer)",
+  "To byla jen řeč u piva. Takový řeči se nepočítají, protože by jich bylo moc.\n— Osudy dobrého vojáka Švejka, díl 1 (Švejk vysvětluje situaci)",
+  "Po pár pivech se člověk vždycky domluví. Jenom neví s kým a na čem.\n— Osudy dobrého vojáka Švejka, díl 1 (Hospodské dohody)",
+  "Já jsem to nemyslel zle, pane. To jen tak vyšlo, jak jsme seděli u piva.\n— Osudy dobrého vojáka Švejka, díl 1 (Obhajoba)",
+  "V hospodě se všechno vyřeší, nebo aspoň odloží. A to je někdy to samý.\n— Osudy dobrého vojáka Švejka, díl 1 (Životní úvahy)",
+  "Člověk jde na jedno pivo a skončí u debaty, která nemá konec. A to je na tom to nejlepší.\n— Osudy dobrého vojáka Švejka, díl 1 (Hospoda U Kalicha večer)",
+];
+
+const MEDIUM_MESSAGES = OLD_MEDIUM_MESSAGES;
+const HIGH_MESSAGES = OLD_HIGH_MESSAGES;
+const EXTREME_MESSAGES = OLD_EXTREME_MESSAGES;
+const ULTRA_MESSAGES = OLD_ULTRA_MESSAGES;
 
 const LAST_UPDATED = "26. 3. 2026";
 
@@ -702,15 +727,17 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               })()}
               {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
               {(() => {
-                const isSwejk = result.message.endsWith("\n— Švejk");
-                const quoteText = isSwejk ? result.message.replace(/\n— Švejk$/, "") : result.message;
+                const lastDash = result.message.lastIndexOf("\n—");
+                const hasAttribution = lastDash !== -1;
+                const quoteText = hasAttribution ? result.message.substring(0, lastDash) : result.message;
+                const attribution = hasAttribution ? result.message.substring(lastDash + 1) : null;
                 return (
                   <div className="mx-auto max-w-xs w-full mb-6 border-l-4 border-amber-700 pl-4 text-left">
                     <p className="text-amber-400 text-base italic leading-relaxed whitespace-pre-line">
                       „{quoteText}"
                     </p>
-                    {isSwejk && (
-                      <p className="text-gray-400 text-sm mt-3">🪖 dobrý voják Švejk</p>
+                    {attribution && (
+                      <p className="text-gray-400 text-sm mt-3">{attribution}</p>
                     )}
                   </div>
                 );
