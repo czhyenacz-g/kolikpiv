@@ -189,25 +189,35 @@ const ULTRA_MESSAGES = [
 
 const LAST_UPDATED = "26. 3. 2026";
 
-const getRandomMessage = (beers: number): string => {
-  // Special message for ultra high values
-  if (beers > 100) {
-    return ULTRA_MESSAGES[Math.floor(Math.random() * ULTRA_MESSAGES.length)];
-  }
+const MESSAGE_CATS: Record<string, string[]> = {
+  u: ULTRA_MESSAGES,
+  l: LOW_MESSAGES,
+  m: MEDIUM_MESSAGES,
+  h: HIGH_MESSAGES,
+  e: EXTREME_MESSAGES,
+};
 
-  let messages: string[];
+const getCatForBeers = (beers: number): string => {
+  if (beers > 100) return "u";
+  if (beers <= 5) return "l";
+  if (beers <= 20) return "m";
+  if (beers <= 60) return "h";
+  return "e";
+};
 
-  if (beers <= 5) {
-    messages = LOW_MESSAGES;
-  } else if (beers <= 20) {
-    messages = MEDIUM_MESSAGES;
-  } else if (beers <= 60) {
-    messages = HIGH_MESSAGES;
-  } else {
-    messages = EXTREME_MESSAGES;
-  }
+const getMessageById = (id: string): string | null => {
+  const [cat, idxStr] = id.split("_");
+  const idx = parseInt(idxStr);
+  return MESSAGE_CATS[cat]?.[idx] ?? null;
+};
 
-  return messages[Math.floor(Math.random() * messages.length)];
+const getRandomMessageWithId = (beers: number, excludeId?: string): { message: string; msgId: string } => {
+  const cat = getCatForBeers(beers);
+  const messages = MESSAGE_CATS[cat];
+  const excludeIdx = excludeId?.startsWith(cat + "_") ? parseInt(excludeId.split("_")[1]) : -1;
+  const available = messages.map((_, i) => i).filter(i => i !== excludeIdx);
+  const idx = available[Math.floor(Math.random() * available.length)];
+  return { message: messages[idx], msgId: `${cat}_${idx}` };
 };
 
 const getBeerWord = (count: number): string => {
@@ -243,7 +253,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [monthlyWage, setMonthlyWage] = useState<string>("35000");
   const [beersPerEvening, setBeersPerEvening] = useState<string>("5");
   const [recalcFlash, setRecalcFlash] = useState<boolean>(false);
-  const [result, setResult] = useState<{ beers: number; hours: number; message: string } | null>(null);
+  const [result, setResult] = useState<{ beers: number; hours: number; message: string; msgId: string } | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [qrDownloadMessage, setQrDownloadMessage] = useState<string>("");
@@ -269,6 +279,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     const urlPrice = searchParams.get("price");
     const urlBeerPrice = searchParams.get("beerPrice");
     const urlSalary = searchParams.get("salary");
+    const urlMsg = searchParams.get("msg");
 
     // Set values, prioritizing URL params over localStorage
     if (urlBeerPrice && !isNaN(parseFloat(urlBeerPrice))) {
@@ -295,9 +306,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         const beers = Math.floor(priceNum / beerPriceNum);
         const hourlyWage = monthlyWageNum / 168;
         const hours = parseFloat((priceNum / hourlyWage).toFixed(1));
-        const message = getRandomMessage(beers);
+        const fromUrl = urlMsg ? getMessageById(urlMsg) : null;
+        const { message, msgId } = fromUrl
+          ? { message: fromUrl, msgId: urlMsg! }
+          : getRandomMessageWithId(beers);
 
-        setResult({ beers, hours, message });
+        setResult({ beers, hours, message, msgId });
         setShowResult(true);
       }
     }
@@ -376,7 +390,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     const beers = Math.floor(priceNum / beerPriceNum);
     const hourlyWage = monthlyWageNum / 168;
     const hours = parseFloat((priceNum / hourlyWage).toFixed(1));
-    const message = getRandomMessage(beers);
+    const { message, msgId } = getRandomMessageWithId(beers);
 
     // Update URL with current calculation
     const params = new URLSearchParams();
@@ -384,13 +398,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     params.set("beerPrice", beerPrice);
     params.set("salary", monthlyWage);
     if (itemName.trim()) params.set("label", itemName.trim());
+    params.set("msg", msgId);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
     track("calculator_submit", { price: priceNum, beerPrice: beerPriceNum, beers });
 
     setShowResult(false);
     setTimeout(() => {
-      setResult({ beers, hours, message });
+      setResult({ beers, hours, message, msgId });
       setShowResult(true);
     }, 50);
   };
@@ -439,7 +454,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
       const beers = Math.floor(value / beerPriceNum);
       const hourlyWage = monthlyWageNum / 168;
       const hours = parseFloat((value / hourlyWage).toFixed(1));
-      const message = getRandomMessage(beers);
+      const { message, msgId } = getRandomMessageWithId(beers);
 
       const params = new URLSearchParams();
       params.set("price", priceStr);
@@ -447,13 +462,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
       params.set("salary", monthlyWage);
       const effectiveLabel = label || itemName.trim();
       if (effectiveLabel) params.set("label", effectiveLabel);
+      params.set("msg", msgId);
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
       track("calculator_submit", { price: value, beerPrice: beerPriceNum, beers });
 
       setShowResult(false);
       setTimeout(() => {
-        setResult({ beers, hours, message });
+        setResult({ beers, hours, message, msgId });
         setShowResult(true);
       }, 50);
     }
@@ -735,7 +751,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           <button
             type="submit"
-            onClick={result ? (e) => { e.preventDefault(); playClink(); setResult((prev) => prev ? { ...prev, message: getRandomMessage(prev.beers) } : null); } : (e) => { playClink(); }}
+            onClick={result ? (e) => { e.preventDefault(); playClink(); setResult((prev) => { if (!prev) return null; const { message, msgId } = getRandomMessageWithId(prev.beers, prev.msgId); const params = new URLSearchParams(window.location.search); params.set("msg", msgId); router.replace(`${pathname}?${params.toString()}`, { scroll: false }); return { ...prev, message, msgId }; }); } : (e) => { playClink(); }}
             className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
           >
             {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
