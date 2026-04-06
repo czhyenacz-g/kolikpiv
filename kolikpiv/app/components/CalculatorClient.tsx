@@ -98,7 +98,28 @@ const LOW_MESSAGES = [
   "Člověk jde na jedno pivo a skončí u debaty, která nemá konec. A to je na tom to nejlepší.\n— Osudy dobrého vojáka Švejka, díl 1 (Hospoda U Kalicha večer)",
 ];
 
-const MEDIUM_MESSAGES = OLD_MEDIUM_MESSAGES;
+const MEDIUM_MESSAGES = [
+  "Člověk si myslí, že má všechno pod kontrolou. A zatím se to pomalu sype, jen to ještě není vidět.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod na frontu)",
+  "Po pár pivech se všechno zdá jednodušší. Akorát že pak přijde chvíle, kdy se to musí udělat, a to už tak jednoduchý není.\n— Osudy dobrého vojáka Švejka, díl 3 (vojenské přesuny)",
+  "My jsme si to vždycky nejdřív vysvětlili mezi sebou. A pak jsme zjistili, že tomu nerozumí nikdo.\n— Osudy dobrého vojáka Švejka, díl 3 (zmatek v jednotce)",
+  "To už je takovej stav, kdy člověk ví, co chce říct, ale říká něco úplně jinýho. A všichni ostatní jsou na tom stejně.\n— Osudy dobrého vojáka Švejka, díl 3 (rozhovory vojáků)",
+  "Jakmile se začne moc vysvětlovat, tak se to zamotá. A pak už se to nedá rozmotat ani za střízliva.\n— Osudy dobrého vojáka Švejka, díl 3 (nedorozumění mezi vojáky)",
+  "To už není jen řeč u piva. To už se podle toho začíná jednat, a to bývá ten problém.\n— Osudy dobrého vojáka Švejka, díl 3 (rozhodování v poli)",
+  "Každej měl svůj plán, jak to udělat správně. A právě proto se to nepovedlo.\n— Osudy dobrého vojáka Švejka, díl 3 (vojenský chaos)",
+  "Člověk si myslí, že ví, co dělá. A pak se ukáže, že to ví úplně někdo jinej.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "To už je takovej okamžik, kdy se nikdo nepřizná, že něco neví. A tím pádem to neví vůbec nikdo.\n— Osudy dobrého vojáka Švejka, díl 4 (vojenské situace)",
+  "My jsme si byli jistý, že to máme správně. A právě to byla ta chyba.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod)",
+  "To už se nedá vzít zpátky, pane. Jakmile se něco řekne a udělá, tak to běží dál samo.\n— Osudy dobrého vojáka Švejka, díl 4 (následky rozhodnutí)",
+  "Každej tomu rozuměl po svým. A tím pádem tomu nerozuměl nikdo pořádně.\n— Osudy dobrého vojáka Švejka, díl 3 (komunikace v jednotce)",
+  "To už není taková legrace, jak to vypadalo na začátku. Ale ještě se tomu pořád někdo směje.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+  "Člověk si myslí, že to zvládne. A pak zjistí, že to zvládá jen tak tak.\n— Osudy dobrého vojáka Švejka, díl 3 (pochod a únava)",
+  "To už je takovej stav, kdy se všechno zdá správně. A právě proto je to špatně.\n— Osudy dobrého vojáka Švejka, díl 4 (bojové situace)",
+  "My jsme to chtěli udělat co nejlíp. A dopadlo to jako vždycky.\n— Osudy dobrého vojáka Švejka, díl 3 (ironické shrnutí)",
+  "To už se nedá vysvětlit jednou větou. A když se to vysvětluje víc, tak to nikdo neposlouchá.\n— Osudy dobrého vojáka Švejka, díl 4 (komunikace)",
+  "Člověk si myslí, že má čas to napravit. A pak zjistí, že už je pozdě.\n— Osudy dobrého vojáka Švejka, díl 4 (následky)",
+  "To už není o tom, co je pravda. To je o tom, co se komu zdá pravda.\n— Osudy dobrého vojáka Švejka, díl 3 (vojenské interpretace)",
+  "Všichni jsme věděli, že to nedopadne dobře. Ale stejně jsme pokračovali.\n— Osudy dobrého vojáka Švejka, díl 4 (fronta)",
+];
 const HIGH_MESSAGES = OLD_HIGH_MESSAGES;
 const EXTREME_MESSAGES = OLD_EXTREME_MESSAGES;
 const ULTRA_MESSAGES = OLD_ULTRA_MESSAGES;
