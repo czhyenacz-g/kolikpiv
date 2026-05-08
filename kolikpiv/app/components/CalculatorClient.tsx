@@ -6,6 +6,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { track } from "@vercel/analytics";
 import { GOATCOUNTER_CODE } from "../config/analytics";
 import {
+  type ProductPreset,
   getDefaultPresets,
   getSurpriseCandidates,
 } from "../../data/product-presets";
@@ -263,6 +264,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [qrDownloadMessage, setQrDownloadMessage] = useState<string>("");
   const [copyLinkMessage, setCopyLinkMessage] = useState<string>("");
   const [heroTagline, setHeroTagline] = useState<string>(HERO_TAGLINES[0]);
+  const [selectedPreset, setSelectedPreset] = useState<ProductPreset | null>(null);
 
   const qrRef = useRef<HTMLDivElement>(null);
   const [visitorCount, setVisitorCount] = useState<string | null>(null);
@@ -435,16 +437,17 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const handleSurprise = () => {
     const candidates = getSurpriseCandidates();
     const pick = candidates[Math.floor(Math.random() * candidates.length)];
-    handleExample(pick.amount, pick.label);
+    handleExample(pick.amount, pick.label, pick);
   };
 
-  const handleExample = (value: number, label?: string) => {
+  const handleExample = (value: number, label?: string, preset?: ProductPreset) => {
     const priceStr = String(value);
     const beerPriceNum = parseFloat(beerPrice);
     const monthlyWageNum = parseFloat(monthlyWage);
 
     setPrice(priceStr);
     if (label) setItemName(label);
+    setSelectedPreset(preset ?? null);
     setErrorMessage("");
 
     if (!isNaN(beerPriceNum) && !isNaN(monthlyWageNum)) {
@@ -663,7 +666,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               <button
                 key={preset.id}
                 type="button"
-                onClick={() => handleExample(preset.amount, preset.label)}
+                onClick={() => handleExample(preset.amount, preset.label, preset)}
                 className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
               >
                 {preset.label}
@@ -695,6 +698,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               value={price}
               onChange={(e) => {
                 setPrice(e.target.value);
+                setSelectedPreset(null);
                 if (errorMessage) setErrorMessage("");
               }}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
@@ -844,6 +848,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               >
                 {copyLinkMessage || "Kopírovat odkaz"}
               </button>
+              {selectedPreset?.affiliateUrl && (
+                <a
+                  href={selectedPreset.affiliateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mt-4 text-sm text-gray-500 hover:text-amber-400 transition-colors text-center"
+                >
+                  Koupit / zjistit cenu →
+                </a>
+              )}
             </div>
 
 {result.beers >= 20 && (() => {
