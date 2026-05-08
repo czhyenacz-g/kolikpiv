@@ -5,6 +5,10 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 import { track } from "@vercel/analytics";
 import { GOATCOUNTER_CODE } from "../config/analytics";
+import {
+  getDefaultPresets,
+  getSurpriseCandidates,
+} from "../../data/product-presets";
 
 // Hero taglines - rotating subtitle under the main title
 const HERO_TAGLINES = [
@@ -429,16 +433,9 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   };
 
   const handleSurprise = () => {
-    const r = Math.random();
-    let value: number;
-    if (r < 0.3) {
-      value = Math.round(100 + Math.random() * 400);
-    } else if (r < 0.7) {
-      value = Math.round(500 + Math.random() * 4500);
-    } else {
-      value = Math.round(5000 + Math.random() * 45000);
-    }
-    handleExample(value);
+    const candidates = getSurpriseCandidates();
+    const pick = candidates[Math.floor(Math.random() * candidates.length)];
+    handleExample(pick.amount, pick.label);
   };
 
   const handleExample = (value: number, label?: string) => {
@@ -662,21 +659,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             </button>
           </div>
           <div className="flex flex-wrap justify-center gap-2">
-            {[
-              { label: "kebab po párty", value: 150 },
-              { label: "Netflix na rok", value: 1900 },
-              { label: "víkend v Praze", value: 8000 },
-              { label: "iPhone", value: 35000 },
-              { label: "zásnubní prsten", value: 50000 },
-              { label: "nové auto", value: 400000 },
-            ].map((ex) => (
+            {getDefaultPresets().map((preset) => (
               <button
-                key={ex.label}
+                key={preset.id}
                 type="button"
-                onClick={() => handleExample(ex.value, ex.label)}
+                onClick={() => handleExample(preset.amount, preset.label)}
                 className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
               >
-                {ex.label}
+                {preset.label}
               </button>
             ))}
           </div>
