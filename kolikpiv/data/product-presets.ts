@@ -12,6 +12,9 @@ export interface ProductPreset {
   affiliateUrl?: string;
   productUrl?: string;
   beerCartUrl?: string;
+  imageUrl?: string;
+  merchantName?: string;
+  ctaLabel?: string;
   note?: string;
   enabled: boolean;
   isDefaultPreset: boolean;
@@ -131,18 +134,21 @@ export const ALL_PRODUCT_PRESETS: ProductPreset[] = [
     isSurpriseCandidate: true,
   },
 
-  // --- Future affiliate products (disabled until links are ready) ---
+  // --- Future affiliate products (enabled as placeholder; swap affiliateUrl for real link when ready) ---
   {
     id: "iphone-16",
     label: "iPhone 16",
     amount: 25990,
     category: "electronics",
     sourceType: "affiliate",
-    // affiliateUrl: "", // doplnit reálný affiliate odkaz
+    affiliateUrl: "https://www.alza.cz/",   // placeholder — doplnit reálný produktový odkaz
+    imageUrl: "/products/iphone-16.jpg",     // placeholder — doplnit reálný obrázek produktu
+    merchantName: "Alza",
+    ctaLabel: "Zobrazit nabídku →",
     note: "Nahradí 'iPhone' až budou připraveny affiliate odkazy.",
-    enabled: false,
+    enabled: true,
     isDefaultPreset: false,
-    isSurpriseCandidate: false,
+    isSurpriseCandidate: true,
   },
 ];
 

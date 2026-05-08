@@ -849,14 +849,42 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 {copyLinkMessage || "Kopírovat odkaz"}
               </button>
               {selectedPreset?.affiliateUrl && (
-                <a
-                  href={selectedPreset.affiliateUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block mt-4 text-sm text-gray-500 hover:text-amber-400 transition-colors text-center"
-                >
-                  Koupit / zjistit cenu →
-                </a>
+                <div className="mt-4 border border-gray-700 rounded-lg overflow-hidden">
+                  {selectedPreset.imageUrl && (
+                    <div className="bg-gray-900 flex justify-center py-3">
+                      <img
+                        src={selectedPreset.imageUrl}
+                        alt={selectedPreset.label}
+                        className="h-20 w-auto object-contain"
+                        loading="lazy"
+                        onError={(e) => {
+                          (e.currentTarget.parentElement as HTMLElement).style.display = "none";
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div className="px-3 py-2.5 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">
+                        {selectedPreset.label}
+                      </p>
+                      <p className="text-xs text-amber-400">
+                        {selectedPreset.amount.toLocaleString("cs-CZ")} Kč
+                        {selectedPreset.merchantName && (
+                          <span className="text-gray-500"> · {selectedPreset.merchantName}</span>
+                        )}
+                      </p>
+                    </div>
+                    <a
+                      href={selectedPreset.affiliateUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 px-3 py-1.5 bg-gray-700 hover:bg-amber-600 rounded text-xs text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+                    >
+                      {selectedPreset.ctaLabel ?? "Zobrazit nabídku →"}
+                    </a>
+                  </div>
+                </div>
               )}
             </div>
 
