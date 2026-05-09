@@ -5,6 +5,7 @@ import Script from "next/script";
 import { GOATCOUNTER_CODE } from "./config/analytics";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kolikpiv.cz"),
   title: "Kolik piv to je? | Přepočet ceny na piva",
   description: "Zjisti, kolik piv stojí cokoliv. Jednoduchá a zábavná kalkulačka, která převádí ceny na piva 🍺.",
   openGraph: {
