@@ -421,6 +421,17 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     calculate();
   };
 
+  const handleRefreshMessage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!result) return;
+    playClink();
+    const { message, msgId } = getRandomMessageWithId(result.beers, result.msgId);
+    const params = new URLSearchParams(window.location.search);
+    params.set("msg", msgId);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    setResult((prev) => prev ? { ...prev, message, msgId } : null);
+  };
+
   const handleCopyLink = async () => {
     const url = typeof window !== "undefined" ? window.location.href : "";
     try {
@@ -732,7 +743,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           <div>
             <label className="block text-sm font-medium mb-2">
-              Měsíční mzda (CZK)
+              Čistá měsíční mzda (CZK)
             </label>
             <input
               type="number"
@@ -745,7 +756,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           <button
             type="submit"
-            onClick={result ? (e) => { e.preventDefault(); playClink(); setResult((prev) => { if (!prev) return null; const { message, msgId } = getRandomMessageWithId(prev.beers, prev.msgId); const params = new URLSearchParams(window.location.search); params.set("msg", msgId); router.replace(`${pathname}?${params.toString()}`, { scroll: false }); return { ...prev, message, msgId }; }); } : (e) => { playClink(); }}
+            onClick={result ? handleRefreshMessage : () => { playClink(); }}
             className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
           >
             {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
@@ -892,9 +903,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                     </div>
                   </div>
 
-                  {/* Oddělovač — jen když obě karty mají aktivní CTA */}
-                  {result && result.beers >= 1 && selectedPreset.affiliateUrl && selectedPreset.beerEquivalentOffer?.affiliateUrl && (
-                    <p className="text-center text-xs text-gray-600">nebo</p>
+                  {/* Oddělovač VS */}
+                  {result && result.beers >= 1 && (
+                    <div
+                      className="text-5xl font-black tracking-tighter shrink-0 leading-none px-1 text-center"
+                      style={{ color: "#dc2626", animation: "vs-pulse 1.2s ease-in-out infinite" }}
+                    >
+                      VS
+                    </div>
                   )}
 
                   {/* Pivní karta — aktivní nebo fallback */}
