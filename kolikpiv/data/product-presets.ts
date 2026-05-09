@@ -141,24 +141,18 @@ export const ALL_PRODUCT_PRESETS: ProductPreset[] = [
     isSurpriseCandidate: true,
   },
 
-  // --- Future affiliate products (links not yet active — shown as fallback cards) ---
-  // Jak aktivovat: vyplnit affiliateUrl reálným produktovým odkazem a případně beerEquivalentOffer.affiliateUrl
+  // --- Affiliate produkty ---
   {
-    id: "iphone-16",
-    label: "iPhone 16",
-    amount: 25990,
+    id: "iphone-16e",
+    label: "iPhone 16e",
+    amount: 13990,
     category: "electronics",
     sourceType: "affiliate",
-    // affiliateUrl: "",          // doplnit reálný produktový odkaz (Alza, Heureka…)
-    imageUrl: "/products/iphone-16.jpg",  // doplnit reálný obrázek nebo CDN URL
+    affiliateUrl: "https://www.alza.cz/EN/iphone-16e-128gb-black-d12812524.htm",
     merchantName: "Alza",
     ctaLabel: "Zobrazit nabídku →",
     // beerEquivalentOffer: {
-    //   affiliateUrl: "",        // doplnit odkaz na pivní e-shop / předvyplněný košík
-    //   merchantName: "Pivní e-shop",
-    //   ctaLabel: "Objednat piva →",
-    // },
-    note: "Nahradí 'iPhone' až budou připraveny affiliate odkazy.",
+    // beerEquivalentOffer: { affiliateUrl: "", merchantName: "Pivní e-shop", ctaLabel: "Objednat piva →" },
     enabled: true,
     isDefaultPreset: false,
     isSurpriseCandidate: true,
