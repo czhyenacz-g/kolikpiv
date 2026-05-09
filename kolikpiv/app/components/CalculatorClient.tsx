@@ -267,6 +267,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [selectedPreset, setSelectedPreset] = useState<ProductPreset | null>(null);
 
   const qrRef = useRef<HTMLDivElement>(null);
+  const hasInitializedFromUrl = useRef(false);
   const [visitorCount, setVisitorCount] = useState<string | null>(null);
 
   // Set random tagline after mount to avoid hydration mismatch
@@ -300,7 +301,10 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
       setMonthlyWage(savedMonthlyWage);
     }
 
-    if (urlPrice && !isNaN(parseFloat(urlPrice))) {
+    // Initialize price and result from URL only once — subsequent router.replace calls
+    // update URL but must not overwrite the user's manually edited price or current result.
+    if (!hasInitializedFromUrl.current && urlPrice && !isNaN(parseFloat(urlPrice))) {
+      hasInitializedFromUrl.current = true;
       setPrice(urlPrice);
 
       // Auto-calculate if we have all params
@@ -428,6 +432,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
     const { message, msgId } = getRandomMessageWithId(result.beers, result.msgId);
     const params = new URLSearchParams(window.location.search);
     params.set("msg", msgId);
+    params.set("price", price); // keep URL in sync with current input, not stale preset price
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     setResult((prev) => prev ? { ...prev, message, msgId } : null);
   };
@@ -754,13 +759,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <p className="mt-1 text-xs text-zinc-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
           </div>
 
-          <button
-            type="submit"
-            onClick={result ? handleRefreshMessage : () => { playClink(); }}
-            className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
-          >
-            {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
-          </button>
+          {/* Hide refresh-quote button while a preset is active — user must edit price first */}
+          {(!result || !selectedPreset) && (
+            <button
+              type="submit"
+              onClick={result ? handleRefreshMessage : () => { playClink(); }}
+              className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
+            </button>
+          )}
         </form>
 
         {errorMessage && (
