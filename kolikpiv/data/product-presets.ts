@@ -86,14 +86,14 @@ export const ALL_PRODUCT_PRESETS: ProductPreset[] = [
     isSurpriseCandidate: true,
   },
   {
-    id: "nove-auto",
-    label: "nové auto",
-    amount: 400000,
+    id: "opel-meriva",
+    label: "Opel Meriva 1.8 r. 2003",
+    amount: 39999,
     category: "vehicle",
     sourceType: "manual",
     enabled: true,
     isDefaultPreset: true,
-    isSurpriseCandidate: false,
+    isSurpriseCandidate: true,
   },
 
   // --- Surprise-only candidates (not in default row, but "Překvap mě" may pick them) ---
