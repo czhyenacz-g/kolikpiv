@@ -3,6 +3,12 @@
 
 export type ProductSourceType = "manual" | "affiliate" | "beer_partner";
 
+export interface BeerEquivalentOffer {
+  affiliateUrl?: string;
+  merchantName?: string;
+  ctaLabel?: string;
+}
+
 export interface ProductPreset {
   id: string;
   label: string;
@@ -12,6 +18,7 @@ export interface ProductPreset {
   affiliateUrl?: string;
   productUrl?: string;
   beerCartUrl?: string;
+  beerEquivalentOffer?: BeerEquivalentOffer;
   imageUrl?: string;
   merchantName?: string;
   ctaLabel?: string;
@@ -134,17 +141,23 @@ export const ALL_PRODUCT_PRESETS: ProductPreset[] = [
     isSurpriseCandidate: true,
   },
 
-  // --- Future affiliate products (enabled as placeholder; swap affiliateUrl for real link when ready) ---
+  // --- Future affiliate products (links not yet active — shown as fallback cards) ---
+  // Jak aktivovat: vyplnit affiliateUrl reálným produktovým odkazem a případně beerEquivalentOffer.affiliateUrl
   {
     id: "iphone-16",
     label: "iPhone 16",
     amount: 25990,
     category: "electronics",
     sourceType: "affiliate",
-    affiliateUrl: "https://www.alza.cz/",   // placeholder — doplnit reálný produktový odkaz
-    imageUrl: "/products/iphone-16.jpg",     // placeholder — doplnit reálný obrázek produktu
+    // affiliateUrl: "",          // doplnit reálný produktový odkaz (Alza, Heureka…)
+    imageUrl: "/products/iphone-16.jpg",  // doplnit reálný obrázek nebo CDN URL
     merchantName: "Alza",
     ctaLabel: "Zobrazit nabídku →",
+    // beerEquivalentOffer: {
+    //   affiliateUrl: "",        // doplnit odkaz na pivní e-shop / předvyplněný košík
+    //   merchantName: "Pivní e-shop",
+    //   ctaLabel: "Objednat piva →",
+    // },
     note: "Nahradí 'iPhone' až budou připraveny affiliate odkazy.",
     enabled: true,
     isDefaultPreset: false,

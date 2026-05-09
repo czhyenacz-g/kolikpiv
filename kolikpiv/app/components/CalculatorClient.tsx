@@ -848,42 +848,85 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               >
                 {copyLinkMessage || "Kopírovat odkaz"}
               </button>
-              {selectedPreset?.affiliateUrl && (
-                <div className="mt-4 border border-gray-700 rounded-lg overflow-hidden">
-                  {selectedPreset.imageUrl && (
-                    <div className="bg-gray-900 flex justify-center py-3">
-                      <img
-                        src={selectedPreset.imageUrl}
-                        alt={selectedPreset.label}
-                        className="h-20 w-auto object-contain"
-                        loading="lazy"
-                        onError={(e) => {
-                          (e.currentTarget.parentElement as HTMLElement).style.display = "none";
-                        }}
-                      />
+              {selectedPreset && selectedPreset.sourceType !== "manual" && (
+                <div className="mt-4 space-y-2">
+                  {/* Produktová karta — aktivní nebo fallback */}
+                  <div className={`border rounded-lg overflow-hidden ${selectedPreset.affiliateUrl ? "border-gray-700" : "border-gray-800"}`}>
+                    {selectedPreset.imageUrl && (
+                      <div className="bg-gray-900 flex justify-center py-3">
+                        <img
+                          src={selectedPreset.imageUrl}
+                          alt={selectedPreset.label}
+                          className="h-20 w-auto object-contain"
+                          loading="lazy"
+                          onError={(e) => {
+                            (e.currentTarget.parentElement as HTMLElement).style.display = "none";
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div className="px-3 py-2.5 flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-white truncate">
+                          {selectedPreset.label}
+                        </p>
+                        <p className="text-xs text-amber-400">
+                          {selectedPreset.amount.toLocaleString("cs-CZ")} Kč
+                          {selectedPreset.merchantName && (
+                            <span className="text-gray-500"> · {selectedPreset.merchantName}</span>
+                          )}
+                        </p>
+                      </div>
+                      {selectedPreset.affiliateUrl ? (
+                        <a
+                          href={selectedPreset.affiliateUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 px-3 py-1.5 bg-gray-700 hover:bg-amber-600 rounded text-xs text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+                        >
+                          {selectedPreset.ctaLabel ?? "Zobrazit nabídku →"}
+                        </a>
+                      ) : (
+                        <span className="shrink-0 text-xs text-gray-600">Odkaz připravujeme</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Oddělovač — jen když obě karty mají aktivní CTA */}
+                  {result && result.beers >= 1 && selectedPreset.affiliateUrl && selectedPreset.beerEquivalentOffer?.affiliateUrl && (
+                    <p className="text-center text-xs text-gray-600">nebo</p>
+                  )}
+
+                  {/* Pivní karta — aktivní nebo fallback */}
+                  {result && result.beers >= 1 && (
+                    <div className={`border rounded-lg overflow-hidden ${selectedPreset.beerEquivalentOffer?.affiliateUrl ? "border-gray-700" : "border-gray-800"}`}>
+                      <div className="px-3 py-2.5 flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-white truncate">
+                            🍺 Piva za stejnou cenu
+                          </p>
+                          <p className="text-xs text-amber-400">
+                            {result.beers} {getBeerWord(result.beers)}
+                            {selectedPreset.beerEquivalentOffer?.merchantName && (
+                              <span className="text-gray-500"> · {selectedPreset.beerEquivalentOffer.merchantName}</span>
+                            )}
+                          </p>
+                        </div>
+                        {selectedPreset.beerEquivalentOffer?.affiliateUrl ? (
+                          <a
+                            href={selectedPreset.beerEquivalentOffer.affiliateUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shrink-0 px-3 py-1.5 bg-gray-700 hover:bg-amber-600 rounded text-xs text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+                          >
+                            {selectedPreset.beerEquivalentOffer.ctaLabel ?? "Objednat piva →"}
+                          </a>
+                        ) : (
+                          <span className="shrink-0 text-xs text-gray-600">Pivní nabídku připravujeme</span>
+                        )}
+                      </div>
                     </div>
                   )}
-                  <div className="px-3 py-2.5 flex items-center justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-white truncate">
-                        {selectedPreset.label}
-                      </p>
-                      <p className="text-xs text-amber-400">
-                        {selectedPreset.amount.toLocaleString("cs-CZ")} Kč
-                        {selectedPreset.merchantName && (
-                          <span className="text-gray-500"> · {selectedPreset.merchantName}</span>
-                        )}
-                      </p>
-                    </div>
-                    <a
-                      href={selectedPreset.affiliateUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="shrink-0 px-3 py-1.5 bg-gray-700 hover:bg-amber-600 rounded text-xs text-gray-300 hover:text-white transition-colors whitespace-nowrap"
-                    >
-                      {selectedPreset.ctaLabel ?? "Zobrazit nabídku →"}
-                    </a>
-                  </div>
                 </div>
               )}
             </div>
