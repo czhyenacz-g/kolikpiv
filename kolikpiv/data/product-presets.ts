@@ -72,7 +72,7 @@ export const ALL_PRODUCT_PRESETS: ProductPreset[] = [
     sourceType: "manual",
     // affiliateUrl: "", // např. "https://www.alza.cz/iphone?utm_source=kolikpiv"
     enabled: true,
-    isDefaultPreset: true,
+    isDefaultPreset: false,
     isSurpriseCandidate: true,
   },
   {
@@ -154,7 +154,7 @@ export const ALL_PRODUCT_PRESETS: ProductPreset[] = [
     // beerEquivalentOffer: {
     // beerEquivalentOffer: { affiliateUrl: "", merchantName: "Pivní e-shop", ctaLabel: "Objednat piva →" },
     enabled: true,
-    isDefaultPreset: false,
+    isDefaultPreset: true,
     isSurpriseCandidate: true,
   },
 ];
