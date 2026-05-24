@@ -6,6 +6,7 @@ import {
   type Gender,
   calcAlcohol,
   calculateCurrentPromile,
+  calcTimeToPromile,
   getPromileDisplay,
 } from "../../lib/alcohol";
 import { ALCOHOL_PRESETS } from "../../data/alcohol-presets";
@@ -17,6 +18,19 @@ function toDateTimeLocal(date: Date): string {
     `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
     `T${pad(date.getHours())}:${pad(date.getMinutes())}`
   );
+}
+
+function formatDuration(hours: number): string {
+  const h = Math.floor(hours);
+  const m = Math.round((hours - h) * 60);
+  if (h === 0) return `${m} min`;
+  if (m === 0) return `${h} h`;
+  return `${h} h ${m} min`;
+}
+
+function formatClock(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
 export default function AlcoholCalculator() {
@@ -103,6 +117,10 @@ export default function AlcoholCalculator() {
   const currentPromile = result
     ? calculateCurrentPromile(result.bacEstimate, stoppedAtDate, now)
     : 0;
+
+  // Time until ~0.3 ‰
+  const hoursTo03 = result ? calcTimeToPromile(currentPromile, 0.3) : 0;
+  const targetAt03 = new Date(now.getTime() + hoursTo03 * 3_600_000);
 
   return (
     <div className="space-y-6">
@@ -353,6 +371,21 @@ export default function AlcoholCalculator() {
                   <span className="font-bold text-amber-300">
                     cca {getPromileDisplay(currentPromile)}
                   </span>
+                </div>
+                <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
+                  <span className="text-gray-400">Na ~0,3 ‰:</span>
+                  {currentPromile <= 0.3 ? (
+                    <span className="text-green-400 font-semibold text-xs">
+                      orientačně již pod hranicí
+                    </span>
+                  ) : (
+                    <span className="font-bold text-gray-300 text-xs text-right">
+                      za {formatDuration(hoursTo03)}
+                      <span className="block text-gray-500 font-normal">
+                        kolem {formatClock(targetAt03)}
+                      </span>
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-gray-600">
                   Odbourávání počítám orientačně 0,12 ‰ za hodinu.

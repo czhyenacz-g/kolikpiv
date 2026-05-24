@@ -81,6 +81,15 @@ export function calculateCurrentPromile(
   return Math.max(0, initialPromile - hours * ELIMINATION_RATE_PER_HOUR);
 }
 
+// Vrátí počet hodin do dosažení cílového promile (0 = již pod hranicí)
+export function calcTimeToPromile(
+  currentPromile: number,
+  targetPromile = 0.3,
+  ratePerHour = ELIMINATION_RATE_PER_HOUR
+): number {
+  return Math.max(0, (currentPromile - targetPromile) / ratePerHour);
+}
+
 export function clampPromileForThermometer(
   promile: number,
   maxPromile = 4
