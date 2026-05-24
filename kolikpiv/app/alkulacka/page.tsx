@@ -24,6 +24,13 @@ export default function AlkulackaPage() {
   return (
     <div className="min-h-screen flex justify-center p-4">
       <div className="w-full max-w-md py-8">
+        {/* Back link */}
+        <div className="mb-6">
+          <Link href="/" className="text-xs text-gray-600 hover:text-amber-400 transition-colors">
+            ← kolikpiv.cz
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-8">
           <p className="text-4xl mb-3">🍺</p>
