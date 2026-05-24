@@ -1,6 +1,14 @@
 import { MetadataRoute } from 'next'
+import { SEO_EXAMPLES } from '../data/seo-examples'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const seoPages: MetadataRoute.Sitemap = SEO_EXAMPLES.map((e) => ({
+    url: `https://kolikpiv.cz/${e.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
   return [
     {
       url: 'https://kolikpiv.cz',
@@ -26,5 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    ...seoPages,
   ]
 }
