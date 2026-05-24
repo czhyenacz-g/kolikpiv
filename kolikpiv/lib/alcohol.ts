@@ -68,6 +68,34 @@ export function calcAlcohol(
   };
 }
 
+// Orientační rychlost odbourávání alkoholu (Widmark / průměrné hodnoty)
+const ELIMINATION_RATE_PER_HOUR = 0.12; // ‰ za hodinu
+
+export function calculateCurrentPromile(
+  initialPromile: number,
+  stoppedAt: Date | null,
+  now: Date = new Date()
+): number {
+  if (!stoppedAt || stoppedAt > now) return initialPromile;
+  const hours = (now.getTime() - stoppedAt.getTime()) / 3_600_000;
+  return Math.max(0, initialPromile - hours * ELIMINATION_RATE_PER_HOUR);
+}
+
+export function clampPromileForThermometer(
+  promile: number,
+  maxPromile = 4
+): number {
+  return Math.max(0, Math.min(promile, maxPromile));
+}
+
+export function getPromileDisplay(
+  promile: number,
+  maxPromile = 4
+): string {
+  if (promile > maxPromile) return `${maxPromile}+ ‰`;
+  return `${(Math.round(promile * 100) / 100).toFixed(2)} ‰`;
+}
+
 function buildDescription(beers: number, bac: number): string {
   const beersRounded = Math.round(beers * 10) / 10;
   const bacRounded = Math.round(bac * 100) / 100;

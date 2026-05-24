@@ -1,14 +1,34 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { type DrinkEntry, type Gender, calcAlcohol } from "../../lib/alcohol";
+import {
+  type DrinkEntry,
+  type Gender,
+  calcAlcohol,
+  calculateCurrentPromile,
+  getPromileDisplay,
+} from "../../lib/alcohol";
 import { ALCOHOL_PRESETS } from "../../data/alcohol-presets";
+import PromileThermometer from "./PromileThermometer";
+
+function toDateTimeLocal(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+    `T${pad(date.getHours())}:${pad(date.getMinutes())}`
+  );
+}
 
 export default function AlcoholCalculator() {
   const [gender, setGender] = useState<Gender>("male");
   const [weight, setWeight] = useState<string>("80");
+  const [stoppedAt, setStoppedAt] = useState<string>(() =>
+    toDateTimeLocal(new Date())
+  );
   const [drinks, setDrinks] = useState<DrinkEntry[]>([]);
-  const [result, setResult] = useState<ReturnType<typeof calcAlcohol> | null>(null);
+  const [result, setResult] = useState<ReturnType<typeof calcAlcohol> | null>(
+    null
+  );
   const [error, setError] = useState<string>("");
   const counter = useRef(0);
 
@@ -45,13 +65,7 @@ export default function AlcoholCalculator() {
   function addCustomDrink() {
     setDrinks((prev) => [
       ...prev,
-      {
-        id: newId(),
-        label: "Vlastní nápoj",
-        volumeMl: 500,
-        abv: 5,
-        count: 1,
-      },
+      { id: newId(), label: "Vlastní nápoj", volumeMl: 500, abv: 5, count: 1 },
     ]);
     setResult(null);
   }
@@ -81,6 +95,14 @@ export default function AlcoholCalculator() {
     setError("");
     setResult(calcAlcohol(drinks, weightNum, gender));
   }
+
+  // Derive current promile from result + stoppedAt on every render
+  const stoppedAtDate = stoppedAt ? new Date(stoppedAt) : null;
+  const now = new Date();
+  const isFuture = stoppedAtDate ? stoppedAtDate > now : false;
+  const currentPromile = result
+    ? calculateCurrentPromile(result.bacEstimate, stoppedAtDate, now)
+    : 0;
 
   return (
     <div className="space-y-6">
@@ -254,6 +276,25 @@ export default function AlcoholCalculator() {
         </p>
       )}
 
+      {/* Stopped drinking time */}
+      <div>
+        <label className="block text-sm font-medium mb-2">
+          Kdy jsi přestal/a pít?{" "}
+          <span className="text-gray-500 font-normal">(volitelné)</span>
+        </label>
+        <input
+          type="datetime-local"
+          value={stoppedAt}
+          onChange={(e) => setStoppedAt(e.target.value)}
+          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition text-sm"
+        />
+        {isFuture && (
+          <p className="mt-1.5 text-xs text-amber-600">
+            Čas konce pití je v budoucnosti — počítám bez časové korekce.
+          </p>
+        )}
+      </div>
+
       {error && (
         <div className="p-3 bg-red-900/30 border border-red-700 rounded-lg">
           <p className="text-red-400 text-sm text-center">{error}</p>
@@ -268,51 +309,82 @@ export default function AlcoholCalculator() {
         Spočítat 🍺
       </button>
 
+      {/* Result */}
       {result && (
         <div className="p-6 bg-gray-800 border border-gray-700 rounded-lg">
           <h2 className="text-lg font-bold text-center mb-5">Výsledek</h2>
 
-          <div className="grid grid-cols-3 gap-4 text-center mb-5">
+          {/* Two-column layout: stats+info | thermometer */}
+          <div className="sm:grid sm:grid-cols-[1fr_90px] sm:gap-5">
+            {/* Left: stats + time-adjusted promile + description */}
             <div>
-              <p className="text-xs text-gray-500 mb-1 leading-tight">
-                Čistý alkohol
-              </p>
-              <p className="text-2xl font-black text-amber-400">
-                {result.totalAlcoholG}
-              </p>
-              <p className="text-xs text-gray-500">g</p>
+              {/* Stats row */}
+              <div className="grid grid-cols-2 gap-3 text-center mb-4">
+                <div>
+                  <p className="text-xs text-gray-500 mb-1 leading-tight">
+                    Čistý alkohol
+                  </p>
+                  <p className="text-2xl font-black text-amber-400">
+                    {result.totalAlcoholG}
+                  </p>
+                  <p className="text-xs text-gray-500">g</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 mb-1 leading-tight">
+                    Jako piv
+                  </p>
+                  <p className="text-2xl font-black text-amber-400">
+                    {result.beerEquivalents}
+                  </p>
+                  <p className="text-xs text-gray-500">🍺</p>
+                </div>
+              </div>
+
+              {/* Promile rows */}
+              <div className="space-y-1.5 mb-4">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Odhad po vypití:</span>
+                  <span className="font-bold text-amber-400">
+                    cca {getPromileDisplay(result.bacEstimate)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Odhad teď:</span>
+                  <span className="font-bold text-amber-300">
+                    cca {getPromileDisplay(currentPromile)}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-600">
+                  Odbourávání počítám orientačně 0,12 ‰ za hodinu.
+                </p>
+                {isFuture && (
+                  <p className="text-xs text-amber-700">
+                    Čas konce pití je v budoucnosti — časová korekce není
+                    aplikována.
+                  </p>
+                )}
+              </div>
+
+              {/* Human description */}
+              <div className="bg-gray-900/60 rounded-lg p-3 text-center mb-4">
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {result.humanDescription}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-xs text-gray-500 mb-1 leading-tight">
-                Jako piv
-              </p>
-              <p className="text-2xl font-black text-amber-400">
-                {result.beerEquivalents}
-              </p>
-              <p className="text-xs text-gray-500">🍺</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 mb-1 leading-tight">
-                Odhad BAC
-              </p>
-              <p className="text-2xl font-black text-amber-400">
-                {result.bacEstimate}
-              </p>
-              <p className="text-xs text-gray-500">‰</p>
+
+            {/* Right: thermometer — on mobile appears below via block + mt */}
+            <div className="flex justify-center sm:justify-start mt-4 sm:mt-0">
+              <PromileThermometer promile={currentPromile} />
             </div>
           </div>
 
-          <div className="bg-gray-900/60 rounded-lg p-4 text-center mb-4">
-            <p className="text-gray-300 text-sm leading-relaxed">
-              {result.humanDescription}
-            </p>
-          </div>
-
+          {/* Disclaimer — full width */}
           <div className="p-3 bg-yellow-900/20 border border-yellow-700/40 rounded-lg">
             <p className="text-yellow-600/90 text-xs text-center leading-relaxed">
-              ⚠️ Výpočet je pouze orientační a slouží pro zábavu a přibližný
-              odhad. Neurčuje, zda můžete řídit nebo vykonávat činnosti
-              vyžadující střízlivost.
+              ⚠️ Výpočet je pouze orientační. Odbourávání alkoholu je
+              individuální a tento odhad neurčuje, zda můžete řídit nebo
+              vykonávat činnosti vyžadující střízlivost.
             </p>
           </div>
         </div>
