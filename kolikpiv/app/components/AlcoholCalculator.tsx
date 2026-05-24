@@ -118,7 +118,9 @@ export default function AlcoholCalculator() {
     ? calculateCurrentPromile(result.bacEstimate, stoppedAtDate, now)
     : 0;
 
-  // Čas do záporné rezervy −0,3 ‰ (= nula + dalších 2,5 h navíc)
+  // Čas do 0 ‰ a do záporné rezervy −0,3 ‰
+  const hoursToZero = result ? calcTimeToPromile(currentPromile, 0) : 0;
+  const targetAtZero = new Date(now.getTime() + hoursToZero * 3_600_000);
   const hoursTo03 = result ? calcTimeToPromile(currentPromile, -0.3) : 0;
   const targetAt03 = new Date(now.getTime() + hoursTo03 * 3_600_000);
 
@@ -371,6 +373,21 @@ export default function AlcoholCalculator() {
                   <span className="font-bold text-amber-300">
                     cca {getPromileDisplay(currentPromile)}
                   </span>
+                </div>
+                <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
+                  <span className="text-gray-400">Na 0 ‰:</span>
+                  {currentPromile <= 0 ? (
+                    <span className="text-green-400 font-semibold text-xs">
+                      orientačně již na nule
+                    </span>
+                  ) : (
+                    <span className="font-bold text-gray-300 text-xs text-right">
+                      za {formatDuration(hoursToZero)}
+                      <span className="block text-gray-500 font-normal">
+                        kolem {formatClock(targetAtZero)}
+                      </span>
+                    </span>
+                  )}
                 </div>
                 <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
                   <span className="text-gray-400 leading-tight">
