@@ -1049,7 +1049,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               <div className="flex justify-center gap-4 mt-5 pt-4 border-t border-gray-700">
                 <a href="/alkulacka" className="text-xs text-gray-500 hover:text-amber-400 transition-colors">Alkulačka</a>
                 <a href="/alkoholmetr" className="text-xs text-gray-500 hover:text-amber-400 transition-colors">Alkoholmetr</a>
-                <a href="/alkoholtester" className="text-xs text-gray-500 hover:text-amber-400 transition-colors">Alkoholtester</a>
               </div>
             </div>
           );
