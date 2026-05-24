@@ -118,8 +118,8 @@ export default function AlcoholCalculator() {
     ? calculateCurrentPromile(result.bacEstimate, stoppedAtDate, now)
     : 0;
 
-  // Time until ~0.3 ‰
-  const hoursTo03 = result ? calcTimeToPromile(currentPromile, 0.3) : 0;
+  // Čas do záporné rezervy −0,3 ‰ (= nula + dalších 2,5 h navíc)
+  const hoursTo03 = result ? calcTimeToPromile(currentPromile, -0.3) : 0;
   const targetAt03 = new Date(now.getTime() + hoursTo03 * 3_600_000);
 
   return (
@@ -373,19 +373,18 @@ export default function AlcoholCalculator() {
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
-                  <span className="text-gray-400">Na ~0,3 ‰:</span>
-                  {currentPromile <= 0.3 ? (
-                    <span className="text-green-400 font-semibold text-xs">
-                      orientačně již pod hranicí
+                  <span className="text-gray-400 leading-tight">
+                    S rez. −0,3 ‰:
+                    <span className="block text-xs text-gray-600 font-normal">
+                      nula + 2,5 h navíc
                     </span>
-                  ) : (
-                    <span className="font-bold text-gray-300 text-xs text-right">
-                      za {formatDuration(hoursTo03)}
-                      <span className="block text-gray-500 font-normal">
-                        kolem {formatClock(targetAt03)}
-                      </span>
+                  </span>
+                  <span className="font-bold text-gray-300 text-xs text-right">
+                    za {formatDuration(hoursTo03)}
+                    <span className="block text-gray-500 font-normal">
+                      kolem {formatClock(targetAt03)}
                     </span>
-                  )}
+                  </span>
                 </div>
                 <p className="text-xs text-gray-600">
                   Odbourávání počítám orientačně 0,12 ‰ za hodinu.
