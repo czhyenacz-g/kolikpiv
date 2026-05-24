@@ -670,12 +670,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           <div className="flex items-center justify-between mb-3">
             <p className="text-gray-500 text-xs">Zkus třeba:</p>
             <div className="flex gap-2">
-              <a
-                href="/alkulacka"
-                className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
-              >
-                🧪 Alkulačka
-              </a>
               <button
                 type="button"
                 onClick={handleSurprise}
@@ -683,6 +677,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               >
                 🎲 Překvap mě
               </button>
+              <a
+                href="/alkulacka"
+                className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+              >
+                🧪 Alkulačka
+              </a>
             </div>
           </div>
           <div className="flex flex-wrap justify-center gap-2">
