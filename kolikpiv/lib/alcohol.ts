@@ -81,6 +81,54 @@ export function calculateCurrentPromile(
   return Math.max(0, initialPromile - hours * ELIMINATION_RATE_PER_HOUR);
 }
 
+export interface CurrentPromileResult {
+  currentPromile: number;
+  hoursSinceStopped: number;
+  drinkingDurationHours: number;
+  effectiveMetabolismHours: number;
+  warning?: "startedAfterStopped" | "stoppedInFuture";
+}
+
+export function calculateCurrentPromileWithDuration({
+  initialPromile,
+  startedAt,
+  stoppedAt,
+  now = new Date(),
+  metabolismRatePerHour = ELIMINATION_RATE_PER_HOUR,
+}: {
+  initialPromile: number;
+  startedAt: Date | null;
+  stoppedAt: Date | null;
+  now?: Date;
+  metabolismRatePerHour?: number;
+}): CurrentPromileResult {
+  if (!stoppedAt || stoppedAt > now) {
+    return {
+      currentPromile: initialPromile,
+      hoursSinceStopped: 0,
+      drinkingDurationHours: 0,
+      effectiveMetabolismHours: 0,
+      warning: stoppedAt && stoppedAt > now ? "stoppedInFuture" : undefined,
+    };
+  }
+
+  const hoursSinceStopped = (now.getTime() - stoppedAt.getTime()) / 3_600_000;
+
+  let drinkingDurationHours = 0;
+  let warning: CurrentPromileResult["warning"];
+
+  if (startedAt && startedAt > stoppedAt) {
+    warning = "startedAfterStopped";
+  } else if (startedAt) {
+    drinkingDurationHours = (stoppedAt.getTime() - startedAt.getTime()) / 3_600_000;
+  }
+
+  const effectiveMetabolismHours = hoursSinceStopped + drinkingDurationHours * 0.5;
+  const currentPromile = Math.max(0, initialPromile - effectiveMetabolismHours * metabolismRatePerHour);
+
+  return { currentPromile, hoursSinceStopped, drinkingDurationHours, effectiveMetabolismHours, warning };
+}
+
 // Vrátí počet hodin do dosažení cílového promile (0 = již pod hranicí)
 export function calcTimeToPromile(
   currentPromile: number,

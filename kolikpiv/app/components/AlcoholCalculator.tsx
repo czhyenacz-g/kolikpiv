@@ -5,7 +5,7 @@ import {
   type DrinkEntry,
   type Gender,
   calcAlcohol,
-  calculateCurrentPromile,
+  calculateCurrentPromileWithDuration,
   calcTimeToPromile,
   getPromileDisplay,
 } from "../../lib/alcohol";
@@ -39,6 +39,8 @@ export default function AlcoholCalculator() {
   const [stoppedAt, setStoppedAt] = useState<string>(() =>
     toDateTimeLocal(new Date())
   );
+  const [startedAt, setStartedAt] = useState<string>("");
+  const [startedAtManual, setStartedAtManual] = useState(false);
   const [drinks, setDrinks] = useState<DrinkEntry[]>([]);
   const [result, setResult] = useState<ReturnType<typeof calcAlcohol> | null>(
     null
@@ -50,6 +52,18 @@ export default function AlcoholCalculator() {
     counter.current += 1;
     return String(counter.current);
   }
+
+  function getDefaultStartedAt(): string {
+    const stoppedAtDate = stoppedAt ? new Date(stoppedAt) : new Date();
+    const drinkCount = drinks.reduce((s, d) => {
+      const c = Number(d.count);
+      return s + (isFinite(c) && c >= 1 ? c : 1);
+    }, 0);
+    const durationMs = Math.min(Math.max(drinkCount * 20, 30), 300) * 60_000;
+    return toDateTimeLocal(new Date(stoppedAtDate.getTime() - durationMs));
+  }
+
+  const effectiveStartedAt = startedAtManual ? startedAt : getDefaultStartedAt();
 
   function addPreset(presetId: string) {
     const preset = ALCOHOL_PRESETS.find((p) => p.id === presetId);
@@ -110,13 +124,24 @@ export default function AlcoholCalculator() {
     setResult(calcAlcohol(drinks, weightNum, gender));
   }
 
-  // Derive current promile from result + stoppedAt on every render
+  // Derive current promile from result + time info on every render
   const stoppedAtDate = stoppedAt ? new Date(stoppedAt) : null;
+  const startedAtDate = effectiveStartedAt ? new Date(effectiveStartedAt) : null;
   const now = new Date();
   const isFuture = stoppedAtDate ? stoppedAtDate > now : false;
-  const currentPromile = result
-    ? calculateCurrentPromile(result.bacEstimate, stoppedAtDate, now)
-    : 0;
+
+  const promileCalc = result
+    ? calculateCurrentPromileWithDuration({
+        initialPromile: result.bacEstimate,
+        startedAt: startedAtDate,
+        stoppedAt: stoppedAtDate,
+        now,
+      })
+    : null;
+
+  const currentPromile = promileCalc?.currentPromile ?? 0;
+  const drinkingDurationHours = promileCalc?.drinkingDurationHours ?? 0;
+  const showStartedAfterStoppedWarning = promileCalc?.warning === "startedAfterStopped";
 
   // Čas do 0 ‰ a do záporné rezervy −0,3 ‰
   const hoursToZero = result ? calcTimeToPromile(currentPromile, 0) : 0;
@@ -296,6 +321,33 @@ export default function AlcoholCalculator() {
         </p>
       )}
 
+      {/* Started drinking time */}
+      <div>
+        <label className="block text-sm font-medium mb-2">
+          Kdy jsi začal/a pít?{" "}
+          <span className="text-gray-500 font-normal">(volitelné)</span>
+        </label>
+        <input
+          type="datetime-local"
+          value={effectiveStartedAt}
+          onChange={(e) => {
+            setStartedAt(e.target.value);
+            setStartedAtManual(true);
+          }}
+          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition text-sm"
+        />
+        {!startedAtManual && (
+          <p className="mt-1.5 text-xs text-gray-500">
+            Začátek pití jsme předvyplnili odhadem podle počtu nápojů. Můžeš ho upravit.
+          </p>
+        )}
+        {showStartedAfterStoppedWarning && (
+          <p className="mt-1.5 text-xs text-amber-600">
+            Začátek pití je nastaven po konci — délka pití se pro výpočet ignoruje.
+          </p>
+        )}
+      </div>
+
       {/* Stopped drinking time */}
       <div>
         <label className="block text-sm font-medium mb-2">
@@ -374,6 +426,14 @@ export default function AlcoholCalculator() {
                     cca {getPromileDisplay(currentPromile)}
                   </span>
                 </div>
+                {drinkingDurationHours > 0 && (
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-400">Délka pití:</span>
+                    <span className="font-bold text-gray-300">
+                      cca {formatDuration(drinkingDurationHours)}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
                   <span className="text-gray-400">Na 0 ‰:</span>
                   {currentPromile <= 0 ? (
@@ -405,11 +465,18 @@ export default function AlcoholCalculator() {
                 </div>
                 <p className="text-xs text-gray-600">
                   Odbourávání počítám orientačně 0,12 ‰ za hodinu.
+                  {drinkingDurationHours > 0 &&
+                    " Odbourávání během pití počítám zjednodušeně jako polovinu délky pití."}
                 </p>
                 {isFuture && (
                   <p className="text-xs text-amber-700">
                     Čas konce pití je v budoucnosti — časová korekce není
                     aplikována.
+                  </p>
+                )}
+                {showStartedAfterStoppedWarning && (
+                  <p className="text-xs text-amber-700">
+                    Začátek pití je nastaven po konci — počítám bez délky pití.
                   </p>
                 )}
               </div>
