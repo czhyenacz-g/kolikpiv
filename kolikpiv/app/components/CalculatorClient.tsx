@@ -661,8 +661,15 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         <p className="text-gray-500 text-center text-xs mb-3">
           (zjistíš na kolikpiv.cz)
         </p>
-        <p className="text-gray-400 text-center mb-8 text-sm">
+        <p className="text-gray-400 text-center mb-3 text-sm">
           {heroTagline}
+        </p>
+        <p className="text-gray-400 text-center mb-8 text-sm">
+          🍺 Pokud tě víc zajímá, kdy po těch pivech vystřízlivíš, zkus naši{" "}
+          <a href="/alkulacka" className="text-amber-400 hover:text-amber-300 underline">
+            Alkulačku
+          </a>
+          .
         </p>
 
         {/* Quick examples */}
