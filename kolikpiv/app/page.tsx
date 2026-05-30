@@ -50,10 +50,8 @@ export default function Home() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center p-4">
-          <div className="w-full max-w-md text-center">
-            <div className="text-gray-400 text-lg">
-              Načítám kalkulačku...
-            </div>
+          <div className="w-full max-w-sm bg-[#fdf8f0] shadow-2xl p-8 text-center">
+            <p className="font-mono text-sm text-stone-500">Načítám kalkulačku…</p>
           </div>
         </div>
       }

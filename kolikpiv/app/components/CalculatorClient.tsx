@@ -623,275 +623,304 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="flex items-center justify-center gap-3 mb-1">
-          <svg width="44" height="50" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* foam */}
-            <ellipse cx="14" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
-            <ellipse cx="26" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
-            <ellipse cx="40" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
-            <ellipse cx="52" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
-            <rect x="8" y="18" width="48" height="6" fill="white" opacity="0.95"/>
-            {/* mug body */}
-            <rect x="8" y="22" width="48" height="44" rx="4" fill="#D97706"/>
-            {/* liquid highlight */}
-            <rect x="14" y="28" width="8" height="32" rx="3" fill="#F59E0B" opacity="0.35"/>
-            {/* handle */}
-            <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
-          </svg>
-          <h1 className="text-3xl font-black tracking-tight">
-            Kolik piv za to je?
-          </h1>
-          <svg width="44" height="50" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* foam */}
-            <ellipse cx="14" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
-            <ellipse cx="26" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
-            <ellipse cx="40" cy="13" rx="9" ry="9" fill="white" opacity="0.95"/>
-            <ellipse cx="52" cy="18" rx="7" ry="7" fill="white" opacity="0.92"/>
-            <rect x="8" y="18" width="48" height="6" fill="white" opacity="0.95"/>
-            {/* mug body */}
-            <rect x="8" y="22" width="48" height="44" rx="4" fill="#D97706"/>
-            {/* liquid highlight */}
-            <rect x="14" y="28" width="8" height="32" rx="3" fill="#F59E0B" opacity="0.35"/>
-            {/* handle */}
-            <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
-          </svg>
-        </div>
-        <p className="text-stone-500 text-center text-xs mb-3">
-          (zjistíš na kolikpiv.cz)
-        </p>
-        <p className="text-stone-400 text-center mb-3 text-sm">
-          {heroTagline}
-        </p>
-        <p className="text-stone-400 text-center mb-8 text-sm">
-          🍺 Pokud tě víc zajímá, kdy po těch pivech vystřízlivíš, zkus naši{" "}
-          <a href="/alkulacka" className="text-amber-400 hover:text-amber-300 underline">
-            Alkulačku
-          </a>
-          .
-        </p>
+    <div className="min-h-screen flex flex-col items-center justify-start pt-8 pb-16 px-4">
 
-        {/* Quick examples */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-stone-500 text-xs">Zkus třeba:</p>
-            <div className="flex gap-2">
+      {/* ── RECEIPT PAPER ── */}
+      <div className="w-full max-w-sm bg-[#fdf8f0] text-stone-900 shadow-2xl">
+
+        {/* HEADER — hospodská hlavička */}
+        <div className="text-center pt-7 pb-5 px-6 border-b-2 border-dashed border-stone-400">
+          <div className="flex justify-center mb-2">
+            <svg width="32" height="36" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="14" cy="18" rx="7" ry="7" fill="#78350f" opacity="0.7"/>
+              <ellipse cx="26" cy="13" rx="9" ry="9" fill="#78350f" opacity="0.8"/>
+              <ellipse cx="40" cy="13" rx="9" ry="9" fill="#78350f" opacity="0.8"/>
+              <ellipse cx="52" cy="18" rx="7" ry="7" fill="#78350f" opacity="0.7"/>
+              <rect x="8" y="18" width="48" height="6" fill="#78350f" opacity="0.8"/>
+              <rect x="8" y="22" width="48" height="44" rx="4" fill="#92400e"/>
+              <rect x="14" y="28" width="8" height="32" rx="3" fill="#b45309" opacity="0.4"/>
+              <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#78350f" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <h1 className="font-black text-2xl tracking-widest uppercase text-stone-900">
+            Kolik piv?
+          </h1>
+          <p className="font-mono text-[10px] tracking-widest text-stone-500 mt-0.5">
+            kolikpiv.cz
+          </p>
+          <p className="font-mono text-xs text-stone-500 mt-3 italic leading-relaxed px-2">
+            {heroTagline}
+          </p>
+          <p className="font-mono text-[10px] text-stone-400 mt-2">
+            🍺{" "}
+            <a href="/alkulacka" className="underline hover:text-amber-700 transition-colors">
+              alkulačka
+            </a>{" "}
+            — kdy vystřízlivíš?
+          </p>
+        </div>
+
+        {/* PRESET ITEMS — jako řádky na jídelním lístku */}
+        <div className="px-5 pt-4 pb-3 border-b border-dashed border-stone-300">
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400">
+              — Zkus třeba —
+            </p>
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={handleSurprise}
-                className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
+                className="inline-flex items-center gap-1 px-2 py-0.5 border border-amber-700 text-amber-800 font-mono text-[10px] font-bold uppercase tracking-wider transform -rotate-1 hover:rotate-0 hover:bg-amber-50 transition-all"
               >
-                🎲 Překvap mě
+                ✦ Překvap mě
               </button>
               <a
                 href="/alkulacka"
-                className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
+                className="font-mono text-[10px] text-stone-400 italic hover:text-amber-700 transition-colors"
               >
-                🧪 Alkulačka
+                → alkulačka
               </a>
             </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="space-y-0">
             {getDefaultPresets().map((preset) => (
               <button
                 key={preset.id}
                 type="button"
                 onClick={() => handleExample(preset.amount, preset.label, preset)}
-                className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
+                className="w-full flex justify-between items-baseline py-1.5 px-1 -mx-1 hover:bg-amber-50 transition-colors group"
               >
-                {preset.label}
+                <span className="font-mono text-sm text-stone-700 group-hover:text-stone-900 text-left">
+                  {preset.label}
+                </span>
+                <span className="font-mono text-xs text-stone-400 group-hover:text-stone-600 shrink-0 ml-3 tabular-nums">
+                  {preset.amount.toLocaleString("cs-CZ")} Kč
+                </span>
               </button>
             ))}
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Co kupuješ? <span className="text-stone-500 font-normal">(volitelné)</span>
-            </label>
+        {/* FORM FIELDS — ručně doplnitelné řádky účtenky */}
+        <form onSubmit={handleSubmit} className="px-5 pt-4 pb-3">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
+            — Zadej položku —
+          </p>
+
+          <div className="flex items-baseline gap-2 py-1.5 border-b border-dotted border-stone-300">
+            <label className="font-mono text-xs text-stone-500 shrink-0 w-28">Položka:</label>
             <input
               type="text"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
-              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
-              placeholder="např. iPhone, auto, kebab…"
+              className="flex-1 text-right bg-transparent font-mono text-sm text-stone-900 focus:outline-none placeholder:text-stone-300 min-w-0"
+              placeholder="co kupuješ?"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Kolik to stojí? (CZK)
-            </label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => {
-                setPrice(e.target.value);
-                setSelectedPreset(null);
-                if (errorMessage) setErrorMessage("");
-              }}
-              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
-              placeholder="např. 1000"
-            />
+          <div className="flex items-baseline gap-2 py-1.5 border-b border-dotted border-stone-300">
+            <label className="font-mono text-xs text-stone-500 shrink-0 w-28">Cena:</label>
+            <div className="flex items-baseline gap-1 ml-auto">
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                  setSelectedPreset(null);
+                  if (errorMessage) setErrorMessage("");
+                }}
+                className="w-28 text-right bg-transparent font-mono text-sm text-stone-900 focus:outline-none placeholder:text-stone-300 tabular-nums"
+                placeholder="0"
+              />
+              <span className="font-mono text-xs text-stone-400">Kč</span>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Cena piva v hospodě (CZK)
-            </label>
-            <input
-              type="number"
-              value={beerPrice}
-              onChange={(e) => setBeerPrice(e.target.value)}
-              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
-            />
+          <div className="flex items-baseline gap-2 py-1.5 border-b border-dotted border-stone-300">
+            <label className="font-mono text-xs text-stone-500 shrink-0 w-28">Pivo v hospodě:</label>
+            <div className="flex items-baseline gap-1 ml-auto">
+              <input
+                type="number"
+                value={beerPrice}
+                onChange={(e) => setBeerPrice(e.target.value)}
+                className="w-20 text-right bg-transparent font-mono text-sm text-stone-900 focus:outline-none tabular-nums"
+              />
+              <span className="font-mono text-xs text-stone-400">Kč</span>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Kolik piv za večer v hospodě?
-            </label>
-            <input
-              type="number"
-              value={beersPerEvening}
-              onChange={(e) => setBeersPerEvening(e.target.value)}
-              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
-            />
+          <div className="flex items-baseline gap-2 py-1.5 border-b border-dotted border-stone-300">
+            <label className="font-mono text-xs text-stone-500 shrink-0 w-28">Piv za večer:</label>
+            <div className="flex items-baseline gap-1 ml-auto">
+              <input
+                type="number"
+                value={beersPerEvening}
+                onChange={(e) => setBeersPerEvening(e.target.value)}
+                className="w-16 text-right bg-transparent font-mono text-sm text-stone-900 focus:outline-none tabular-nums"
+              />
+              <span className="font-mono text-xs text-stone-400">ks</span>
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Čistá měsíční mzda (CZK)
-            </label>
-            <input
-              type="number"
-              value={monthlyWage}
-              onChange={(e) => setMonthlyWage(e.target.value)}
-              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
-            />
-            <p className="mt-1 text-xs text-stone-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
+          <div className="flex items-baseline gap-2 py-1.5 border-b border-dotted border-stone-300">
+            <label className="font-mono text-xs text-stone-500 shrink-0 w-28">Čistá mzda:</label>
+            <div className="flex items-baseline gap-1 ml-auto">
+              <input
+                type="number"
+                value={monthlyWage}
+                onChange={(e) => setMonthlyWage(e.target.value)}
+                className="w-24 text-right bg-transparent font-mono text-sm text-stone-900 focus:outline-none tabular-nums"
+              />
+              <span className="font-mono text-xs text-stone-400">Kč/m</span>
+            </div>
           </div>
 
-          {/* Hide refresh-quote button while a preset is active — user must edit price first */}
+          {errorMessage && (
+            <p className="font-mono text-xs text-red-700 mt-2 text-center">
+              ⚠ {errorMessage}
+            </p>
+          )}
+
           {(!result || !selectedPreset) && (
             <button
               type="submit"
               onClick={result ? handleRefreshMessage : () => { playClink(); }}
-              className="w-full py-3 bg-amber-700 hover:bg-amber-600 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+              className="mt-4 w-full py-2.5 border-2 border-stone-800 text-stone-900 font-mono font-bold text-sm uppercase tracking-widest hover:bg-stone-900 hover:text-[#fdf8f0] transition-colors"
             >
-              {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
+              {result ? "Jiný citát :)" : "Spočítat →"}
             </button>
           )}
         </form>
 
-        {errorMessage && (
-          <div className="mt-6 p-4 bg-red-900/30 border border-red-700 rounded-lg text-center">
-            <p className="text-red-400 font-semibold">
-              {errorMessage}
-            </p>
-          </div>
-        )}
-
+        {/* CELKEM — hlavní výsledek jako součet na účtence */}
         {result && (
-          <>
-            <div
-              className={`mt-6 p-6 bg-amber-950/20 border-2 border-amber-800/50 rounded-lg text-center transition-opacity duration-500 ${
-                showResult ? "opacity-100" : "opacity-0"
-              }`}
-            >
+          <div
+            className={`px-5 pb-6 transition-opacity duration-500 ${
+              showResult ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <div className="border-t-4 border-double border-stone-800 pt-4 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
+                ══ Celkem ══
+              </p>
+
               {result.beers < 1 ? (
-                <p className="text-3xl font-bold mb-2">
+                <p className="font-black text-2xl text-stone-900 mb-3">
                   Ani na jedno pivo 😄
                 </p>
-              ) : result.beers >= 20 ? (
-                <>
-                  <p className="text-sm text-stone-400 mb-1">Tohle je za</p>
-                  <p className="text-7xl font-black text-amber-400 mb-1 leading-none">
-                    {result.beers}
-                  </p>
-                  <p className="text-2xl font-bold mb-2">{getBeerWord(result.beers)} 🍺</p>
-                  <p className="text-stone-500 text-sm mb-3">
-                    ({Math.floor(result.beers / 20)}{" "}
-                    {(() => {
-                      const crates = Math.floor(result.beers / 20);
-                      if (crates === 1) return "basa";
-                      if (crates >= 2 && crates <= 4) return "basy";
-                      return "bas";
-                    })()}
-                    {result.beers % 20 > 0 && ` a ${result.beers % 20} ${getBeerWord(result.beers % 20)}`} 📦)
-                  </p>
-                </>
               ) : (
                 <>
-                  <p className="text-sm text-stone-400 mb-1">Tohle je za</p>
-                  <p className="text-7xl font-black text-amber-400 mb-1 leading-none">
+                  <p className="font-black text-7xl text-stone-900 leading-none tabular-nums">
                     {result.beers}
                   </p>
-                  <p className="text-2xl font-bold mb-2">{getBeerWord(result.beers)} 🍺</p>
+                  <p className="font-mono text-xl font-bold mt-1 text-stone-800">
+                    {getBeerWord(result.beers)} 🍺
+                  </p>
+                  {result.beers >= 20 && (
+                    <p className="font-mono text-xs text-stone-500 mt-1">
+                      ({Math.floor(result.beers / 20)}{" "}
+                      {(() => {
+                        const crates = Math.floor(result.beers / 20);
+                        if (crates === 1) return "basa";
+                        if (crates >= 2 && crates <= 4) return "basy";
+                        return "bas";
+                      })()}
+                      {result.beers % 20 > 0 &&
+                        ` + ${result.beers % 20} ${getBeerWord(result.beers % 20)}`}{" "}
+                      📦)
+                    </p>
+                  )}
                 </>
               )}
-              <p className="text-stone-400 mb-1">
-                = {result.hours} hodin práce
-              </p>
-              <p className="text-stone-400 text-sm mb-1">
-                {result.hours / 8 < 1
-                  ? `= ${Math.round((result.hours / 8) * 100)} % pracovního dne`
-                  : `= ${(result.hours / 8).toFixed(2)} pracovních dní`}
-              </p>
-              {(() => {
-                const evenings = parseFloat(beersPerEvening);
-                if (!isNaN(evenings) && evenings > 0 && result.beers > 0) {
-                  const eveningCount = parseFloat((result.beers / evenings).toFixed(1));
-                  const eveningWord = eveningCount === 1 ? "večer" : eveningCount < 5 ? "večery" : "večerů";
-                  return (
-                    <p className="text-stone-400 text-sm mb-2">
-                      = {eveningCount} {eveningWord} v hospodě 🍺
-                    </p>
-                  );
-                }
-                return <div className="mb-2" />;
-              })()}
-              {recalcFlash && <p className="text-green-400 text-xs mb-3">přepočítáno</p>}
+
+              {/* Sub-položky */}
+              <div className="mt-4 border-t border-dotted border-stone-300 pt-3 space-y-1 text-left">
+                <div className="flex justify-between font-mono text-xs text-stone-600">
+                  <span>Hodin práce:</span>
+                  <span className="font-medium text-stone-800 tabular-nums">{result.hours} h</span>
+                </div>
+                <div className="flex justify-between font-mono text-xs text-stone-600">
+                  <span>Pracovních dní:</span>
+                  <span className="font-medium text-stone-800 tabular-nums">
+                    {result.hours / 8 < 1
+                      ? `${Math.round((result.hours / 8) * 100)} %`
+                      : `${(result.hours / 8).toFixed(2)}`}
+                  </span>
+                </div>
+                {(() => {
+                  const evenings = parseFloat(beersPerEvening);
+                  if (!isNaN(evenings) && evenings > 0 && result.beers > 0) {
+                    const eveningCount = parseFloat((result.beers / evenings).toFixed(1));
+                    const eveningWord =
+                      eveningCount === 1 ? "večer" : eveningCount < 5 ? "večery" : "večerů";
+                    return (
+                      <div className="flex justify-between font-mono text-xs text-stone-600">
+                        <span>Večerů v hospodě:</span>
+                        <span className="font-medium text-stone-800 tabular-nums">
+                          {eveningCount} {eveningWord}
+                        </span>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
+                {recalcFlash && (
+                  <p className="text-center font-mono text-[10px] text-amber-700 mt-1">
+                    přepočítáno
+                  </p>
+                )}
+              </div>
+
+              {/* Citát ze Švejka */}
               {(() => {
                 const lastDash = result.message.lastIndexOf("\n—");
                 const hasAttribution = lastDash !== -1;
-                const quoteText = hasAttribution ? result.message.substring(0, lastDash) : result.message;
-                const attribution = hasAttribution ? result.message.substring(lastDash + 1) : null;
+                const quoteText = hasAttribution
+                  ? result.message.substring(0, lastDash)
+                  : result.message;
+                const attribution = hasAttribution
+                  ? result.message.substring(lastDash + 1)
+                  : null;
                 return (
-                  <div className="mx-auto max-w-xs w-full mb-6 border-l-4 border-amber-700 pl-4 py-2 pr-3 rounded-r-sm bg-amber-950/10 text-left">
-                    <p className="text-amber-400 text-base italic leading-relaxed whitespace-pre-line">
+                  <div className="mt-4 pt-3 border-t border-dashed border-stone-300 text-left">
+                    <p className="font-mono text-xs italic text-stone-600 leading-relaxed whitespace-pre-line">
                       „{quoteText}"
                     </p>
                     {attribution && (
-                      <p className="text-stone-400 text-sm mt-3">{attribution}</p>
+                      <p className="font-mono text-[10px] text-stone-400 mt-2">
+                        {attribution}
+                      </p>
                     )}
                   </div>
                 );
               })()}
-              <button
-                onClick={handleShare}
-                className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                Sdílej kamarádům 🍺
-              </button>
-              <button
-                onClick={handleCopyLink}
-                className="w-full py-2.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm text-stone-300 transition mt-1.5"
-              >
-                {copyLinkMessage || "Kopírovat odkaz"}
-              </button>
+
+              {/* Sdílení */}
+              <div className="mt-4 space-y-2">
+                <button
+                  onClick={handleShare}
+                  className="w-full py-2.5 bg-stone-900 text-[#fdf8f0] font-mono font-bold text-sm uppercase tracking-widest hover:bg-stone-700 transition-colors"
+                >
+                  Sdílej kamarádům 🍺
+                </button>
+                <button
+                  onClick={handleCopyLink}
+                  className="w-full py-2 border border-stone-400 text-stone-600 font-mono text-xs hover:border-stone-700 hover:text-stone-900 transition-colors"
+                >
+                  {copyLinkMessage || "Kopírovat odkaz"}
+                </button>
+              </div>
+
+              {/* Affiliate produktové / pivní karty — receipt styl */}
               {selectedPreset && selectedPreset.sourceType !== "manual" && (
-                <div className="mt-4 space-y-2">
-                  {/* Produktová karta — aktivní nebo fallback */}
-                  <div className={`border rounded-lg overflow-hidden ${selectedPreset.affiliateUrl ? "border-stone-700" : "border-stone-800"}`}>
+                <div className="mt-4 space-y-2 border-t border-dashed border-stone-300 pt-4">
+                  <div className={`border text-left ${selectedPreset.affiliateUrl ? "border-stone-400" : "border-stone-200"}`}>
                     {selectedPreset.imageUrl && (
-                      <div className="bg-stone-950 flex justify-center py-3">
+                      <div className="bg-stone-100 flex justify-center py-2">
                         <img
                           src={selectedPreset.imageUrl}
                           alt={selectedPreset.label}
-                          className="h-20 w-auto object-contain"
+                          className="h-14 w-auto object-contain"
                           loading="lazy"
                           onError={(e) => {
                             (e.currentTarget.parentElement as HTMLElement).style.display = "none";
@@ -899,15 +928,15 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         />
                       </div>
                     )}
-                    <div className="px-3 py-2.5 flex items-center justify-between gap-3">
+                    <div className="px-3 py-2 flex items-center justify-between gap-2">
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">
+                        <p className="font-mono text-xs font-semibold text-stone-900 truncate">
                           {selectedPreset.label}
                         </p>
-                        <p className="text-xs text-amber-400">
+                        <p className="font-mono text-[10px] text-amber-700">
                           {selectedPreset.amount.toLocaleString("cs-CZ")} Kč
                           {selectedPreset.merchantName && (
-                            <span className="text-stone-500"> · {selectedPreset.merchantName}</span>
+                            <span className="text-stone-400"> · {selectedPreset.merchantName}</span>
                           )}
                         </p>
                       </div>
@@ -916,38 +945,40 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                           href={selectedPreset.affiliateUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="shrink-0 px-3 py-1.5 bg-stone-800 hover:bg-amber-700 rounded text-xs text-stone-300 hover:text-white transition-colors whitespace-nowrap"
+                          className="shrink-0 px-2 py-1 border border-stone-400 hover:border-stone-700 hover:bg-stone-100 font-mono text-[10px] text-stone-600 hover:text-stone-900 transition-colors whitespace-nowrap"
                         >
-                          {selectedPreset.ctaLabel ?? "Zobrazit nabídku →"}
+                          {selectedPreset.ctaLabel ?? "Zobrazit →"}
                         </a>
                       ) : (
-                        <span className="shrink-0 text-xs text-stone-600">Odkaz připravujeme</span>
+                        <span className="shrink-0 font-mono text-[10px] text-stone-400">
+                          Odkaz připravujeme
+                        </span>
                       )}
                     </div>
                   </div>
 
-                  {/* Oddělovač VS */}
                   {result && result.beers >= 1 && (
                     <div
-                      className="text-5xl font-black tracking-tighter shrink-0 leading-none px-1 text-center"
+                      className="font-black text-3xl tracking-tighter text-center"
                       style={{ color: "#dc2626", animation: "vs-pulse 1.2s ease-in-out infinite" }}
                     >
                       VS
                     </div>
                   )}
 
-                  {/* Pivní karta — aktivní nebo fallback */}
                   {result && result.beers >= 1 && (
-                    <div className={`border rounded-lg overflow-hidden ${selectedPreset.beerEquivalentOffer?.affiliateUrl ? "border-stone-700" : "border-stone-800"}`}>
-                      <div className="px-3 py-2.5 flex items-center justify-between gap-3">
+                    <div className={`border text-left ${selectedPreset.beerEquivalentOffer?.affiliateUrl ? "border-stone-400" : "border-stone-200"}`}>
+                      <div className="px-3 py-2 flex items-center justify-between gap-2">
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-white truncate">
+                          <p className="font-mono text-xs font-semibold text-stone-900 truncate">
                             🍺 Piva za stejnou cenu
                           </p>
-                          <p className="text-xs text-amber-400">
+                          <p className="font-mono text-[10px] text-amber-700">
                             {result.beers} {getBeerWord(result.beers)}
                             {selectedPreset.beerEquivalentOffer?.merchantName && (
-                              <span className="text-stone-500"> · {selectedPreset.beerEquivalentOffer.merchantName}</span>
+                              <span className="text-stone-400">
+                                {" "}· {selectedPreset.beerEquivalentOffer.merchantName}
+                              </span>
                             )}
                           </p>
                         </div>
@@ -956,12 +987,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                             href={selectedPreset.beerEquivalentOffer.affiliateUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="shrink-0 px-3 py-1.5 bg-stone-800 hover:bg-amber-700 rounded text-xs text-stone-300 hover:text-white transition-colors whitespace-nowrap"
+                            className="shrink-0 px-2 py-1 border border-stone-400 hover:border-stone-700 hover:bg-stone-100 font-mono text-[10px] text-stone-600 hover:text-stone-900 transition-colors whitespace-nowrap"
                           >
-                            {selectedPreset.beerEquivalentOffer.ctaLabel ?? "Objednat piva →"}
+                            {selectedPreset.beerEquivalentOffer.ctaLabel ?? "Objednat →"}
                           </a>
                         ) : (
-                          <span className="shrink-0 text-xs text-stone-600">Pivní nabídku připravujeme</span>
+                          <span className="shrink-0 font-mono text-[10px] text-stone-400">
+                            Pivní nabídku připravujeme
+                          </span>
                         )}
                       </div>
                     </div>
@@ -969,91 +1002,81 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 </div>
               )}
             </div>
-
-{result.beers >= 20 && (() => {
-              const beerPriceNum = parseFloat(beerPrice);
-              const donationAmount = getDonationAmount(beerPriceNum);
-              const isCapped = beerPriceNum > 2000;
-              const qrValue = `SPD*1.0*ACC:CZ5055000000008216903002*AM:${donationAmount}.00*CC:CZK*MSG:Pivo`;
-
-              return (
-                <div
-                  className={`mt-6 p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${
-                    showResult ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <h2 className="text-xl font-bold mb-4">
-                    Kup mi pivo 🍺
-                  </h2>
-                  <p className="text-stone-300 mb-6">
-                    To už je minimálně na basu… tak ať se taky napiju 🍺
-                  </p>
-                  <div className="flex justify-center mb-4">
-                    <div
-                      ref={qrRef}
-                      onClick={handleDownloadQR}
-                      className="bg-white p-4 rounded-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
-                      title="Klikni pro uložení QR kódu"
-                    >
-                      <QRCodeSVG
-                        value={qrValue}
-                        size={200}
-                        level="M"
-                      />
-                    </div>
-                  </div>
-                  {qrDownloadMessage && (
-                    <p className="text-green-400 text-sm mb-2 font-semibold">
-                      {qrDownloadMessage}
-                    </p>
-                  )}
-                  <p className="text-stone-400 text-sm mb-2">
-                    Naskenuj v bankovní aplikaci
-                  </p>
-                  <p className="text-stone-400 text-xs mb-2 md:hidden">
-                    Klikni pro uložení 🍺
-                  </p>
-                  {donationAmount === 50 ? (
-                    <p className="text-amber-500 font-semibold">
-                      👉 50 Kč = 1 pivo pro mě
-                    </p>
-                  ) : (
-                    <>
-                      <p className="text-amber-500 font-semibold">
-                        👉 QR je připravený na {donationAmount} Kč
-                      </p>
-                      {isCapped && (
-                        <p className="text-stone-500 text-xs mt-2">
-                          Původní cena piva: {beerPriceNum} Kč 😄
-                        </p>
-                      )}
-                    </>
-                  )}
-                </div>
-              );
-            })()}
-          </>
+          </div>
         )}
 
-        {/* Alcohol equivalence */}
+        {/* PERFOROVANÝ SPODNÍ OKRAJ */}
+        <div className="receipt-tear" />
+      </div>
+
+      {/* ── SEKUNDÁRNÍ SEKCE pod účtenkou (tmavé) ── */}
+      <div className="w-full max-w-sm space-y-4 mt-5">
+
+        {/* QR donation */}
+        {result && result.beers >= 20 && (() => {
+          const beerPriceNum = parseFloat(beerPrice);
+          const donationAmount = getDonationAmount(beerPriceNum);
+          const isCapped = beerPriceNum > 2000;
+          const qrValue = `SPD*1.0*ACC:CZ5055000000008216903002*AM:${donationAmount}.00*CC:CZK*MSG:Pivo`;
+
+          return (
+            <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+              <h2 className="text-xl font-bold mb-4">Kup mi pivo 🍺</h2>
+              <p className="text-stone-300 mb-6">
+                To už je minimálně na basu… tak ať se taky napiju 🍺
+              </p>
+              <div className="flex justify-center mb-4">
+                <div
+                  ref={qrRef}
+                  onClick={handleDownloadQR}
+                  className="bg-white p-4 rounded-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                  title="Klikni pro uložení QR kódu"
+                >
+                  <QRCodeSVG value={qrValue} size={200} level="M" />
+                </div>
+              </div>
+              {qrDownloadMessage && (
+                <p className="text-green-400 text-sm mb-2 font-semibold">{qrDownloadMessage}</p>
+              )}
+              <p className="text-stone-400 text-sm mb-2">Naskenuj v bankovní aplikaci</p>
+              <p className="text-stone-400 text-xs mb-2 md:hidden">Klikni pro uložení 🍺</p>
+              {donationAmount === 50 ? (
+                <p className="text-amber-500 font-semibold">👉 50 Kč = 1 pivo pro mě</p>
+              ) : (
+                <>
+                  <p className="text-amber-500 font-semibold">
+                    👉 QR je připravený na {donationAmount} Kč
+                  </p>
+                  {isCapped && (
+                    <p className="text-stone-500 text-xs mt-2">
+                      Původní cena piva: {beerPriceNum} Kč 😄
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+          );
+        })()}
+
+        {/* Alkohol ekvivalence */}
         {result && result.beers > 0 && (() => {
-          // Based on: 12° beer, 0.5l, 5% ABV = 25ml pure alcohol
           const ALCOHOL_PER_BEER_ML = 25;
-          const VODKA_BOTTLE_ML = 200; // 0.5l × 40%
-          const WINE_BOTTLE_ML = 90;   // 0.75l × 12%
+          const VODKA_BOTTLE_ML = 200;
+          const WINE_BOTTLE_ML = 90;
 
           const pureAlcoholMl = result.beers * ALCOHOL_PER_BEER_ML;
           const vodkaBottles = parseFloat((pureAlcoholMl / VODKA_BOTTLE_ML).toFixed(1));
           const wineBottles = parseFloat((pureAlcoholMl / WINE_BOTTLE_ML).toFixed(1));
-          const pureAlcoholDisplay = pureAlcoholMl >= 1000
-            ? `${(pureAlcoholMl / 1000).toFixed(2)} l`
-            : `${pureAlcoholMl} ml`;
+          const pureAlcoholDisplay =
+            pureAlcoholMl >= 1000
+              ? `${(pureAlcoholMl / 1000).toFixed(2)} l`
+              : `${pureAlcoholMl} ml`;
 
           const vodkaWord = vodkaBottles === 1 ? "lahev" : vodkaBottles < 5 ? "lahve" : "lahví";
           const wineWord = wineBottles === 1 ? "lahev" : wineBottles < 5 ? "lahve" : "lahví";
 
           return (
-            <div className={`mt-6 p-6 bg-stone-900 border border-stone-700/70 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+            <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
               <h2 className="text-lg font-bold text-center mb-4">🧪 V přepočtu na alkohol</h2>
               <p className="text-xs text-stone-500 text-center mb-4">(počítáno jako 12° pivo, 0.5l, 5% ABV)</p>
               <div className="space-y-2 text-sm text-center">
@@ -1069,28 +1092,25 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           );
         })()}
 
-        {/* Store beer deals — temporarily replaced with ad */}
+        {/* Beer deals / reklama */}
         {(() => {
           const totalPrice = parseFloat(price);
           if (!result || isNaN(totalPrice) || totalPrice <= 0) return null;
 
-          // TODO: re-enable beer deals when links are verified
           const SHOW_BEER_DEALS = false;
 
           if (!SHOW_BEER_DEALS) {
             return (
-              <div className="mt-8">
-                <div className="p-5 rounded-lg border border-stone-700 bg-stone-900/50 text-center">
-                  <p className="text-stone-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
-                  <p className="text-stone-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
-                  <a
-                    href="mailto:reklama@kolikpiv.cz?subject=Reklama%20na%20kolikpiv.cz"
-                    className="inline-block text-amber-400 font-semibold text-sm hover:text-amber-300 transition-colors"
-                  >
-                    Objednejte si zde
-                  </a>
-                  <p className="text-stone-500 text-xs mt-2">Od 500 Kč měsíčně</p>
-                </div>
+              <div className="p-5 rounded-lg border border-stone-700 bg-stone-900/50 text-center">
+                <p className="text-stone-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
+                <p className="text-stone-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
+                <a
+                  href="mailto:reklama@kolikpiv.cz?subject=Reklama%20na%20kolikpiv.cz"
+                  className="inline-block text-amber-400 font-semibold text-sm hover:text-amber-300 transition-colors"
+                >
+                  Objednejte si zde
+                </a>
+                <p className="text-stone-500 text-xs mt-2">Od 500 Kč měsíčně</p>
               </div>
             );
           }
@@ -1102,7 +1122,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           });
 
           return (
-            <div className="mt-8">
+            <div>
               <h2 className="text-xl font-bold text-center mb-1">🔥 Co za to koupíš v obchodě</h2>
               <p className="text-stone-500 text-sm text-center mb-1">Orientačně podle ceny za kus 🍺</p>
               <p className="text-stone-500 text-xs text-center mb-6">Ceny aktualizovány: {LAST_UPDATED}</p>
@@ -1118,7 +1138,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                       )}
                       <div className="flex items-center gap-2">
                         <span className="text-2xl leading-none">{deal.icon ?? "🍺"}</span>
-                        <p className="font-semibold text-white text-sm">{deal.name}</p>
+                        <p className="font-semibold text-stone-100 text-sm">{deal.name}</p>
                       </div>
                       <p className="text-stone-400 text-xs mt-0.5">od {deal.pricePerPiece} Kč / kus</p>
                       {pieceCount > 0 ? (
@@ -1177,20 +1197,20 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           );
         })()}
 
-        {/* Calorie & running stats */}
+        {/* Kalorický přepočet */}
         {result && result.beers > 0 && (() => {
-          const KCAL_PER_BEER = 200;       // 0.5l, 12° pivo
-          const KCAL_PER_KM = 70;          // průměrný člověk ~70 kg
+          const KCAL_PER_BEER = 200;
+          const KCAL_PER_KM = 70;
 
           const totalKcal = result.beers * KCAL_PER_BEER;
           const runKm = parseFloat((totalKcal / KCAL_PER_KM).toFixed(1));
-
-          const kcalDisplay = totalKcal >= 1000
-            ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
-            : `${totalKcal} kcal`;
+          const kcalDisplay =
+            totalKcal >= 1000
+              ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
+              : `${totalKcal} kcal`;
 
           return (
-            <div className={`mt-6 p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+            <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
               <h2 className="text-lg font-bold mb-4">🏃 Kolik toho musíš odběhat</h2>
               <p className="text-stone-300 text-sm mb-1">
                 {result.beers} piv = <span className="text-amber-400 font-semibold">{kcalDisplay}</span>
@@ -1202,8 +1222,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           );
         })()}
 
-        {/* SEO Summary */}
-        <div className="mt-12 pt-8 border-t border-stone-800">
+        {/* SEO summary */}
+        <div className="pt-8 border-t border-stone-800">
           <p className="text-stone-500 text-sm text-center max-w-2xl mx-auto">
             Kolikpiv.cz je jednoduchá online kalkulačka, která převádí ceny na počet piv.
             Zadej částku a zjisti, kolik piv za ni dostaneš. Nejde o alkohol kalkulačku ani
@@ -1218,7 +1238,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           <p className="text-stone-500 text-xs">Něco může být nepřesné… ale piva sedí 😄</p>
         </div>
 
-        {/* Footer — SEO + Švejk */}
+        {/* Footer */}
         <div className="mt-8 pb-8 text-center border-t border-stone-800 pt-6">
           <p className="text-stone-500 text-sm mb-2">
             Citáty na této stránce jsou inspirovány románem{" "}
@@ -1230,13 +1250,9 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             Švejk by tohle určitě přepočítal na piva. My jsme to udělali za něj.
           </p>
           {visitorCount && (
-            <p className="text-stone-700 text-xs mt-3">
-              Návštěv celkem: {visitorCount}
-            </p>
+            <p className="text-stone-700 text-xs mt-3">Návštěv celkem: {visitorCount}</p>
           )}
-          <p className="text-stone-700 text-xs mt-1">
-            Díky, že to šíříš 🍺
-          </p>
+          <p className="text-stone-700 text-xs mt-1">Díky, že to šíříš 🍺</p>
         </div>
       </div>
     </div>
