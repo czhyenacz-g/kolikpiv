@@ -640,7 +640,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             {/* handle */}
             <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
           </svg>
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-3xl font-black tracking-tight">
             Kolik piv za to je?
           </h1>
           <svg width="44" height="50" viewBox="0 0 64 72" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -658,13 +658,13 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <path d="M56 32 Q72 32 72 46 Q72 60 56 60" stroke="#B45309" strokeWidth="6" fill="none" strokeLinecap="round"/>
           </svg>
         </div>
-        <p className="text-gray-500 text-center text-xs mb-3">
+        <p className="text-stone-500 text-center text-xs mb-3">
           (zjistíš na kolikpiv.cz)
         </p>
-        <p className="text-gray-400 text-center mb-3 text-sm">
+        <p className="text-stone-400 text-center mb-3 text-sm">
           {heroTagline}
         </p>
-        <p className="text-gray-400 text-center mb-8 text-sm">
+        <p className="text-stone-400 text-center mb-8 text-sm">
           🍺 Pokud tě víc zajímá, kdy po těch pivech vystřízlivíš, zkus naši{" "}
           <a href="/alkulacka" className="text-amber-400 hover:text-amber-300 underline">
             Alkulačku
@@ -675,18 +675,18 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         {/* Quick examples */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-gray-500 text-xs">Zkus třeba:</p>
+            <p className="text-stone-500 text-xs">Zkus třeba:</p>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={handleSurprise}
-                className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+                className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
               >
                 🎲 Překvap mě
               </button>
               <a
                 href="/alkulacka"
-                className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+                className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
               >
                 🧪 Alkulačka
               </a>
@@ -698,7 +698,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 key={preset.id}
                 type="button"
                 onClick={() => handleExample(preset.amount, preset.label, preset)}
-                className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+                className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
               >
                 {preset.label}
               </button>
@@ -709,13 +709,13 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-2">
-              Co kupuješ? <span className="text-gray-500 font-normal">(volitelné)</span>
+              Co kupuješ? <span className="text-stone-500 font-normal">(volitelné)</span>
             </label>
             <input
               type="text"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
               placeholder="např. iPhone, auto, kebab…"
             />
           </div>
@@ -732,7 +732,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 setSelectedPreset(null);
                 if (errorMessage) setErrorMessage("");
               }}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
               placeholder="např. 1000"
             />
           </div>
@@ -745,7 +745,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               type="number"
               value={beerPrice}
               onChange={(e) => setBeerPrice(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
             />
           </div>
 
@@ -757,7 +757,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               type="number"
               value={beersPerEvening}
               onChange={(e) => setBeersPerEvening(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
             />
           </div>
 
@@ -769,9 +769,9 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               type="number"
               value={monthlyWage}
               onChange={(e) => setMonthlyWage(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+              className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
             />
-            <p className="mt-1 text-xs text-zinc-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
+            <p className="mt-1 text-xs text-stone-400 text-center">Průměr v ČR ~30–33 tisíc čistého</p>
           </div>
 
           {/* Hide refresh-quote button while a preset is active — user must edit price first */}
@@ -779,7 +779,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <button
               type="submit"
               onClick={result ? handleRefreshMessage : () => { playClink(); }}
-              className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full py-3 bg-amber-700 hover:bg-amber-600 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
             >
               {result ? "Co si o tom myslíš? :)" : "Kolik piv to je?"}
             </button>
@@ -797,7 +797,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         {result && (
           <>
             <div
-              className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
+              className={`mt-6 p-6 bg-amber-950/20 border-2 border-amber-800/50 rounded-lg text-center transition-opacity duration-500 ${
                 showResult ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -807,12 +807,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 </p>
               ) : result.beers >= 20 ? (
                 <>
-                  <p className="text-sm text-gray-400 mb-1">Tohle je za</p>
+                  <p className="text-sm text-stone-400 mb-1">Tohle je za</p>
                   <p className="text-7xl font-black text-amber-400 mb-1 leading-none">
                     {result.beers}
                   </p>
                   <p className="text-2xl font-bold mb-2">{getBeerWord(result.beers)} 🍺</p>
-                  <p className="text-gray-500 text-sm mb-3">
+                  <p className="text-stone-500 text-sm mb-3">
                     ({Math.floor(result.beers / 20)}{" "}
                     {(() => {
                       const crates = Math.floor(result.beers / 20);
@@ -825,17 +825,17 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 </>
               ) : (
                 <>
-                  <p className="text-sm text-gray-400 mb-1">Tohle je za</p>
+                  <p className="text-sm text-stone-400 mb-1">Tohle je za</p>
                   <p className="text-7xl font-black text-amber-400 mb-1 leading-none">
                     {result.beers}
                   </p>
                   <p className="text-2xl font-bold mb-2">{getBeerWord(result.beers)} 🍺</p>
                 </>
               )}
-              <p className="text-gray-400 mb-1">
+              <p className="text-stone-400 mb-1">
                 = {result.hours} hodin práce
               </p>
-              <p className="text-gray-400 text-sm mb-1">
+              <p className="text-stone-400 text-sm mb-1">
                 {result.hours / 8 < 1
                   ? `= ${Math.round((result.hours / 8) * 100)} % pracovního dne`
                   : `= ${(result.hours / 8).toFixed(2)} pracovních dní`}
@@ -846,7 +846,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   const eveningCount = parseFloat((result.beers / evenings).toFixed(1));
                   const eveningWord = eveningCount === 1 ? "večer" : eveningCount < 5 ? "večery" : "večerů";
                   return (
-                    <p className="text-gray-400 text-sm mb-2">
+                    <p className="text-stone-400 text-sm mb-2">
                       = {eveningCount} {eveningWord} v hospodě 🍺
                     </p>
                   );
@@ -860,12 +860,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 const quoteText = hasAttribution ? result.message.substring(0, lastDash) : result.message;
                 const attribution = hasAttribution ? result.message.substring(lastDash + 1) : null;
                 return (
-                  <div className="mx-auto max-w-xs w-full mb-6 border-l-4 border-amber-700 pl-4 text-left">
+                  <div className="mx-auto max-w-xs w-full mb-6 border-l-4 border-amber-700 pl-4 py-2 pr-3 rounded-r-sm bg-amber-950/10 text-left">
                     <p className="text-amber-400 text-base italic leading-relaxed whitespace-pre-line">
                       „{quoteText}"
                     </p>
                     {attribution && (
-                      <p className="text-gray-400 text-sm mt-3">{attribution}</p>
+                      <p className="text-stone-400 text-sm mt-3">{attribution}</p>
                     )}
                   </div>
                 );
@@ -878,16 +878,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               </button>
               <button
                 onClick={handleCopyLink}
-                className="w-full py-2.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm text-gray-300 transition mt-1.5"
+                className="w-full py-2.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm text-stone-300 transition mt-1.5"
               >
                 {copyLinkMessage || "Kopírovat odkaz"}
               </button>
               {selectedPreset && selectedPreset.sourceType !== "manual" && (
                 <div className="mt-4 space-y-2">
                   {/* Produktová karta — aktivní nebo fallback */}
-                  <div className={`border rounded-lg overflow-hidden ${selectedPreset.affiliateUrl ? "border-gray-700" : "border-gray-800"}`}>
+                  <div className={`border rounded-lg overflow-hidden ${selectedPreset.affiliateUrl ? "border-stone-700" : "border-stone-800"}`}>
                     {selectedPreset.imageUrl && (
-                      <div className="bg-gray-900 flex justify-center py-3">
+                      <div className="bg-stone-950 flex justify-center py-3">
                         <img
                           src={selectedPreset.imageUrl}
                           alt={selectedPreset.label}
@@ -907,7 +907,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         <p className="text-xs text-amber-400">
                           {selectedPreset.amount.toLocaleString("cs-CZ")} Kč
                           {selectedPreset.merchantName && (
-                            <span className="text-gray-500"> · {selectedPreset.merchantName}</span>
+                            <span className="text-stone-500"> · {selectedPreset.merchantName}</span>
                           )}
                         </p>
                       </div>
@@ -916,12 +916,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                           href={selectedPreset.affiliateUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="shrink-0 px-3 py-1.5 bg-gray-700 hover:bg-amber-600 rounded text-xs text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+                          className="shrink-0 px-3 py-1.5 bg-stone-800 hover:bg-amber-700 rounded text-xs text-stone-300 hover:text-white transition-colors whitespace-nowrap"
                         >
                           {selectedPreset.ctaLabel ?? "Zobrazit nabídku →"}
                         </a>
                       ) : (
-                        <span className="shrink-0 text-xs text-gray-600">Odkaz připravujeme</span>
+                        <span className="shrink-0 text-xs text-stone-600">Odkaz připravujeme</span>
                       )}
                     </div>
                   </div>
@@ -938,7 +938,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
                   {/* Pivní karta — aktivní nebo fallback */}
                   {result && result.beers >= 1 && (
-                    <div className={`border rounded-lg overflow-hidden ${selectedPreset.beerEquivalentOffer?.affiliateUrl ? "border-gray-700" : "border-gray-800"}`}>
+                    <div className={`border rounded-lg overflow-hidden ${selectedPreset.beerEquivalentOffer?.affiliateUrl ? "border-stone-700" : "border-stone-800"}`}>
                       <div className="px-3 py-2.5 flex items-center justify-between gap-3">
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-white truncate">
@@ -947,7 +947,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                           <p className="text-xs text-amber-400">
                             {result.beers} {getBeerWord(result.beers)}
                             {selectedPreset.beerEquivalentOffer?.merchantName && (
-                              <span className="text-gray-500"> · {selectedPreset.beerEquivalentOffer.merchantName}</span>
+                              <span className="text-stone-500"> · {selectedPreset.beerEquivalentOffer.merchantName}</span>
                             )}
                           </p>
                         </div>
@@ -956,12 +956,12 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                             href={selectedPreset.beerEquivalentOffer.affiliateUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="shrink-0 px-3 py-1.5 bg-gray-700 hover:bg-amber-600 rounded text-xs text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+                            className="shrink-0 px-3 py-1.5 bg-stone-800 hover:bg-amber-700 rounded text-xs text-stone-300 hover:text-white transition-colors whitespace-nowrap"
                           >
                             {selectedPreset.beerEquivalentOffer.ctaLabel ?? "Objednat piva →"}
                           </a>
                         ) : (
-                          <span className="shrink-0 text-xs text-gray-600">Pivní nabídku připravujeme</span>
+                          <span className="shrink-0 text-xs text-stone-600">Pivní nabídku připravujeme</span>
                         )}
                       </div>
                     </div>
@@ -978,14 +978,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
               return (
                 <div
-                  className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${
+                  className={`mt-6 p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${
                     showResult ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <h2 className="text-xl font-bold mb-4">
                     Kup mi pivo 🍺
                   </h2>
-                  <p className="text-gray-300 mb-6">
+                  <p className="text-stone-300 mb-6">
                     To už je minimálně na basu… tak ať se taky napiju 🍺
                   </p>
                   <div className="flex justify-center mb-4">
@@ -1007,10 +1007,10 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                       {qrDownloadMessage}
                     </p>
                   )}
-                  <p className="text-gray-400 text-sm mb-2">
+                  <p className="text-stone-400 text-sm mb-2">
                     Naskenuj v bankovní aplikaci
                   </p>
-                  <p className="text-zinc-400 text-xs mb-2 md:hidden">
+                  <p className="text-stone-400 text-xs mb-2 md:hidden">
                     Klikni pro uložení 🍺
                   </p>
                   {donationAmount === 50 ? (
@@ -1023,7 +1023,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         👉 QR je připravený na {donationAmount} Kč
                       </p>
                       {isCapped && (
-                        <p className="text-gray-500 text-xs mt-2">
+                        <p className="text-stone-500 text-xs mt-2">
                           Původní cena piva: {beerPriceNum} Kč 😄
                         </p>
                       )}
@@ -1053,17 +1053,17 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           const wineWord = wineBottles === 1 ? "lahev" : wineBottles < 5 ? "lahve" : "lahví";
 
           return (
-            <div className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+            <div className={`mt-6 p-6 bg-stone-900 border border-stone-700/70 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
               <h2 className="text-lg font-bold text-center mb-4">🧪 V přepočtu na alkohol</h2>
-              <p className="text-xs text-gray-500 text-center mb-4">(počítáno jako 12° pivo, 0.5l, 5% ABV)</p>
+              <p className="text-xs text-stone-500 text-center mb-4">(počítáno jako 12° pivo, 0.5l, 5% ABV)</p>
               <div className="space-y-2 text-sm text-center">
-                <p className="text-gray-300">= <span className="text-amber-400 font-semibold">{pureAlcoholDisplay}</span> čistého alkoholu</p>
-                <p className="text-gray-300">= <span className="text-amber-400 font-semibold">{vodkaBottles} {vodkaWord}</span> vodky (0.5l, 40 %)</p>
-                <p className="text-gray-300">= <span className="text-amber-400 font-semibold">{wineBottles} {wineWord}</span> vína (0.75l, 12 %)</p>
+                <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{pureAlcoholDisplay}</span> čistého alkoholu</p>
+                <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{vodkaBottles} {vodkaWord}</span> vodky (0.5l, 40 %)</p>
+                <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{wineBottles} {wineWord}</span> vína (0.75l, 12 %)</p>
               </div>
-              <div className="flex justify-center gap-4 mt-5 pt-4 border-t border-gray-700">
-                <a href="/alkulacka" className="text-xs text-gray-500 hover:text-amber-400 transition-colors">Alkulačka</a>
-                <a href="/alkoholmetr" className="text-xs text-gray-500 hover:text-amber-400 transition-colors">Alkoholmetr</a>
+              <div className="flex justify-center gap-4 mt-5 pt-4 border-t border-stone-700">
+                <a href="/alkulacka" className="text-xs text-stone-500 hover:text-amber-400 transition-colors">Alkulačka</a>
+                <a href="/alkoholmetr" className="text-xs text-stone-500 hover:text-amber-400 transition-colors">Alkoholmetr</a>
               </div>
             </div>
           );
@@ -1080,16 +1080,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           if (!SHOW_BEER_DEALS) {
             return (
               <div className="mt-8">
-                <div className="p-5 rounded-lg border border-gray-700 bg-gray-800/50 text-center">
-                  <p className="text-gray-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
-                  <p className="text-gray-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
+                <div className="p-5 rounded-lg border border-stone-700 bg-stone-900/50 text-center">
+                  <p className="text-stone-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
+                  <p className="text-stone-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
                   <a
                     href="mailto:reklama@kolikpiv.cz?subject=Reklama%20na%20kolikpiv.cz"
                     className="inline-block text-amber-400 font-semibold text-sm hover:text-amber-300 transition-colors"
                   >
                     Objednejte si zde
                   </a>
-                  <p className="text-gray-500 text-xs mt-2">Od 500 Kč měsíčně</p>
+                  <p className="text-stone-500 text-xs mt-2">Od 500 Kč měsíčně</p>
                 </div>
               </div>
             );
@@ -1104,8 +1104,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           return (
             <div className="mt-8">
               <h2 className="text-xl font-bold text-center mb-1">🔥 Co za to koupíš v obchodě</h2>
-              <p className="text-gray-500 text-sm text-center mb-1">Orientačně podle ceny za kus 🍺</p>
-              <p className="text-zinc-500 text-xs text-center mb-6">Ceny aktualizovány: {LAST_UPDATED}</p>
+              <p className="text-stone-500 text-sm text-center mb-1">Orientačně podle ceny za kus 🍺</p>
+              <p className="text-stone-500 text-xs text-center mb-6">Ceny aktualizovány: {LAST_UPDATED}</p>
               <div className="space-y-3">
                 {sorted.map((deal) => {
                   const pieceCount = Math.floor(totalPrice / deal.pricePerPiece);
@@ -1120,14 +1120,14 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         <span className="text-2xl leading-none">{deal.icon ?? "🍺"}</span>
                         <p className="font-semibold text-white text-sm">{deal.name}</p>
                       </div>
-                      <p className="text-gray-400 text-xs mt-0.5">od {deal.pricePerPiece} Kč / kus</p>
+                      <p className="text-stone-400 text-xs mt-0.5">od {deal.pricePerPiece} Kč / kus</p>
                       {pieceCount > 0 ? (
                         <p className="text-amber-400 text-sm mt-1">{pieceCount} piv 🍺</p>
                       ) : (
-                        <p className="text-gray-600 text-sm mt-1">Na tohle zatím nestačí</p>
+                        <p className="text-stone-600 text-sm mt-1">Na tohle zatím nestačí</p>
                       )}
                       {deal.isBestDeal && (
-                        <p className="text-gray-500 text-xs mt-1">Nejlepší cena právě teď</p>
+                        <p className="text-stone-500 text-xs mt-1">Nejlepší cena právě teď</p>
                       )}
                       {isClickable && (
                         <p className="text-blue-400 text-xs mt-1.5">Mrkni na ceny 🍺</p>
@@ -1150,8 +1150,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                         })}
                         className={`block p-4 rounded-lg border transition-colors ${
                           deal.isBestDeal
-                            ? "bg-gray-800 border-amber-500/60 hover:border-amber-400 hover:bg-gray-700"
-                            : "bg-gray-800 border-gray-600 hover:border-amber-500 hover:bg-gray-700"
+                            ? "bg-stone-900 border-amber-700/60 hover:border-amber-600 hover:bg-stone-800"
+                            : "bg-stone-900 border-stone-700 hover:border-amber-600 hover:bg-stone-800"
                         }`}
                       >
                         {inner}
@@ -1163,8 +1163,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                       key={deal.id}
                       className={`p-4 rounded-lg border ${
                         deal.isBestDeal
-                          ? "bg-gray-800 border-amber-500/60"
-                          : "bg-gray-800 border-gray-700"
+                          ? "bg-stone-900 border-amber-700/60"
+                          : "bg-stone-900 border-stone-700"
                       }`}
                     >
                       {inner}
@@ -1172,7 +1172,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   );
                 })}
               </div>
-              <p className="text-zinc-600 text-xs text-center mt-4">Ceny se mohou lišit podle aktuálních akcí 🍺</p>
+              <p className="text-stone-600 text-xs text-center mt-4">Ceny se mohou lišit podle aktuálních akcí 🍺</p>
             </div>
           );
         })()}
@@ -1190,21 +1190,21 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             : `${totalKcal} kcal`;
 
           return (
-            <div className={`mt-6 p-6 bg-gray-800 border border-gray-700 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+            <div className={`mt-6 p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
               <h2 className="text-lg font-bold mb-4">🏃 Kolik toho musíš odběhat</h2>
-              <p className="text-gray-300 text-sm mb-1">
+              <p className="text-stone-300 text-sm mb-1">
                 {result.beers} piv = <span className="text-amber-400 font-semibold">{kcalDisplay}</span>
               </p>
               <p className="text-3xl font-bold text-amber-400 my-3">{runKm} km</p>
-              <p className="text-gray-500 text-xs">(při průměrném tempu, ~70 kcal/km)</p>
-              <p className="text-gray-600 text-xs mt-3">Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.</p>
+              <p className="text-stone-500 text-xs">(při průměrném tempu, ~70 kcal/km)</p>
+              <p className="text-stone-600 text-xs mt-3">Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.</p>
             </div>
           );
         })()}
 
         {/* SEO Summary */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <p className="text-gray-500 text-sm text-center max-w-2xl mx-auto">
+        <div className="mt-12 pt-8 border-t border-stone-800">
+          <p className="text-stone-500 text-sm text-center max-w-2xl mx-auto">
             Kolikpiv.cz je jednoduchá online kalkulačka, která převádí ceny na počet piv.
             Zadej částku a zjisti, kolik piv za ni dostaneš. Nejde o alkohol kalkulačku ani
             výpočet promile, ale o zábavný způsob, jak si představit hodnotu peněz. Například
@@ -1214,27 +1214,27 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
         {/* Disclaimer */}
         <div className="mt-6 text-center">
-          <p className="text-zinc-500 text-xs">Experiment 🍺</p>
-          <p className="text-zinc-500 text-xs">Něco může být nepřesné… ale piva sedí 😄</p>
+          <p className="text-stone-500 text-xs">Experiment 🍺</p>
+          <p className="text-stone-500 text-xs">Něco může být nepřesné… ale piva sedí 😄</p>
         </div>
 
         {/* Footer — SEO + Švejk */}
-        <div className="mt-8 pb-8 text-center border-t border-gray-800 pt-6">
-          <p className="text-gray-500 text-sm mb-2">
+        <div className="mt-8 pb-8 text-center border-t border-stone-800 pt-6">
+          <p className="text-stone-500 text-sm mb-2">
             Citáty na této stránce jsou inspirovány románem{" "}
-            <strong className="text-gray-400">Osudy dobrého vojáka Švejka za světové války</strong>{" "}
+            <strong className="text-stone-400">Osudy dobrého vojáka Švejka za světové války</strong>{" "}
             od Jaroslava Haška — jako pocta českému humoru, hospodské filozofii a nenapravitelnému optimismu
             tváří v tvář absurditě.
           </p>
-          <p className="text-gray-600 text-xs mt-2">
+          <p className="text-stone-600 text-xs mt-2">
             Švejk by tohle určitě přepočítal na piva. My jsme to udělali za něj.
           </p>
           {visitorCount && (
-            <p className="text-gray-700 text-xs mt-3">
+            <p className="text-stone-700 text-xs mt-3">
               Návštěv celkem: {visitorCount}
             </p>
           )}
-          <p className="text-gray-700 text-xs mt-1">
+          <p className="text-stone-700 text-xs mt-1">
             Díky, že to šíříš 🍺
           </p>
         </div>

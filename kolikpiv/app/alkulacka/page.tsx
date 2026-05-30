@@ -26,7 +26,7 @@ export default function AlkulackaPage() {
       <div className="w-full max-w-md py-8">
         {/* Back link */}
         <div className="mb-6">
-          <Link href="/" className="text-xs text-gray-600 hover:text-amber-400 transition-colors">
+          <Link href="/" className="text-xs text-stone-600 hover:text-amber-400 transition-colors">
             ← kolikpiv.cz
           </Link>
         </div>
@@ -34,8 +34,8 @@ export default function AlkulackaPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <p className="text-4xl mb-3">🍺</p>
-          <h1 className="text-3xl font-bold mb-2">Alkulačka</h1>
-          <p className="text-gray-400 text-sm">
+          <h1 className="text-3xl font-black tracking-tight mb-2">Alkulačka</h1>
+          <p className="text-stone-400 text-sm">
             Alkoholová kalkulačka — přepočítej pivo, víno a panáky na orientační
             promile.
           </p>
@@ -47,7 +47,7 @@ export default function AlkulackaPage() {
         </div>
 
         {/* SEO content */}
-        <div className="mt-10 pt-8 border-t border-gray-800 space-y-8 text-sm text-gray-400 leading-relaxed">
+        <div className="mt-10 pt-8 border-t border-stone-800 space-y-8 text-sm text-stone-400 leading-relaxed">
           <section>
             <h2 className="text-white font-semibold text-base mb-2">
               Co je alkulačka?
@@ -129,14 +129,14 @@ export default function AlkulackaPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="mt-8 pb-8 text-center border-t border-gray-800 pt-6">
-          <p className="text-zinc-600 text-xs leading-relaxed">
+        <div className="mt-8 pb-8 text-center border-t border-stone-800 pt-6">
+          <p className="text-stone-600 text-xs leading-relaxed">
             Alkulačka je čistě orientační nástroj pro zábavu a přibližný odhad.
             Neurčuje, zda můžete řídit nebo vykonávat jiné činnosti vyžadující
             střízlivost.
           </p>
-          <p className="text-zinc-700 text-xs mt-2">
-            <Link href="/" className="hover:text-zinc-500 transition-colors">
+          <p className="text-stone-700 text-xs mt-2">
+            <Link href="/" className="hover:text-stone-500 transition-colors">
               ← zpět na kolikpiv.cz
             </Link>
           </p>

@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="cs">
-      <body className="bg-gray-900 text-white antialiased">
+      <body className="bg-stone-950 text-stone-100 antialiased">
         {children}
         <Analytics />
         {GOATCOUNTER_CODE && (

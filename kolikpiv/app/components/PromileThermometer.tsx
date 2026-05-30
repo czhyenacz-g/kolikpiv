@@ -40,7 +40,7 @@ export default function PromileThermometer({
 
   return (
     <div className="flex flex-col items-center gap-1 select-none">
-      <p className="text-xs text-gray-500 text-center leading-tight">
+      <p className="text-xs text-stone-500 text-center leading-tight">
         Odhad teď
       </p>
       <p className="text-base font-black text-amber-400 text-center leading-tight whitespace-nowrap">
@@ -63,7 +63,7 @@ export default function PromileThermometer({
             return (
               <span
                 key={m.value}
-                className="absolute right-0 text-[10px] text-gray-500 leading-none"
+                className="absolute right-0 text-[10px] text-stone-500 leading-none"
                 style={{
                   bottom: fromBottom,
                   transform: "translateY(50%)",
@@ -82,7 +82,7 @@ export default function PromileThermometer({
         >
           {/* tube background */}
           <div
-            className="absolute border border-gray-600 bg-gray-900"
+            className="absolute border border-stone-700 bg-stone-950"
             style={{
               left: tubeLeft,
               top: 0,
@@ -108,19 +108,19 @@ export default function PromileThermometer({
           )}
           {/* bulb */}
           <div
-            className="absolute border border-gray-600 rounded-full transition-colors duration-500"
+            className="absolute border border-stone-700 rounded-full transition-colors duration-500"
             style={{
               bottom: 0,
               left: 0,
               width: BULB_D,
               height: BULB_D,
-              backgroundColor: fillH > 0 ? color : "#374151",
+              backgroundColor: fillH > 0 ? color : "#44403c",
             }}
           />
         </div>
       </div>
 
-      <p className="text-[10px] text-gray-600 text-center leading-tight mt-1">
+      <p className="text-[10px] text-stone-600 text-center leading-tight mt-1">
         jen
         <br />
         orientačně

@@ -166,7 +166,7 @@ export default function AlcoholCalculator() {
               className={`flex-1 py-2.5 rounded-lg border text-sm font-semibold transition-colors ${
                 gender === g
                   ? "bg-amber-600 border-amber-500 text-white"
-                  : "bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-600"
+                  : "bg-stone-900 border-stone-700 text-stone-300 hover:border-stone-600"
               }`}
             >
               {g === "male" ? "Muž" : "Žena"}
@@ -187,7 +187,7 @@ export default function AlcoholCalculator() {
           }}
           min="30"
           max="300"
-          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition"
+          className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition"
           placeholder="např. 80"
         />
       </div>
@@ -201,7 +201,7 @@ export default function AlcoholCalculator() {
               key={preset.id}
               type="button"
               onClick={() => addPreset(preset.id)}
-              className="px-3 py-1.5 bg-gray-800 border border-gray-700 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-300 transition-colors"
+              className="px-3 py-1.5 bg-stone-900 border border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-300 transition-colors"
             >
               {preset.label}
             </button>
@@ -209,7 +209,7 @@ export default function AlcoholCalculator() {
           <button
             type="button"
             onClick={addCustomDrink}
-            className="px-3 py-1.5 bg-gray-800 border border-dashed border-gray-600 hover:border-amber-500 hover:text-amber-400 rounded-full text-xs text-gray-400 transition-colors"
+            className="px-3 py-1.5 bg-stone-900 border border-dashed border-stone-700 hover:border-amber-600 hover:text-amber-400 rounded-full text-xs text-stone-400 transition-colors"
           >
             + vlastní
           </button>
@@ -222,7 +222,7 @@ export default function AlcoholCalculator() {
           {drinks.map((drink) => (
             <div
               key={drink.id}
-              className="bg-gray-800 border border-gray-700 rounded-lg p-3"
+              className="bg-stone-900 border border-stone-700 rounded-lg p-3"
             >
               <div className="flex items-center justify-between mb-2">
                 <input
@@ -234,19 +234,19 @@ export default function AlcoholCalculator() {
                       presetId: undefined,
                     })
                   }
-                  className="bg-transparent text-sm font-medium text-white focus:outline-none border-b border-transparent focus:border-amber-500 pb-0.5 flex-1 mr-2"
+                  className="bg-transparent text-sm font-medium text-white focus:outline-none border-b border-transparent focus:border-amber-600 pb-0.5 flex-1 mr-2"
                 />
                 <button
                   type="button"
                   onClick={() => removeDrink(drink.id)}
-                  className="text-gray-600 hover:text-red-400 transition-colors text-xl leading-none w-6 text-center"
+                  className="text-stone-600 hover:text-red-400 transition-colors text-xl leading-none w-6 text-center"
                 >
                   ×
                 </button>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">
+                  <label className="block text-xs text-stone-500 mb-1">
                     Objem (ml)
                   </label>
                   <input
@@ -259,11 +259,11 @@ export default function AlcoholCalculator() {
                       })
                     }
                     min="10"
-                    className="w-full px-2 py-1.5 bg-gray-900 border border-gray-600 rounded text-sm focus:outline-none focus:border-amber-500"
+                    className="w-full px-2 py-1.5 bg-stone-950 border border-stone-700 rounded text-sm focus:outline-none focus:border-amber-600"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">
+                  <label className="block text-xs text-stone-500 mb-1">
                     Alkohol (%)
                   </label>
                   <input
@@ -278,11 +278,11 @@ export default function AlcoholCalculator() {
                     min="0"
                     max="80"
                     step="0.1"
-                    className="w-full px-2 py-1.5 bg-gray-900 border border-gray-600 rounded text-sm focus:outline-none focus:border-amber-500"
+                    className="w-full px-2 py-1.5 bg-stone-950 border border-stone-700 rounded text-sm focus:outline-none focus:border-amber-600"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">
+                  <label className="block text-xs text-stone-500 mb-1">
                     Počet
                   </label>
                   <div className="flex items-center gap-1">
@@ -293,7 +293,7 @@ export default function AlcoholCalculator() {
                           ? updateDrink(drink.id, { count: drink.count - 1 })
                           : removeDrink(drink.id)
                       }
-                      className="w-7 h-[34px] bg-gray-700 hover:bg-gray-600 rounded text-base font-bold transition-colors"
+                      className="w-7 h-[34px] bg-stone-800 hover:bg-stone-700 rounded text-base font-bold transition-colors"
                     >
                       −
                     </button>
@@ -305,7 +305,7 @@ export default function AlcoholCalculator() {
                       onClick={() =>
                         updateDrink(drink.id, { count: drink.count + 1 })
                       }
-                      className="w-7 h-[34px] bg-gray-700 hover:bg-gray-600 rounded text-base font-bold transition-colors"
+                      className="w-7 h-[34px] bg-stone-800 hover:bg-stone-700 rounded text-base font-bold transition-colors"
                     >
                       +
                     </button>
@@ -316,7 +316,7 @@ export default function AlcoholCalculator() {
           ))}
         </div>
       ) : (
-        <p className="text-gray-600 text-sm text-center py-4 border border-dashed border-gray-800 rounded-lg">
+        <p className="text-stone-600 text-sm text-center py-4 border border-dashed border-stone-800 rounded-lg">
           Zatím žádný nápoj — přidej ho tlačítky výše.
         </p>
       )}
@@ -325,7 +325,7 @@ export default function AlcoholCalculator() {
       <div>
         <label className="block text-sm font-medium mb-2">
           Kdy jsi začal/a pít?{" "}
-          <span className="text-gray-500 font-normal">(volitelné)</span>
+          <span className="text-stone-500 font-normal">(volitelné)</span>
         </label>
         <input
           type="datetime-local"
@@ -334,10 +334,10 @@ export default function AlcoholCalculator() {
             setStartedAt(e.target.value);
             setStartedAtManual(true);
           }}
-          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition text-sm"
+          className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition text-sm"
         />
         {!startedAtManual && (
-          <p className="mt-1.5 text-xs text-gray-500">
+          <p className="mt-1.5 text-xs text-stone-500">
             Začátek pití jsme předvyplnili odhadem podle počtu nápojů. Můžeš ho upravit.
           </p>
         )}
@@ -352,13 +352,13 @@ export default function AlcoholCalculator() {
       <div>
         <label className="block text-sm font-medium mb-2">
           Kdy jsi přestal/a pít?{" "}
-          <span className="text-gray-500 font-normal">(volitelné)</span>
+          <span className="text-stone-500 font-normal">(volitelné)</span>
         </label>
         <input
           type="datetime-local"
           value={stoppedAt}
           onChange={(e) => setStoppedAt(e.target.value)}
-          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-amber-500 transition text-sm"
+          className="w-full px-4 py-3 bg-stone-900/80 border border-stone-700 rounded-lg focus:outline-none focus:border-amber-600 transition text-sm"
         />
         {isFuture && (
           <p className="mt-1.5 text-xs text-amber-600">
@@ -376,14 +376,14 @@ export default function AlcoholCalculator() {
       <button
         type="button"
         onClick={calculate}
-        className="w-full py-3 bg-amber-600 hover:bg-amber-700 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
+        className="w-full py-3 bg-amber-700 hover:bg-amber-600 rounded-lg font-semibold transition transform hover:scale-[1.02] active:scale-[0.98]"
       >
         Spočítat 🍺
       </button>
 
       {/* Result */}
       {result && (
-        <div className="p-6 bg-gray-800 border border-gray-700 rounded-lg">
+        <div className="p-6 bg-stone-900 border border-amber-900/50 rounded-lg">
           <h2 className="text-lg font-bold text-center mb-5">Výsledek</h2>
 
           {/* Two-column layout: stats+info | thermometer */}
@@ -393,77 +393,77 @@ export default function AlcoholCalculator() {
               {/* Stats row */}
               <div className="grid grid-cols-2 gap-3 text-center mb-4">
                 <div>
-                  <p className="text-xs text-gray-500 mb-1 leading-tight">
+                  <p className="text-xs text-stone-500 mb-1 leading-tight">
                     Čistý alkohol
                   </p>
                   <p className="text-2xl font-black text-amber-400">
                     {result.totalAlcoholG}
                   </p>
-                  <p className="text-xs text-gray-500">g</p>
+                  <p className="text-xs text-stone-500">g</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 mb-1 leading-tight">
+                  <p className="text-xs text-stone-500 mb-1 leading-tight">
                     Jako piv
                   </p>
                   <p className="text-2xl font-black text-amber-400">
                     {result.beerEquivalents}
                   </p>
-                  <p className="text-xs text-gray-500">🍺</p>
+                  <p className="text-xs text-stone-500">🍺</p>
                 </div>
               </div>
 
               {/* Promile rows */}
               <div className="space-y-1.5 mb-4">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-400">Odhad po vypití:</span>
+                  <span className="text-stone-400">Odhad po vypití:</span>
                   <span className="font-bold text-amber-400">
                     cca {getPromileDisplay(result.bacEstimate)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-400">Odhad teď:</span>
+                  <span className="text-stone-400">Odhad teď:</span>
                   <span className="font-bold text-amber-300">
                     cca {getPromileDisplay(currentPromile)}
                   </span>
                 </div>
                 {drinkingDurationHours > 0 && (
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-400">Délka pití:</span>
-                    <span className="font-bold text-gray-300">
+                    <span className="text-stone-400">Délka pití:</span>
+                    <span className="font-bold text-stone-300">
                       cca {formatDuration(drinkingDurationHours)}
                     </span>
                   </div>
                 )}
-                <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
-                  <span className="text-gray-400">Na 0 ‰:</span>
+                <div className="flex justify-between items-center text-sm pt-1 border-t border-stone-700/50">
+                  <span className="text-stone-400">Na 0 ‰:</span>
                   {currentPromile <= 0 ? (
                     <span className="text-green-400 font-semibold text-xs">
                       orientačně již na nule
                     </span>
                   ) : (
-                    <span className="font-bold text-gray-300 text-xs text-right">
+                    <span className="font-bold text-stone-300 text-xs text-right">
                       za {formatDuration(hoursToZero)}
-                      <span className="block text-gray-500 font-normal">
+                      <span className="block text-stone-500 font-normal">
                         kolem {formatClock(targetAtZero)}
                       </span>
                     </span>
                   )}
                 </div>
-                <div className="flex justify-between items-center text-sm pt-1 border-t border-gray-700/50">
-                  <span className="text-gray-400 leading-tight">
+                <div className="flex justify-between items-center text-sm pt-1 border-t border-stone-700/50">
+                  <span className="text-stone-400 leading-tight">
                     S rez. −0,3 ‰:
-                    <span className="block text-xs text-gray-600 font-normal">
+                    <span className="block text-xs text-stone-600 font-normal">
                       nula + 2,5 h navíc
                     </span>
                   </span>
-                  <span className="font-bold text-gray-300 text-xs text-right">
+                  <span className="font-bold text-stone-300 text-xs text-right">
                     za {formatDuration(hoursTo03)}
-                    <span className="block text-gray-500 font-normal">
+                    <span className="block text-stone-500 font-normal">
                       kolem {formatClock(targetAt03)}
                     </span>
                   </span>
                 </div>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-stone-600">
                   Odbourávání počítám orientačně 0,12 ‰ za hodinu.
                   {drinkingDurationHours > 0 &&
                     " Odbourávání během pití počítám zjednodušeně jako polovinu délky pití."}
@@ -482,8 +482,8 @@ export default function AlcoholCalculator() {
               </div>
 
               {/* Human description */}
-              <div className="bg-gray-900/60 rounded-lg p-3 text-center mb-4">
-                <p className="text-gray-300 text-sm leading-relaxed">
+              <div className="bg-stone-950/70 rounded-lg p-3 text-center mb-4">
+                <p className="text-stone-300 text-sm leading-relaxed">
                   {result.humanDescription}
                 </p>
               </div>

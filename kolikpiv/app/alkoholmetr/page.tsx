@@ -27,8 +27,8 @@ export default function AlkoholmetrPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <p className="text-4xl mb-3">🍺</p>
-          <h1 className="text-3xl font-bold mb-2">Alkoholmetr</h1>
-          <p className="text-gray-400 text-sm">
+          <h1 className="text-3xl font-black tracking-tight mb-2">Alkoholmetr</h1>
+          <p className="text-stone-400 text-sm">
             Orientační výpočet alkoholu v krvi — pro zábavu a přibližný odhad.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function AlkoholmetrPage() {
         </div>
 
         {/* SEO content */}
-        <div className="mt-10 pt-8 border-t border-gray-800 space-y-8 text-sm text-gray-400 leading-relaxed">
+        <div className="mt-10 pt-8 border-t border-stone-800 space-y-8 text-sm text-stone-400 leading-relaxed">
           <section>
             <h2 className="text-white font-semibold text-base mb-2">
               Co je alkoholmetr?
@@ -124,14 +124,14 @@ export default function AlkoholmetrPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="mt-8 pb-8 text-center border-t border-gray-800 pt-6">
-          <p className="text-zinc-600 text-xs leading-relaxed">
+        <div className="mt-8 pb-8 text-center border-t border-stone-800 pt-6">
+          <p className="text-stone-600 text-xs leading-relaxed">
             Alkoholmetr je čistě orientační nástroj pro zábavu. Neurčuje, kdy
             je bezpečné řídit. Přesné hodnoty závisí na mnoha individuálních
             faktorech.
           </p>
-          <p className="text-zinc-700 text-xs mt-2">
-            <Link href="/" className="hover:text-zinc-500 transition-colors">
+          <p className="text-stone-700 text-xs mt-2">
+            <Link href="/" className="hover:text-stone-500 transition-colors">
               ← zpět na kolikpiv.cz
             </Link>
           </p>
