@@ -1006,8 +1006,15 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         <div className="receipt-tear" />
       </div>
 
-      {/* ── SEKUNDÁRNÍ SEKCE pod účtenkou (tmavé) ── */}
-      <div className="w-full max-w-sm space-y-4 mt-5">
+      {/* ── DROBNÝM PÍSMEM — druhý receipt blok ── */}
+      <div className="w-full max-w-sm bg-[#fdf8f0] text-stone-900 shadow-2xl mt-4">
+
+        {/* Header */}
+        <div className="px-5 pt-5 pb-3 border-b-2 border-dashed border-stone-400 text-center">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400">
+            ══ Drobným písmem ══
+          </p>
+        </div>
 
         {/* QR donation */}
         {result && result.beers >= 20 && (() => {
@@ -1015,37 +1022,46 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           const donationAmount = getDonationAmount(beerPriceNum);
           const isCapped = beerPriceNum > 2000;
           const qrValue = `SPD*1.0*ACC:CZ5055000000008216903002*AM:${donationAmount}.00*CC:CZK*MSG:Pivo`;
-
           return (
-            <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <h2 className="text-xl font-bold font-mono mb-4">Kup mi pivo 🍺</h2>
-              <p className="text-stone-300 mb-6">
+            <div className={`px-5 py-4 border-b border-dashed border-stone-300 transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
+                — Kup mi pivo —
+              </p>
+              <p className="font-mono text-xs text-stone-600 mb-3">
                 To už je minimálně na basu… tak ať se taky napiju 🍺
               </p>
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center mb-3">
                 <div
                   ref={qrRef}
                   onClick={handleDownloadQR}
-                  className="bg-white p-4 rounded-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                  className="bg-white p-3 border border-stone-300 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
                   title="Klikni pro uložení QR kódu"
                 >
-                  <QRCodeSVG value={qrValue} size={200} level="M" />
+                  <QRCodeSVG value={qrValue} size={160} level="M" />
                 </div>
               </div>
               {qrDownloadMessage && (
-                <p className="text-green-400 text-sm mb-2 font-semibold">{qrDownloadMessage}</p>
+                <p className="font-mono text-xs text-green-700 text-center mb-2 font-semibold">
+                  {qrDownloadMessage}
+                </p>
               )}
-              <p className="text-stone-400 text-sm mb-2">Naskenuj v bankovní aplikaci</p>
-              <p className="text-stone-400 text-xs mb-2 md:hidden">Klikni pro uložení 🍺</p>
+              <p className="font-mono text-[10px] text-stone-500 text-center">
+                Naskenuj v bankovní aplikaci
+              </p>
+              <p className="font-mono text-[10px] text-stone-400 text-center md:hidden">
+                Klikni pro uložení 🍺
+              </p>
               {donationAmount === 50 ? (
-                <p className="text-amber-500 font-semibold">👉 50 Kč = 1 pivo pro mě</p>
+                <p className="font-mono text-xs text-amber-700 font-semibold text-center mt-1">
+                  👉 50 Kč = 1 pivo pro mě
+                </p>
               ) : (
                 <>
-                  <p className="text-amber-500 font-semibold">
+                  <p className="font-mono text-xs text-amber-700 font-semibold text-center mt-1">
                     👉 QR je připravený na {donationAmount} Kč
                   </p>
                   {isCapped && (
-                    <p className="text-stone-500 text-xs mt-2">
+                    <p className="font-mono text-[10px] text-stone-500 text-center">
                       Původní cena piva: {beerPriceNum} Kč 😄
                     </p>
                   )}
@@ -1060,30 +1076,37 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           const ALCOHOL_PER_BEER_ML = 25;
           const VODKA_BOTTLE_ML = 200;
           const WINE_BOTTLE_ML = 90;
-
           const pureAlcoholMl = result.beers * ALCOHOL_PER_BEER_ML;
           const vodkaBottles = parseFloat((pureAlcoholMl / VODKA_BOTTLE_ML).toFixed(1));
           const wineBottles = parseFloat((pureAlcoholMl / WINE_BOTTLE_ML).toFixed(1));
-          const pureAlcoholDisplay =
-            pureAlcoholMl >= 1000
-              ? `${(pureAlcoholMl / 1000).toFixed(2)} l`
-              : `${pureAlcoholMl} ml`;
-
+          const pureAlcoholDisplay = pureAlcoholMl >= 1000
+            ? `${(pureAlcoholMl / 1000).toFixed(2)} l`
+            : `${pureAlcoholMl} ml`;
           const vodkaWord = vodkaBottles === 1 ? "lahev" : vodkaBottles < 5 ? "lahve" : "lahví";
           const wineWord = wineBottles === 1 ? "lahev" : wineBottles < 5 ? "lahve" : "lahví";
-
           return (
-            <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <h2 className="text-lg font-bold font-mono text-center mb-4">🧪 V přepočtu na alkohol</h2>
-              <p className="text-xs text-stone-500 text-center mb-4">(počítáno jako 12° pivo, 0.5l, 5% ABV)</p>
-              <div className="space-y-2 text-sm text-center">
-                <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{pureAlcoholDisplay}</span> čistého alkoholu</p>
-                <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{vodkaBottles} {vodkaWord}</span> vodky (0.5l, 40 %)</p>
-                <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{wineBottles} {wineWord}</span> vína (0.75l, 12 %)</p>
+            <div className={`px-5 py-4 border-b border-dashed border-stone-300 transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-2">
+                — V přepočtu na alkohol —
+              </p>
+              <p className="font-mono text-[9px] text-stone-400 mb-3">(12° pivo, 0.5l, 5% ABV)</p>
+              <div className="space-y-1">
+                <div className="flex justify-between font-mono text-xs text-stone-600">
+                  <span>Čistý alkohol:</span>
+                  <span className="text-amber-700 font-medium tabular-nums">{pureAlcoholDisplay}</span>
+                </div>
+                <div className="flex justify-between font-mono text-xs text-stone-600">
+                  <span>Vodka (0.5l, 40 %):</span>
+                  <span className="text-amber-700 font-medium tabular-nums">{vodkaBottles} {vodkaWord}</span>
+                </div>
+                <div className="flex justify-between font-mono text-xs text-stone-600">
+                  <span>Víno (0.75l, 12 %):</span>
+                  <span className="text-amber-700 font-medium tabular-nums">{wineBottles} {wineWord}</span>
+                </div>
               </div>
-              <div className="flex justify-center gap-4 mt-5 pt-4 border-t border-stone-700">
-                <a href="/alkulacka" className="text-xs text-stone-500 hover:text-amber-400 transition-colors">Alkulačka</a>
-                <a href="/alkoholmetr" className="text-xs text-stone-500 hover:text-amber-400 transition-colors">Alkoholmetr</a>
+              <div className="flex gap-4 mt-3 pt-2 border-t border-dotted border-stone-300">
+                <a href="/alkulacka" className="font-mono text-[10px] text-amber-700 hover:text-amber-600 transition-colors">Alkulačka</a>
+                <a href="/alkoholmetr" className="font-mono text-[10px] text-amber-700 hover:text-amber-600 transition-colors">Alkoholmetr</a>
               </div>
             </div>
           );
@@ -1093,65 +1116,58 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         {(() => {
           const totalPrice = parseFloat(price);
           if (!result || isNaN(totalPrice) || totalPrice <= 0) return null;
-
           const SHOW_BEER_DEALS = false;
-
           if (!SHOW_BEER_DEALS) {
             return (
-              <div className="p-5 rounded-lg border border-stone-700 bg-stone-900/50 text-center">
-                <p className="text-stone-300 text-sm mb-1">Prodáváte, nebo vaříte pivo?</p>
-                <p className="text-stone-300 text-sm mb-3">Chcete tady mít jen svoji reklamu?</p>
+              <div className="px-5 py-3 border-b border-dotted border-stone-300 text-center">
+                <p className="font-mono text-[10px] text-stone-500 mb-0.5">
+                  Prodáváte, nebo vaříte pivo?
+                </p>
+                <p className="font-mono text-[10px] text-stone-500 mb-1">
+                  Chcete tady mít jen svoji reklamu?
+                </p>
                 <a
                   href="mailto:reklama@kolikpiv.cz?subject=Reklama%20na%20kolikpiv.cz"
-                  className="inline-block text-amber-400 font-semibold text-sm hover:text-amber-300 transition-colors"
+                  className="font-mono text-[10px] text-amber-700 hover:text-amber-600 transition-colors underline"
                 >
                   Objednejte si zde
                 </a>
-                <p className="text-stone-500 text-xs mt-2">Od 500 Kč měsíčně</p>
+                <span className="font-mono text-[10px] text-stone-400 ml-2">· Od 500 Kč měsíčně</span>
               </div>
             );
           }
-
           const sorted = [...beerDeals].sort((a, b) => {
             if (a.isBestDeal && !b.isBestDeal) return -1;
             if (!a.isBestDeal && b.isBestDeal) return 1;
             return a.pricePerPiece - b.pricePerPiece;
           });
-
           return (
-            <div>
-              <h2 className="text-xl font-bold text-center mb-1">🔥 Co za to koupíš v obchodě</h2>
-              <p className="text-stone-500 text-sm text-center mb-1">Orientačně podle ceny za kus 🍺</p>
-              <p className="text-stone-500 text-xs text-center mb-6">Ceny aktualizovány: {LAST_UPDATED}</p>
-              <div className="space-y-3">
+            <div className="px-5 py-4 border-b border-dashed border-stone-300">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-2">
+                — Co za to koupíš v obchodě —
+              </p>
+              <p className="font-mono text-[9px] text-stone-400 mb-3">
+                Orientačně · Ceny aktualizovány: {LAST_UPDATED}
+              </p>
+              <div className="space-y-1.5">
                 {sorted.map((deal) => {
                   const pieceCount = Math.floor(totalPrice / deal.pricePerPiece);
                   const isClickable = Boolean(deal.url);
-
                   const inner = (
-                    <>
-                      {deal.isBestDeal && (
-                        <p className="text-amber-400 text-xs font-semibold mb-1">🔥 Nejvýhodnější</p>
-                      )}
-                      <div className="flex items-center gap-2">
-                        <span className="text-2xl leading-none">{deal.icon ?? "🍺"}</span>
-                        <p className="font-semibold text-stone-100 text-sm">{deal.name}</p>
-                      </div>
-                      <p className="text-stone-400 text-xs mt-0.5">od {deal.pricePerPiece} Kč / kus</p>
+                    <div className="flex justify-between items-baseline">
+                      <span className="font-mono text-xs text-stone-700">
+                        {deal.icon ?? "🍺"} {deal.name}
+                        <span className="text-stone-400 text-[10px] ml-1">od {deal.pricePerPiece} Kč</span>
+                      </span>
                       {pieceCount > 0 ? (
-                        <p className="text-amber-400 text-sm mt-1">{pieceCount} piv 🍺</p>
+                        <span className="font-mono text-xs text-amber-700 font-medium tabular-nums shrink-0 ml-2">
+                          {pieceCount} piv
+                        </span>
                       ) : (
-                        <p className="text-stone-600 text-sm mt-1">Na tohle zatím nestačí</p>
+                        <span className="font-mono text-[10px] text-stone-400 shrink-0 ml-2">nestačí</span>
                       )}
-                      {deal.isBestDeal && (
-                        <p className="text-stone-500 text-xs mt-1">Nejlepší cena právě teď</p>
-                      )}
-                      {isClickable && (
-                        <p className="text-blue-400 text-xs mt-1.5">Mrkni na ceny 🍺</p>
-                      )}
-                    </>
+                    </div>
                   );
-
                   if (isClickable) {
                     return (
                       <a
@@ -1165,31 +1181,16 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                           pieceCount,
                           totalPrice,
                         })}
-                        className={`block p-4 rounded-lg border transition-colors ${
-                          deal.isBestDeal
-                            ? "bg-stone-900 border-amber-700/60 hover:border-amber-600 hover:bg-stone-800"
-                            : "bg-stone-900 border-stone-700 hover:border-amber-600 hover:bg-stone-800"
-                        }`}
+                        className="block hover:bg-amber-50 -mx-1 px-1 rounded transition-colors"
                       >
                         {inner}
                       </a>
                     );
                   }
-                  return (
-                    <div
-                      key={deal.id}
-                      className={`p-4 rounded-lg border ${
-                        deal.isBestDeal
-                          ? "bg-stone-900 border-amber-700/60"
-                          : "bg-stone-900 border-stone-700"
-                      }`}
-                    >
-                      {inner}
-                    </div>
-                  );
+                  return <div key={deal.id}>{inner}</div>;
                 })}
               </div>
-              <p className="text-stone-600 text-xs text-center mt-4">Ceny se mohou lišit podle aktuálních akcí 🍺</p>
+              <p className="font-mono text-[9px] text-stone-400 mt-2">Ceny se mohou lišit podle aktuálních akcí 🍺</p>
             </div>
           );
         })()}
@@ -1198,30 +1199,35 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
         {result && result.beers > 0 && (() => {
           const KCAL_PER_BEER = 200;
           const KCAL_PER_KM = 70;
-
           const totalKcal = result.beers * KCAL_PER_BEER;
           const runKm = parseFloat((totalKcal / KCAL_PER_KM).toFixed(1));
-          const kcalDisplay =
-            totalKcal >= 1000
-              ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
-              : `${totalKcal} kcal`;
-
+          const kcalDisplay = totalKcal >= 1000
+            ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
+            : `${totalKcal} kcal`;
           return (
-            <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <h2 className="text-lg font-bold font-mono mb-4">🏃 Kolik toho musíš odběhat</h2>
-              <p className="text-stone-300 text-sm mb-1">
-                {result.beers} piv = <span className="text-amber-400 font-semibold">{kcalDisplay}</span>
+            <div className={`px-5 py-4 border-b border-dashed border-stone-300 transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
+                — Kolik toho musíš odběhat —
               </p>
-              <p className="text-3xl font-bold text-amber-400 my-3">{runKm} km</p>
-              <p className="text-stone-500 text-xs">(při průměrném tempu, ~70 kcal/km)</p>
-              <p className="text-stone-600 text-xs mt-3">Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.</p>
+              <div className="flex items-baseline justify-between mb-1">
+                <span className="font-mono text-xs text-stone-600">{result.beers} piv =</span>
+                <span className="font-mono text-xs text-amber-700 font-medium">{kcalDisplay}</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="font-mono text-xs text-stone-600">Vzdálenost:</span>
+                <span className="font-black text-2xl text-amber-900 tabular-nums">{runKm} km</span>
+              </div>
+              <p className="font-mono text-[10px] text-stone-400 mt-1">(~70 kcal/km, průměrné tempo)</p>
+              <p className="font-mono text-[10px] text-stone-500 mt-1">
+                Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.
+              </p>
             </div>
           );
         })()}
 
         {/* SEO summary */}
-        <div className="pt-8 border-t border-stone-800">
-          <p className="text-stone-500 text-sm text-center max-w-2xl mx-auto">
+        <div className="px-5 py-4 border-b border-dotted border-stone-300">
+          <p className="font-mono text-[10px] text-stone-500 leading-relaxed">
             Kolikpiv.cz je jednoduchá online kalkulačka, která převádí ceny na počet piv.
             Zadej částku a zjisti, kolik piv za ni dostaneš. Nejde o alkohol kalkulačku ani
             výpočet promile, ale o zábavný způsob, jak si představit hodnotu peněz. Například
@@ -1229,28 +1235,31 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           </p>
         </div>
 
-        {/* Disclaimer */}
-        <div className="mt-6 text-center">
-          <p className="text-stone-500 text-xs">Experiment 🍺</p>
-          <p className="text-stone-500 text-xs">Něco může být nepřesné… ale piva sedí 😄</p>
-        </div>
-
-        {/* Footer */}
-        <div className="mt-8 pb-8 text-center border-t border-stone-800 pt-6">
-          <p className="text-stone-500 text-sm mb-2">
+        {/* Disclaimer + footer */}
+        <div className="px-5 py-4 text-center">
+          <p className="font-mono text-[10px] text-stone-400">Experiment 🍺</p>
+          <p className="font-mono text-[10px] text-stone-400 mt-0.5">
+            Něco může být nepřesné… ale piva sedí 😄
+          </p>
+          <p className="font-mono text-[10px] text-stone-500 mt-4 leading-relaxed">
             Citáty na této stránce jsou inspirovány románem{" "}
-            <strong className="text-stone-400">Osudy dobrého vojáka Švejka za světové války</strong>{" "}
+            <strong className="text-stone-600">Osudy dobrého vojáka Švejka za světové války</strong>{" "}
             od Jaroslava Haška — jako pocta českému humoru, hospodské filozofii a nenapravitelnému optimismu
             tváří v tvář absurditě.
           </p>
-          <p className="text-stone-600 text-xs mt-2">
+          <p className="font-mono text-[10px] text-stone-400 mt-1">
             Švejk by tohle určitě přepočítal na piva. My jsme to udělali za něj.
           </p>
           {visitorCount && (
-            <p className="text-stone-700 text-xs mt-3">Návštěv celkem: {visitorCount}</p>
+            <p className="font-mono text-[10px] text-stone-400 mt-2">
+              Návštěv celkem: {visitorCount}
+            </p>
           )}
-          <p className="text-stone-700 text-xs mt-1">Díky, že to šíříš 🍺</p>
+          <p className="font-mono text-[10px] text-stone-400 mt-1">Díky, že to šíříš 🍺</p>
         </div>
+
+        {/* Perforovaný spodní okraj */}
+        <div className="receipt-tear" />
       </div>
     </div>
   );
