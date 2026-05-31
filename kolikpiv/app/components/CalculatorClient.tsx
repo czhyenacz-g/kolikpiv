@@ -648,12 +648,15 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           <p className="font-mono text-[10px] tracking-widest text-stone-500 mt-0.5">
             kolikpiv.cz
           </p>
+          <p className="font-mono text-[10px] text-stone-400 mt-0.5">
+            Vystaveno: dnes
+          </p>
           <p className="font-mono text-xs text-stone-500 mt-3 italic leading-relaxed px-2">
             {heroTagline}
           </p>
           <p className="font-mono text-[10px] text-stone-400 mt-2">
             🍺{" "}
-            <a href="/alkulacka" className="underline hover:text-amber-700 transition-colors">
+            <a href="/alkulacka" className="text-amber-700 underline hover:text-amber-600 transition-colors">
               alkulačka
             </a>{" "}
             — kdy vystřízlivíš?
@@ -670,7 +673,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               <button
                 type="button"
                 onClick={handleSurprise}
-                className="inline-flex items-center gap-1 px-2 py-0.5 border border-amber-700 text-amber-800 font-mono text-[10px] font-bold uppercase tracking-wider transform -rotate-1 hover:rotate-0 hover:bg-amber-50 transition-all"
+                className="inline-flex items-center gap-1 px-3 py-1 border border-amber-700 text-amber-800 font-mono text-[11px] font-bold uppercase tracking-wider transform -rotate-2 hover:rotate-0 hover:bg-amber-50 transition-all"
               >
                 ✦ Překvap mě
               </button>
@@ -810,7 +813,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 </p>
               ) : (
                 <>
-                  <p className="font-black text-7xl text-stone-900 leading-none tabular-nums">
+                  <p className="font-black text-7xl text-amber-900 leading-none tabular-nums">
                     {result.beers}
                   </p>
                   <p className="font-mono text-xl font-bold mt-1 text-stone-800">
@@ -1021,7 +1024,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           return (
             <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <h2 className="text-xl font-bold mb-4">Kup mi pivo 🍺</h2>
+              <h2 className="text-xl font-bold font-mono mb-4">Kup mi pivo 🍺</h2>
               <p className="text-stone-300 mb-6">
                 To už je minimálně na basu… tak ať se taky napiju 🍺
               </p>
@@ -1077,7 +1080,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           return (
             <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <h2 className="text-lg font-bold text-center mb-4">🧪 V přepočtu na alkohol</h2>
+              <h2 className="text-lg font-bold font-mono text-center mb-4">🧪 V přepočtu na alkohol</h2>
               <p className="text-xs text-stone-500 text-center mb-4">(počítáno jako 12° pivo, 0.5l, 5% ABV)</p>
               <div className="space-y-2 text-sm text-center">
                 <p className="text-stone-300">= <span className="text-amber-400 font-semibold">{pureAlcoholDisplay}</span> čistého alkoholu</p>
@@ -1211,7 +1214,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
 
           return (
             <div className={`p-6 bg-stone-900 border border-stone-700/70 rounded-lg text-center transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <h2 className="text-lg font-bold mb-4">🏃 Kolik toho musíš odběhat</h2>
+              <h2 className="text-lg font-bold font-mono mb-4">🏃 Kolik toho musíš odběhat</h2>
               <p className="text-stone-300 text-sm mb-1">
                 {result.beers} piv = <span className="text-amber-400 font-semibold">{kcalDisplay}</span>
               </p>
