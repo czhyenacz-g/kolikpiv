@@ -1023,7 +1023,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           const isCapped = beerPriceNum > 2000;
           const qrValue = `SPD*1.0*ACC:CZ5055000000008216903002*AM:${donationAmount}.00*CC:CZK*MSG:Pivo`;
           return (
-            <div className={`px-5 py-4 border-b border-dashed border-stone-300 transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+            <div className="px-5 py-4 border-b border-dashed border-stone-300">
               <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
                 — Kup mi pivo —
               </p>
@@ -1037,7 +1037,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                   className="bg-white p-3 border border-stone-300 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
                   title="Klikni pro uložení QR kódu"
                 >
-                  <QRCodeSVG value={qrValue} size={160} level="M" />
+                  <QRCodeSVG value={qrValue} size={190} level="M" />
                 </div>
               </div>
               {qrDownloadMessage && (
@@ -1085,7 +1085,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           const vodkaWord = vodkaBottles === 1 ? "lahev" : vodkaBottles < 5 ? "lahve" : "lahví";
           const wineWord = wineBottles === 1 ? "lahev" : wineBottles < 5 ? "lahve" : "lahví";
           return (
-            <div className={`px-5 py-4 border-b border-dashed border-stone-300 transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
+            <div className="px-5 py-4 border-b border-dashed border-stone-300">
               <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-2">
                 — V přepočtu na alkohol —
               </p>
@@ -1108,6 +1108,36 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 <a href="/alkulacka" className="font-mono text-[10px] text-amber-700 hover:text-amber-600 transition-colors">Alkulačka</a>
                 <a href="/alkoholmetr" className="font-mono text-[10px] text-amber-700 hover:text-amber-600 transition-colors">Alkoholmetr</a>
               </div>
+            </div>
+          );
+        })()}
+
+        {/* Kalorický přepočet */}
+        {result && result.beers > 0 && (() => {
+          const KCAL_PER_BEER = 200;
+          const KCAL_PER_KM = 70;
+          const totalKcal = result.beers * KCAL_PER_BEER;
+          const runKm = parseFloat((totalKcal / KCAL_PER_KM).toFixed(1));
+          const kcalDisplay = totalKcal >= 1000
+            ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
+            : `${totalKcal} kcal`;
+          return (
+            <div className="px-5 py-4 border-b border-dashed border-stone-300">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
+                — Kolik toho musíš odběhat —
+              </p>
+              <div className="flex items-baseline justify-between mb-1">
+                <span className="font-mono text-xs text-stone-600">{result.beers} piv =</span>
+                <span className="font-mono text-xs text-amber-700 font-medium">{kcalDisplay}</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="font-mono text-xs text-stone-600">Vzdálenost:</span>
+                <span className="font-black text-2xl text-amber-900 tabular-nums">{runKm} km</span>
+              </div>
+              <p className="font-mono text-[10px] text-stone-400 mt-1">(~70 kcal/km, průměrné tempo)</p>
+              <p className="font-mono text-[10px] text-stone-500 mt-1">
+                Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.
+              </p>
             </div>
           );
         })()}
@@ -1191,36 +1221,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
                 })}
               </div>
               <p className="font-mono text-[9px] text-stone-400 mt-2">Ceny se mohou lišit podle aktuálních akcí 🍺</p>
-            </div>
-          );
-        })()}
-
-        {/* Kalorický přepočet */}
-        {result && result.beers > 0 && (() => {
-          const KCAL_PER_BEER = 200;
-          const KCAL_PER_KM = 70;
-          const totalKcal = result.beers * KCAL_PER_BEER;
-          const runKm = parseFloat((totalKcal / KCAL_PER_KM).toFixed(1));
-          const kcalDisplay = totalKcal >= 1000
-            ? `${(totalKcal / 1000).toFixed(1)} tis. kcal`
-            : `${totalKcal} kcal`;
-          return (
-            <div className={`px-5 py-4 border-b border-dashed border-stone-300 transition-opacity duration-500 ${showResult ? "opacity-100" : "opacity-0"}`}>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">
-                — Kolik toho musíš odběhat —
-              </p>
-              <div className="flex items-baseline justify-between mb-1">
-                <span className="font-mono text-xs text-stone-600">{result.beers} piv =</span>
-                <span className="font-mono text-xs text-amber-700 font-medium">{kcalDisplay}</span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono text-xs text-stone-600">Vzdálenost:</span>
-                <span className="font-black text-2xl text-amber-900 tabular-nums">{runKm} km</span>
-              </div>
-              <p className="font-mono text-[10px] text-stone-400 mt-1">(~70 kcal/km, průměrné tempo)</p>
-              <p className="font-mono text-[10px] text-stone-500 mt-1">
-                Až poběžíš maraton (42 km) = 14 piv. Což zní jako solidní plán.
-              </p>
             </div>
           );
         })()}
