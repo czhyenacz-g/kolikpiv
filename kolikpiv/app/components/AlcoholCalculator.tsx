@@ -33,6 +33,20 @@ function formatClock(date: Date): string {
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
+// Normalizace číselného vstupu po opuštění pole (blur).
+// parseFloat zvládá "09" → 9, "08.8" → 8.8, "8.80" → 8.8.
+function normalizeDecimal(s: string, min: number, max: number, fallback: number): string {
+  const num = parseFloat(s);
+  if (isNaN(num)) return String(fallback);
+  return String(Math.min(max, Math.max(min, num)));
+}
+
+function normalizeInteger(s: string, min: number, max: number, fallback: number): string {
+  const num = parseFloat(s); // parseFloat aby fungoval "80.7" → 81
+  if (isNaN(num)) return String(fallback);
+  return String(Math.min(max, Math.max(min, Math.round(num))));
+}
+
 export default function AlcoholCalculator() {
   const [gender, setGender] = useState<Gender>("male");
   const [weight, setWeight] = useState<string>("80");
@@ -48,9 +62,26 @@ export default function AlcoholCalculator() {
   const [error, setError] = useState<string>("");
   const counter = useRef(0);
 
+  // Zobrazované textové hodnoty pro volume/abv inputy — oddělené od číselných hodnot v DrinkEntry.
+  // Umožňují dočasně prázdné nebo neúplné vstupy bez okamžité konverze na 0.
+  const [drinkTexts, setDrinkTexts] = useState<Record<string, { volText: string; abvText: string }>>({});
+
   function newId() {
     counter.current += 1;
     return String(counter.current);
+  }
+
+  function getVolText(drink: DrinkEntry): string {
+    return drinkTexts[drink.id]?.volText ?? String(drink.volumeMl);
+  }
+  function getAbvText(drink: DrinkEntry): string {
+    return drinkTexts[drink.id]?.abvText ?? String(drink.abv);
+  }
+  function setVolText(id: string, text: string) {
+    setDrinkTexts(prev => ({ ...prev, [id]: { ...(prev[id] ?? { volText: "", abvText: "" }), volText: text } }));
+  }
+  function setAbvText(id: string, text: string) {
+    setDrinkTexts(prev => ({ ...prev, [id]: { ...(prev[id] ?? { volText: "", abvText: "" }), abvText: text } }));
   }
 
   function getDefaultStartedAt(): string {
@@ -68,38 +99,33 @@ export default function AlcoholCalculator() {
   function addPreset(presetId: string) {
     const preset = ALCOHOL_PRESETS.find((p) => p.id === presetId);
     if (!preset) return;
-    setDrinks((prev) => {
-      const existing = prev.find((d) => d.presetId === presetId);
-      if (existing) {
-        return prev.map((d) =>
-          d.presetId === presetId ? { ...d, count: d.count + 1 } : d
-        );
-      }
-      return [
-        ...prev,
-        {
-          id: newId(),
-          presetId: preset.id,
-          label: preset.label,
-          volumeMl: preset.volumeMl,
-          abv: preset.abv,
-          count: 1,
-        },
-      ];
-    });
+    const existing = drinks.find((d) => d.presetId === presetId);
+    if (existing) {
+      updateDrink(existing.id, { count: existing.count + 1 });
+      return;
+    }
+    const id = newId();
+    setDrinks(prev => [...prev, {
+      id, presetId: preset.id, label: preset.label,
+      volumeMl: preset.volumeMl, abv: preset.abv, count: 1,
+    }]);
+    setDrinkTexts(prev => ({
+      ...prev,
+      [id]: { volText: String(preset.volumeMl), abvText: String(preset.abv) },
+    }));
     setResult(null);
   }
 
   function addCustomDrink() {
-    setDrinks((prev) => [
-      ...prev,
-      { id: newId(), label: "Vlastní nápoj", volumeMl: 500, abv: 5, count: 1 },
-    ]);
+    const id = newId();
+    setDrinks(prev => [...prev, { id, label: "Vlastní nápoj", volumeMl: 500, abv: 5, count: 1 }]);
+    setDrinkTexts(prev => ({ ...prev, [id]: { volText: "500", abvText: "5" } }));
     setResult(null);
   }
 
   function removeDrink(id: string) {
-    setDrinks((prev) => prev.filter((d) => d.id !== id));
+    setDrinks(prev => prev.filter(d => d.id !== id));
+    setDrinkTexts(prev => { const n = { ...prev }; delete n[id]; return n; });
     setResult(null);
   }
 
@@ -187,6 +213,7 @@ export default function AlcoholCalculator() {
             setWeight(e.target.value);
             setResult(null);
           }}
+          onBlur={() => setWeight(normalizeInteger(weight, 30, 200, 80))}
           min="30"
           max="200"
           className="w-full px-4 py-3 bg-white/70 border border-stone-300 rounded-lg focus:outline-none focus:border-amber-600 transition"
@@ -256,14 +283,25 @@ export default function AlcoholCalculator() {
                   </label>
                   <input
                     type="number"
-                    value={drink.volumeMl}
-                    onChange={(e) =>
-                      updateDrink(drink.id, {
-                        volumeMl: parseFloat(e.target.value) || 0,
-                        presetId: undefined,
-                      })
-                    }
+                    inputMode="numeric"
+                    step="1"
                     min="10"
+                    value={getVolText(drink)}
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      setVolText(drink.id, text);
+                      const num = parseInt(text, 10);
+                      if (!isNaN(num) && num >= 10) {
+                        updateDrink(drink.id, { volumeMl: num, presetId: undefined });
+                      } else {
+                        setResult(null);
+                      }
+                    }}
+                    onBlur={() => {
+                      const normalized = normalizeInteger(getVolText(drink), 10, 5000, 500);
+                      setVolText(drink.id, normalized);
+                      updateDrink(drink.id, { volumeMl: parseInt(normalized, 10), presetId: undefined });
+                    }}
                     className="w-full px-2 py-1.5 bg-stone-50 border border-stone-300 rounded text-sm focus:outline-none focus:border-amber-600"
                   />
                 </div>
@@ -272,17 +310,24 @@ export default function AlcoholCalculator() {
                     Alkohol (%)
                   </label>
                   <input
-                    type="number"
-                    value={drink.abv}
-                    onChange={(e) =>
-                      updateDrink(drink.id, {
-                        abv: parseFloat(e.target.value) || 0,
-                        presetId: undefined,
-                      })
-                    }
-                    min="0"
-                    max="80"
-                    step="0.1"
+                    type="text"
+                    inputMode="decimal"
+                    value={getAbvText(drink)}
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      setAbvText(drink.id, text);
+                      const num = parseFloat(text);
+                      if (!isNaN(num) && num >= 0 && num <= 100) {
+                        updateDrink(drink.id, { abv: num, presetId: undefined });
+                      } else {
+                        setResult(null);
+                      }
+                    }}
+                    onBlur={() => {
+                      const normalized = normalizeDecimal(getAbvText(drink), 0, 100, drink.abv);
+                      setAbvText(drink.id, normalized);
+                      updateDrink(drink.id, { abv: parseFloat(normalized), presetId: undefined });
+                    }}
                     className="w-full px-2 py-1.5 bg-stone-50 border border-stone-300 rounded text-sm focus:outline-none focus:border-amber-600"
                   />
                 </div>
