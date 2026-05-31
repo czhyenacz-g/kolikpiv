@@ -36,8 +36,7 @@ export default function AlkulackaPage() {
           </p>
           <p className="font-mono text-[10px] text-stone-400 mt-0.5">Vystaveno: dnes</p>
           <p className="font-mono text-xs text-stone-500 mt-3 italic leading-relaxed px-2">
-            Alkoholová kalkulačka — přepočítej pivo, víno a panáky na orientační
-            promile.
+            Kolik z toho bude promile? Orientační výsledek podle váhy, pohlaví a vypitých nápojů.
           </p>
           <p className="font-mono text-[10px] text-stone-400 mt-2">
             <Link
@@ -51,6 +50,9 @@ export default function AlkulackaPage() {
 
         {/* Calculator */}
         <div className="px-5 py-6">
+          <p className="font-mono text-[10px] text-stone-500 leading-relaxed mb-5 italic">
+            Výsledek je jen hrubý odhad — nebere v úvahu jídlo, zdravotní stav, rychlost pití ani individuální odbourávání alkoholu.
+          </p>
           <AlcoholCalculator />
         </div>
 

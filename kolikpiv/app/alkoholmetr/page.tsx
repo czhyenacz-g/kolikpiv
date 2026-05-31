@@ -36,7 +36,7 @@ export default function AlkoholmetrPage() {
           </p>
           <p className="font-mono text-[10px] text-stone-400 mt-0.5">Vystaveno: dnes</p>
           <p className="font-mono text-xs text-stone-500 mt-3 italic leading-relaxed px-2">
-            Orientační výpočet alkoholu v krvi — pro zábavu a přibližný odhad.
+            Kolik z toho bude promile? Orientační odhad — pro zábavu, ne jako návod k řízení.
           </p>
           <p className="font-mono text-[10px] text-stone-400 mt-2">
             <Link
@@ -50,6 +50,9 @@ export default function AlkoholmetrPage() {
 
         {/* Calculator */}
         <div className="px-5 py-6">
+          <p className="font-mono text-[10px] text-stone-500 leading-relaxed mb-5 italic">
+            Výsledek je jen hrubý odhad — nebere v úvahu jídlo, zdravotní stav, rychlost pití ani individuální odbourávání alkoholu.
+          </p>
           <AlcoholCalculator />
         </div>
 

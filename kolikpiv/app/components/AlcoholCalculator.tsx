@@ -111,9 +111,9 @@ export default function AlcoholCalculator() {
   }
 
   function calculate() {
-    const weightNum = parseFloat(weight);
-    if (isNaN(weightNum) || weightNum < 30 || weightNum > 300) {
-      setError("Zadej váhu mezi 30 a 300 kg.");
+    const weightNum = Math.round(parseFloat(weight));
+    if (isNaN(weightNum) || weightNum < 30 || weightNum > 200) {
+      setError("Zadej hmotnost mezi 30 a 200 kg.");
       return;
     }
     if (drinks.length === 0) {
@@ -177,16 +177,18 @@ export default function AlcoholCalculator() {
 
       {/* Weight */}
       <div>
-        <label className="block text-sm font-medium mb-2">Váha (kg)</label>
+        <label className="block text-sm font-medium mb-2">Hmotnost (kg)</label>
         <input
           type="number"
+          inputMode="numeric"
+          step="1"
           value={weight}
           onChange={(e) => {
             setWeight(e.target.value);
             setResult(null);
           }}
           min="30"
-          max="300"
+          max="200"
           className="w-full px-4 py-3 bg-white/70 border border-stone-300 rounded-lg focus:outline-none focus:border-amber-600 transition"
           placeholder="např. 80"
         />
@@ -214,6 +216,9 @@ export default function AlcoholCalculator() {
             + vlastní
           </button>
         </div>
+        <p className="font-mono text-[10px] text-stone-400 italic mt-1">
+          Orientační hodnoty — skutečný obsah alkoholu se může lišit podle značky a receptury.
+        </p>
       </div>
 
       {/* Drink list */}
@@ -435,7 +440,7 @@ export default function AlcoholCalculator() {
                   </div>
                 )}
                 <div className="flex justify-between items-center text-sm pt-1 border-t border-stone-300/70">
-                  <span className="text-stone-600">Na 0 ‰:</span>
+                  <span className="text-stone-600">Na 0 ‰ <span className="text-stone-400 font-normal text-xs">(orient.)</span>:</span>
                   {currentPromile <= 0 ? (
                     <span className="text-green-700 font-semibold text-xs">
                       orientačně již na nule
@@ -463,6 +468,9 @@ export default function AlcoholCalculator() {
                     </span>
                   </span>
                 </div>
+                <p className="font-mono text-[10px] text-stone-500 italic mt-0.5">
+                  Časy jsou hrubý odhad. Neříkají, kdy je bezpečné řídit.
+                </p>
                 <p className="text-xs text-stone-600">
                   Odbourávání počítám orientačně 0,12 ‰ za hodinu.
                   {drinkingDurationHours > 0 &&
@@ -498,9 +506,7 @@ export default function AlcoholCalculator() {
           {/* Disclaimer — full width */}
           <div className="p-3 bg-amber-50 border border-amber-300 rounded-sm mt-4">
             <p className="text-amber-800 text-xs text-center leading-relaxed">
-              ⚠️ Výpočet je pouze orientační. Odbourávání alkoholu je
-              individuální a tento odhad neurčuje, zda můžete řídit nebo
-              vykonávat činnosti vyžadující střízlivost.
+              ⚠️ Výsledek je pouze orientační. Skutečná hladina alkoholu závisí na těle, jídle, rychlosti pití i zdravotním stavu. Nepoužívej výpočet jako rozhodnutí, jestli můžeš řídit.
             </p>
           </div>
         </div>

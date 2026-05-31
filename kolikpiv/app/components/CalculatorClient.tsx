@@ -661,7 +661,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             >
               🍺 alkulačka
             </a>
-            <span className="font-mono text-[10px] text-stone-400 italic">— kdy vystřízlivíš?</span>
+            <span className="font-mono text-[10px] text-stone-400 italic">Kolik z toho bude promile?</span>
           </div>
         </div>
 
