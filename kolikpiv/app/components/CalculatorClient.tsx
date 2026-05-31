@@ -654,13 +654,15 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
           <p className="font-mono text-xs text-stone-500 mt-3 italic leading-relaxed px-2">
             {heroTagline}
           </p>
-          <p className="font-mono text-[10px] text-stone-400 mt-2">
-            🍺{" "}
-            <a href="/alkulacka" className="text-amber-700 underline hover:text-amber-600 transition-colors">
-              alkulačka
-            </a>{" "}
-            — kdy vystřízlivíš?
-          </p>
+          <div className="mt-2 flex flex-col items-center gap-1">
+            <a
+              href="/alkulacka"
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 border border-indigo-600 text-indigo-700 font-mono text-[10px] font-bold tracking-wider transform rotate-1 hover:rotate-0 hover:bg-indigo-50 transition-all"
+            >
+              🍺 alkulačka
+            </a>
+            <span className="font-mono text-[10px] text-stone-400 italic">— kdy vystřízlivíš?</span>
+          </div>
         </div>
 
         {/* PRESET ITEMS — jako řádky na jídelním lístku */}
