@@ -22,26 +22,46 @@ export const metadata: Metadata = {
 
 export default function AlkoholmetrPage() {
   return (
-    <div className="min-h-screen flex justify-center p-4">
-      <div className="w-full max-w-md py-8">
+    <div className="min-h-screen flex flex-col items-center justify-start pt-8 pb-16 px-4">
+
+      {/* Receipt paper */}
+      <div className="w-full max-w-md bg-[#fdf8f0] text-stone-900 shadow-2xl">
+
         {/* Header */}
-        <div className="text-center mb-8">
-          <p className="text-4xl mb-3">🍺</p>
-          <h1 className="text-3xl font-black tracking-tight mb-2">Alkoholmetr</h1>
-          <p className="text-stone-400 text-sm">
+        <div className="text-center pt-7 pb-5 px-6 border-b-2 border-dashed border-stone-400">
+          <p className="text-3xl mb-2">🍺</p>
+          <h1 className="font-black text-2xl tracking-widest uppercase">Alkoholmetr</h1>
+          <p className="font-mono text-[10px] tracking-widest text-stone-500 mt-0.5">
+            kolikpiv.cz
+          </p>
+          <p className="font-mono text-[10px] text-stone-400 mt-0.5">Vystaveno: dnes</p>
+          <p className="font-mono text-xs text-stone-500 mt-3 italic leading-relaxed px-2">
             Orientační výpočet alkoholu v krvi — pro zábavu a přibližný odhad.
+          </p>
+          <p className="font-mono text-[10px] text-stone-400 mt-2">
+            <Link
+              href="/"
+              className="text-amber-700 underline hover:text-amber-600 transition-colors"
+            >
+              ← kolikpiv.cz
+            </Link>
           </p>
         </div>
 
         {/* Calculator */}
-        <div className="mb-10">
+        <div className="px-5 py-6">
           <AlcoholCalculator />
         </div>
 
-        {/* SEO content */}
-        <div className="mt-10 pt-8 border-t border-stone-800 space-y-8 text-sm text-stone-400 leading-relaxed">
+        {/* Perforated bottom */}
+        <div className="receipt-tear" />
+      </div>
+
+      {/* SEO content — dark sections below receipt */}
+      <div className="w-full max-w-md mt-5">
+        <div className="pt-8 border-t border-stone-800 space-y-8 text-sm text-stone-400 leading-relaxed">
           <section>
-            <h2 className="text-white font-semibold text-base mb-2">
+            <h2 className="text-stone-200 font-semibold font-mono text-sm mb-2">
               Co je alkoholmetr?
             </h2>
             <p>
@@ -54,7 +74,7 @@ export default function AlkoholmetrPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-semibold text-base mb-2">
+            <h2 className="text-stone-200 font-semibold font-mono text-sm mb-2">
               Jak alkoholmetr funguje?
             </h2>
             <p>
@@ -67,7 +87,7 @@ export default function AlkoholmetrPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-semibold text-base mb-2">
+            <h2 className="text-stone-200 font-semibold font-mono text-sm mb-2">
               Kolik alkoholu má běžné pivo?
             </h2>
             <p>
@@ -79,7 +99,7 @@ export default function AlkoholmetrPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-semibold text-base mb-2">
+            <h2 className="text-stone-200 font-semibold font-mono text-sm mb-2">
               Proč je výpočet jen orientační?
             </h2>
             <p>
@@ -92,7 +112,7 @@ export default function AlkoholmetrPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-semibold text-base mb-2">
+            <h2 className="text-stone-200 font-semibold font-mono text-sm mb-2">
               Rozdíl mezi pivem, vínem a panáky
             </h2>
             <p>
@@ -105,7 +125,7 @@ export default function AlkoholmetrPage() {
           </section>
 
           <section>
-            <h2 className="text-white font-semibold text-base mb-2">
+            <h2 className="text-stone-200 font-semibold font-mono text-sm mb-2">
               Spočítej si, kolik piv za co zaplatíš
             </h2>
             <p>

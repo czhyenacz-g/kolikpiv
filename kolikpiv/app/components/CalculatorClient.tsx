@@ -677,12 +677,6 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               >
                 ✦ Překvap mě
               </button>
-              <a
-                href="/alkulacka"
-                className="font-mono text-[10px] text-stone-400 italic hover:text-amber-700 transition-colors"
-              >
-                → alkulačka
-              </a>
             </div>
           </div>
           <div className="space-y-0">
