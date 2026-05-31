@@ -669,7 +669,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             <p className="font-mono text-[10px] uppercase tracking-widest text-stone-400">
               — Zkus třeba —
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[10px] text-stone-400 italic">nebo</span>
               <button
                 type="button"
                 onClick={handleSurprise}
