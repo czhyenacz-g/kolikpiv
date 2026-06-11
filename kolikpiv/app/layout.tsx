@@ -1,11 +1,27 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import { GOATCOUNTER_CODE } from "./config/analytics";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#fbbf24",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://kolikpiv.cz"),
+  icons: {
+    icon: "/icon-192.png",
+    shortcut: "/icon-192.png",
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Kolik piv",
+    statusBarStyle: "black-translucent",
+  },
   title: "Kolik piv to je? | Přepočet ceny na piva",
   description: "Zjisti, kolik piv stojí cokoliv. Jednoduchá a zábavná kalkulačka, která převádí ceny na piva 🍺.",
   openGraph: {
