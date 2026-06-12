@@ -706,6 +706,11 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
               </button>
             ))}
           </div>
+          <p className="font-mono text-[9px] text-stone-300 mt-2 text-right">
+            <a href="/institut" className="hover:text-stone-400 transition-colors">
+              Metodika výpočtu: Pivní institut ekonomických studií
+            </a>
+          </p>
         </div>
 
         {/* FORM FIELDS — ručně doplnitelné řádky účtenky */}
