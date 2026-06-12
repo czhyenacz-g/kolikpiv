@@ -7,7 +7,7 @@ import { track } from "@vercel/analytics";
 import { GOATCOUNTER_CODE } from "../config/analytics";
 import {
   type ProductPreset,
-  getDefaultPresets,
+  getRandomHomepagePresetsByCategory,
   getSurpriseCandidates,
 } from "../../data/product-presets";
 
@@ -265,6 +265,8 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   const [copyLinkMessage, setCopyLinkMessage] = useState<string>("");
   const [heroTagline, setHeroTagline] = useState<string>(HERO_TAGLINES[0]);
   const [selectedPreset, setSelectedPreset] = useState<ProductPreset | null>(null);
+  // Initialized once after mount to avoid hydration mismatch with server render.
+  const [homepagePresets, setHomepagePresets] = useState<ProductPreset[]>([]);
 
   const qrRef = useRef<HTMLDivElement>(null);
   const hasInitializedFromUrl = useRef(false);
@@ -274,6 +276,11 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
   useEffect(() => {
     const randomTagline = HERO_TAGLINES[Math.floor(Math.random() * HERO_TAGLINES.length)];
     setHeroTagline(randomTagline);
+  }, []);
+
+  // Pick one preset per category once after mount — never changes until reload.
+  useEffect(() => {
+    setHomepagePresets(getRandomHomepagePresetsByCategory());
   }, []);
 
   // Load from URL query params and localStorage on mount
@@ -683,7 +690,7 @@ export default function CalculatorClient({ beerDeals }: { beerDeals: BeerDeal[] 
             </div>
           </div>
           <div className="space-y-0">
-            {getDefaultPresets().map((preset) => (
+            {homepagePresets.map((preset) => (
               <button
                 key={preset.id}
                 type="button"
